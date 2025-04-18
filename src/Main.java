@@ -1,4 +1,6 @@
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import DAO.DaoFactory;
 import DAO.GeneralDaoImpl;
@@ -16,5 +18,20 @@ public class Main {
 
         ResultSet res = userDao.getAll();
         GeneralVue.showOutput(res);
+
+        Map<String, Object> userbdd = new HashMap<>();
+        userbdd.put("name", "michel");
+        userbdd.put("password", "4567");
+        userDao.insert(userbdd);
+
+        userDao.setById("id_user", 2, "name", "bob2");
+        userDao.delete("id_user", 1);
+
+        try {
+            dao.getConnection().close(); //Close the connection if used
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }
