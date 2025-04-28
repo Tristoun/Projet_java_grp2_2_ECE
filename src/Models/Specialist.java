@@ -1,10 +1,11 @@
 package Models;
+import java.util.ArrayList;
 
 public class Specialist extends User {
     private int specialistId;
     private String specialistUsername;
     private String specialistPassword;
-    private ArrayList<String> schedule
+    private ArrayList<String> schedule;
     private String description;
     public Specialist(int specialistId, String specialistUsername, String specialistPassword) {
         super(specialistId,specialistUsername,specialistPassword,1); //1 car tjrs specialiste

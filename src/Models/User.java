@@ -5,7 +5,7 @@ public class User{
     private String username;
     private String password;
     private int status; //0=user lambda, 1=specialiste, 2 = admin
-    public SpecialistDao(int userId, String username, String password, int status) {
+    void SpecialistDao(int userId, String username, String password, int status) {
         this.userId = userId;
         this.username = username;
         this.password = password;
