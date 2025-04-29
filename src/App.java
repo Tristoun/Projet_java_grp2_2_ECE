@@ -21,8 +21,8 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/SceneDesign/login.fxml")); // Corrected path
         Scene scene = new Scene(root); // Set scene size and background color
-        String css = this.getClass().getResource("application.css").toExternalForm();
-        scene.getStylesheets().add(css);
+        //String css = this.getClass().getResource("application.css").toExternalForm();
+        //scene.getStylesheets().add(css);
 
         stage.setScene(scene);
         stage.show(); // Show the stage
