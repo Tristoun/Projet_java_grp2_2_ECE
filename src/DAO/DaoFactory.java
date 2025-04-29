@@ -6,36 +6,21 @@ import java.sql.SQLException;
 
 public class DaoFactory {
     private static String url;
-    private String username;
-    private String password;
+    private static String username;
+    private static String password;
 
-
-    public DaoFactory(String url, String username, String password) {
-        this.url = url;
-        this.username = username;
-        this.password = password;
-    }
-
-    public static DaoFactory getInstance(String database, String username, String password) {
+    public static void init(String database, String user, String pass) {
         try {
-            // chargement driver "com.mysql.cj.jdbc.Driver"
             Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
+            url = "jdbc:mysql://localhost:3306/" + database;
+            username = user;
+            password = pass;
+        } catch (ClassNotFoundException e) {
             System.out.println("Erreur de connexion à la base de données");
         }
-
-        url = "jdbc:mysql://localhost:3306/" + database;
-
-        // Instancier une instance l'objet de DaoFactory
-        DaoFactory instance = new DaoFactory(url, username,password);
-
-        // Retourner cette instance
-        return instance;
     }
 
-    public Connection getConnection() throws SQLException {
-        // Retourner la connection du driver de la base de données
+    public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, username, password);
     }
 }
