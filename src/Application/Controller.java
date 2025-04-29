@@ -30,9 +30,7 @@ public class Controller {
 
 
     public void submitLogIn(ActionEvent event) {
-        DaoFactory dao = DaoFactory.getInstance("info_doctolib", "root", "patapouf");;
-
-        UserDaoImpl userdaoimpl = new UserDaoImpl(dao);
+        UserDaoImpl userdaoimpl = new UserDaoImpl();
         try {
             username = usernameInput.getText();
             password = passwordInput.getText();

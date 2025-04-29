@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class UserDaoImpl extends GeneralDaoImpl{
     
-    public UserDaoImpl(DaoFactory dao) {
-        super(dao, "user");
+    public UserDaoImpl() {
+        super("user");
     }
 
     /**
@@ -21,11 +21,10 @@ public class UserDaoImpl extends GeneralDaoImpl{
      * @return idUser the user's ID in the database, or -1 if login failed
      */
     public int logIn(String username, String password) {
-        DaoFactory dao = DaoFactory.getInstance("info_doctolib", "root", "patapouf");
         int id = -1;
 
         try {
-            Connection connexion = dao.getConnection();
+            Connection connexion = DaoFactory.getConnection();
 
             String query = "SELECT id_user FROM user WHERE name=? AND password=?";
             PreparedStatement statement = connexion.prepareStatement(query);
@@ -62,6 +61,5 @@ public class UserDaoImpl extends GeneralDaoImpl{
         }
 
         return id;
-}
-
+    }
 }

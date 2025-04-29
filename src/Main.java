@@ -13,8 +13,8 @@ import Vue.*;
 
 public class Main {
     public static void main(String args[]) {
-        DaoFactory dao = DaoFactory.getInstance("info_doctolib", "root", "patapouf");
-        UserDaoImpl userDao = new UserDaoImpl(dao);
+        DaoFactory.init("info_doctolib", "root", "patapouf");
+        UserDaoImpl userDao = new UserDaoImpl();
 
         ResultSet res = userDao.getAll();
         GeneralVue.showOutput(res);
@@ -28,7 +28,7 @@ public class Main {
         userDao.delete("id_user", 1);
 
         try {
-            dao.getConnection().close(); //Close the connection if used
+            DaoFactory.getConnection().close(); //Close the connection if used
         } catch (SQLException e) {
             e.printStackTrace();
         }
