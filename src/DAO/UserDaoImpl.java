@@ -44,7 +44,7 @@ public class UserDaoImpl extends GeneralDaoImpl{
         return id;
     }
 
-    public int signIn(String username, String password) {
+    public int registerUser(String username, String password) {
         int id = -1;
         if(username == "" || password == "") {
             return id;

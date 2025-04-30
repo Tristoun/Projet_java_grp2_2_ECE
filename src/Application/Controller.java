@@ -32,9 +32,6 @@ public class Controller {
     @FXML
     private PasswordField passwordInput;
 
-    @FXML
-    private Button logiButton;
-
     String username;
     String password;
     int idUser;
@@ -65,14 +62,14 @@ public class Controller {
         }
     }
 
-    public void submitSign(ActionEvent event) {
+    public void register(ActionEvent event) {
         UserDaoImpl userDaoImpl = new UserDaoImpl();
         try {
             username = usernameInput.getText();
             password = passwordInput.getText();
     
             System.out.println(username + " " + password);
-            idUser = userDaoImpl.signIn(username, password);
+            idUser = userDaoImpl.registerUser(username, password);
             if(idUser != -1 && idUser != -2) {
                 switchScene("../SceneDesign/main.fxml", event);
             }
