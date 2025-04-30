@@ -4,44 +4,97 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controller">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#107acaa3" height="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0" />
-      <Label layoutX="51.0" layoutY="26.0" text="Doctolib ECE" textFill="WHITE">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0">
+         <fill>
+            <LinearGradient endX="0.6333333333333333" endY="0.9285714285714286">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.062745101749897" green="0.47843137383461" blue="0.7921568751335144" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill></Rectangle>
+      <Label layoutX="25.0" layoutY="22.0" text="Doctolib ECE" textFill="WHITE">
+         <font>
+            <Font name="Poppins SemiBold" size="40.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelUsername" layoutX="295.0" layoutY="169.0" text="Username : " textFill="#107aca">
          <font>
             <Font size="40.0" />
          </font>
       </Label>
-      <Label fx:id="labelUsername" layoutX="146.0" layoutY="299.0" text="Username : ">
-         <font>
-            <Font size="40.0" />
-         </font>
-      </Label>
-      <TextField fx:id="usernameInput" layoutX="432.0" layoutY="299.0" prefHeight="49.0" prefWidth="185.0">
+      <TextField fx:id="usernameInput" layoutX="265.0" layoutY="236.0" prefHeight="49.0" prefWidth="270.0" promptText="Exemple : Patate">
          <font>
             <Font size="20.0" />
          </font>
+         <effect>
+            <InnerShadow>
+               <color>
+                  <Color red="0.7763158082962036" green="0.7763158082962036" blue="0.7763158082962036" />
+               </color>
+            </InnerShadow>
+         </effect>
       </TextField>
-      <Label fx:id="labelPassword" layoutX="149.0" layoutY="400.0" text="Password :">
+      <Label fx:id="labelPassword" layoutX="303.0" layoutY="321.0" text="Password :" textFill="#107aca">
          <font>
             <Font size="40.0" />
          </font>
       </Label>
-      <Button fx:id="logInButton" layoutX="202.0" layoutY="538.0" mnemonicParsing="false" onAction="#submitLogIn" prefHeight="58.0" prefWidth="139.0" text="Login">
+      <Button fx:id="logInButton" layoutX="221.0" layoutY="519.0" mnemonicParsing="false" onAction="#submitLogIn" prefHeight="58.0" prefWidth="149.0" text="Login" textFill="#107aca">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <PasswordField fx:id="passwordInput" layoutX="432.0" layoutY="400.0" prefHeight="49.0" prefWidth="185.0" />
-      <Button fx:id="registerButton" layoutX="432.0" layoutY="538.0" mnemonicParsing="false" onAction="#register" prefHeight="58.0" prefWidth="185.0" text="Register">
+      <PasswordField fx:id="passwordInput" layoutX="265.0" layoutY="391.0" prefHeight="49.0" prefWidth="270.0" promptText="Exemple : Omega1998">
+         <font>
+            <Font size="20.0" />
+         </font>
+         <effect>
+            <InnerShadow>
+               <color>
+                  <Color red="0.7764706015586853" green="0.7764706015586853" blue="0.7764706015586853" />
+               </color>
+            </InnerShadow>
+         </effect></PasswordField>
+      <Button fx:id="registerButton" layoutX="425.0" layoutY="519.0" mnemonicParsing="false" onAction="#register" prefHeight="58.0" prefWidth="149.0" text="Register" textFill="#107aca">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#107acaa3" height="217.0" layoutY="583.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="183.0" layoutY="617.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0">
+         <fill>
+            <LinearGradient endX="0.6523809523809525" endY="1.0" startX="0.14761904761904762">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.9511452317237854" green="0.9642929434776306" blue="0.9736841917037964" opacity="0.6399999856948853" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.12156862765550613" green="0.5098039507865906" blue="0.7882353067398071" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill></Rectangle>
    </children>
 </AnchorPane>
