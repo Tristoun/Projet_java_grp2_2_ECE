@@ -32,24 +32,48 @@ public class UserDaoImpl extends GeneralDaoImpl{
             statement.setString(2, password);
             ResultSet res = statement.executeQuery();
 
+            if (res.next()) {
+                id = res.getInt("id_user");
+            }
+            res.close();
+            statement.close();
+            connexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
+    public int signIn(String username, String password) {
+        int id = -1;
+        if(username == "" || password == "") {
+            return id;
+        }
+        try {
+            Connection connexion = DaoFactory.getConnection();
+
+            String query = "SELECT id_user FROM user WHERE name=?";
+            PreparedStatement statement = connexion.prepareStatement(query);
+            statement.setString(1, username);
+            ResultSet res = statement.executeQuery();
+
             if (!res.next()) {
-                System.out.println("No existing user found. Creating new one...");
                 Map<String, Object> userInfo = new HashMap<>();
                 userInfo.put("name", username);
                 userInfo.put("password", password);
                 this.insert(userInfo);
-
+                query = query+" and password=?";
+                System.out.println(query);
                 statement = connexion.prepareStatement(query);
                 statement.setString(1, username);
                 statement.setString(2, password);
                 res = statement.executeQuery();
 
-                // Check again after insertion
                 if (res.next()) {
                     id = res.getInt("id_user");
                 }
             } else {
-                id = res.getInt("id_user");
+                id = -2; //L'utilisateur existe déjà 
             }
 
             res.close();
@@ -61,5 +85,6 @@ public class UserDaoImpl extends GeneralDaoImpl{
         }
 
         return id;
+    
     }
 }
