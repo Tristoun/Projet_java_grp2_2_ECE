@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/home/bitenbois/javafx-sdk-21.0.7/lib/**/*.jar"
+    ]
+}

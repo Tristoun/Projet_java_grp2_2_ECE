@@ -1,0 +1,44 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "Doctolib_ECE_3c743358"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "Doctolib_ECE_3c743358",
+            "vmArgs": "--module-path /home/bitenbois/javafx-sdk-21.0.7/lib --add-modules javafx.controls,javafx.fxml",
+            "env": {
+                "JAVA_HOME": "/usr/lib64/jvm/java-21-openjdk-21"
+            }
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "App",
+            "vmArgs": "--module-path /home/bitenbois/javafx-sdk-21.0.7/lib --add-modules javafx.controls,javafx.fxml",
+            "projectName": "Doctolib_ECE_3c743358",
+            "env": {
+                "JAVA_HOME": "/usr/lib64/jvm/java-21-openjdk-21"
+            }
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "vmArgs": "--module-path /home/bitenbois/javafx-sdk-21.0.7/lib --add-modules javafx.controls,javafx.fxml",
+            "env": {
+                "JAVA_HOME": "/usr/lib64/jvm/java-21-openjdk-21"
+            }
+        }
+    ]
+}
