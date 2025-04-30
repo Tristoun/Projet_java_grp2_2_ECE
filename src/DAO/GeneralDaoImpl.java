@@ -9,18 +9,16 @@ import java.util.Map;
 import java.util.Set;
 
 public class GeneralDaoImpl {
-    private DaoFactory dao;
     private String table;
 
-    public GeneralDaoImpl(DaoFactory dao, String table) {
-        this.dao = dao;
+    public GeneralDaoImpl(String table) {
         this.table = table;
     }
 
     public ResultSet getAll() {
         ResultSet res = null;
         try {
-            Connection connexion = this.dao.getConnection();
+            Connection connexion = DaoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
             // récupération des produits de la base de données avec la requete SELECT
@@ -62,7 +60,7 @@ public class GeneralDaoImpl {
         System.out.println(query); //Affiche le résultat de la query  !!! A RETIRER
 
         try {
-            Connection connexion = this.dao.getConnection();
+            Connection connexion = DaoFactory.getConnection();
             PreparedStatement statement = connexion.prepareStatement(query);
 
             int pos = 1;
@@ -88,7 +86,7 @@ public class GeneralDaoImpl {
      */
     public void delete(String columnName, int value) {
         try {
-            Connection connextion = this.dao.getConnection();
+            Connection connextion = DaoFactory.getConnection();
             String query = "DELETE FROM "+this.table+"WHERE "+columnName+"=?";
             PreparedStatement statement = connextion.prepareStatement(query);
             statement.setInt(1, value);
@@ -106,7 +104,7 @@ public class GeneralDaoImpl {
      */
     public void setById(String idName, int idValue, String columnName, Object value) {
         try {
-            Connection connexion = this.dao.getConnection();
+            Connection connexion = DaoFactory.getConnection();
             String query = "UPDATE "+this.table+" SET "+columnName+"=? WHERE "+idName+"=?";
             PreparedStatement statement = connexion.prepareStatement(query);
             statement.setObject(1, value);
