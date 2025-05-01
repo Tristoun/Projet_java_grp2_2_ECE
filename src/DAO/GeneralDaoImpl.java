@@ -49,7 +49,7 @@ public class GeneralDaoImpl {
             statement.setString(1, "%" + value + "%");
 
             res = statement.executeQuery();
-            if (!res.isBeforeFirst()) {
+            if(res == null) {
                 System.out.println("No values");
             }else {
                 while (res.next()) {
