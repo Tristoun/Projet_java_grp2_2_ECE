@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package DAO;
 
 public class UserDaoImpl extends GeneralDaoImpl{
@@ -6,3 +7,9 @@ public class UserDaoImpl extends GeneralDaoImpl{
         super("user");
     }
 }
+=======
+/*package DAO;
+public class UserDaoImpl extends GeneralDaoImpl implements UserDao{
+
+}*/
+>>>>>>> maven
