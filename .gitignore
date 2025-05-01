@@ -2,4 +2,8 @@
 .idea
 /bin
 .vscode
-not.idea
+/not.idea
+/target
+/out
+/nonplus.idea
+/ahcacestsurcestpas.idea

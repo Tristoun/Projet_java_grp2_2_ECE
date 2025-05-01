@@ -1,15 +1,15 @@
-package Models;
+/*package Models;
 
 
 public class Specialist extends User {
     private int specialistId;
     private String specialistUsername;
     private String specialistPassword;
-    private   schedule;
+    //private String schedule;
     private String description;
     public Specialist(int specialistId, String specialistUsername, String specialistPassword) {
         super(specialistId,specialistUsername,specialistPassword,1); //1 car tjrs specialiste
-        this.schedule = new ArrayList<String>();
+        //this.schedule = new ArrayList<String>();
         this.description = "";
     }
 
@@ -25,4 +25,4 @@ public class Specialist extends User {
     public String getDescription() {
         return description;
     }
-}
+}*/
