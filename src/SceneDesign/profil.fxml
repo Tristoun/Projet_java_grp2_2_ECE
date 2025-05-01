@@ -32,5 +32,10 @@
             <Font name="Poppins SemiBold" size="40.0" />
          </font>
       </Label>
+      <Label layoutX="59.0" layoutY="198.0" prefHeight="70.0" prefWidth="288.0" text="Username :">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

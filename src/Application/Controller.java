@@ -3,6 +3,7 @@ package Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,15 +11,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.util.ResourceBundle.Control;
 
 import javax.swing.Action;
 
 import DAO.DaoFactory;
 import DAO.UserDaoImpl;
 
+import Application.DrawApp;
 
 public class Controller {
 
@@ -36,26 +41,35 @@ public class Controller {
     String password;
     int idUser;
 
-    public void switchScene(String path, ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../SceneDesign/profil.fxml"));
-        Parent root = loader.load();
+    public AnchorPane switchScene(String path, ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+        AnchorPane root = loader.load();
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        return root;
     }
 
     public void submitLogIn(ActionEvent event) {
-        UserDaoImpl userdaoimpl = new UserDaoImpl();
+        UserDaoImpl userDaoImpl = new UserDaoImpl();
         try {
             username = usernameInput.getText();
             password = passwordInput.getText();
     
             System.out.println(username + " " + password);
-            idUser = userdaoimpl.logIn(username, password);
+            idUser = userDaoImpl.logIn(username, password);
             
             if(idUser != -1 && idUser != -2) {
-                switchScene("../SceneDesign/main.fxml", event);
+                AnchorPane root = switchScene("../SceneDesign/profil.fxml", event);
+                DrawApp.drawButton(root, 60.0, 198.0,"S'inscrire en tant que spécialiste"); //Change to have a function where draw for each layout.
+                ResultSet res = userDaoImpl.getSpecific("id_user", idUser);
+                if(res !=null) {
+                    if(res.next()) {
+                        DrawApp.drawLabel(root, 50.0, 125.0, res.getString("name"));
+                    }
+                }
+
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -71,7 +85,9 @@ public class Controller {
             System.out.println(username + " " + password);
             idUser = userDaoImpl.registerUser(username, password);
             if(idUser != -1 && idUser != -2) {
-                switchScene("../SceneDesign/main.fxml", event);
+                AnchorPane root = switchScene("../SceneDesign/profil.fxml", event);
+                DrawApp.drawButton(root, 60.0, 198.0, "S'inscrire en tant que spécialiste");
+                ResultSet res = userDaoImpl.getSpecific("name", idUser);
             }
         } catch (Exception e) {
             System.out.println(e);

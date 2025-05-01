@@ -95,4 +95,16 @@ public class UserDaoImpl extends GeneralDaoImpl{
         return id;
     
     }
+
+    public void returnProfilPatient(int id_patient){
+        getSpecific("id_user", id_patient);
+    }
+
+    public void returnAllProfiles() {
+        getAll();
+    }
+
+    public void editProfileUser(int id_patient, String newName){
+        setById("id_user", id_patient, "name", newName);
+    }
 }
