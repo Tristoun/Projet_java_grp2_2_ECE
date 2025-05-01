@@ -4,3 +4,5 @@
 .vscode
 not.idea
 target
+/out/prodction
+/out
