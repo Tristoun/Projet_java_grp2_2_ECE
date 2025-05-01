@@ -29,6 +29,7 @@ public class Main {
         //UserDAO.SetByID("id_user", 2, "name", "bob2");
         userDao.delete("id_user", 7);
         userDao.returnAllProfiles();
+        userDao.editProfileUser(6,"neweditedname");
 
         try {
             DaoFactory.getConnection().close(); //Close the connection if used

@@ -17,6 +17,10 @@ public class UserDaoImpl extends GeneralDaoImpl{
         getAll();
     }
 
+    public void editProfileUser(int id_patient, String newName){
+        setById("id_user", id_patient, "name", newName);
+    }
+
 
    /* public void SetByID(int idUser, String name, String password){
         Map<String, Object> updateData = new HashMap<>();
