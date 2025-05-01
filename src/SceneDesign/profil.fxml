@@ -12,11 +12,11 @@
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0">
          <fill>
-            <LinearGradient endX="0.6047619047619048" endY="1.0">
+            <LinearGradient endX="0.6333333333333333" endY="0.9285714285714286">
                <stops>
                   <Stop>
                      <color>
-                        <Color red="0.062745101749897" green="0.47843137383461" blue="0.7921568751335144" opacity="0.6399999856948853" />
+                        <Color red="0.062745101749897" green="0.47843137383461" blue="0.7921568751335144" />
                      </color>
                   </Stop>
                   <Stop offset="1.0">
@@ -32,5 +32,22 @@
             <Font name="Poppins SemiBold" size="40.0" />
          </font>
       </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="183.0" layoutY="617.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0">
+         <fill>
+            <LinearGradient endX="0.6523809523809525" endY="1.0" startX="0.14761904761904762">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.9511452317237854" green="0.9642929434776306" blue="0.9736841917037964" opacity="0.6399999856948853" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.12156862765550613" green="0.5098039507865906" blue="0.7882353067398071" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill></Rectangle>
    </children>
 </AnchorPane>
