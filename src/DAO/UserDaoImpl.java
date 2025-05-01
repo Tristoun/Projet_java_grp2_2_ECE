@@ -13,7 +13,9 @@ public class UserDaoImpl extends GeneralDaoImpl{
         getSpecific("id_user", id_patient);
     }
 
-
+    public void returnAllProfiles() {
+        getAll();
+    }
 
 
    /* public void SetByID(int idUser, String name, String password){

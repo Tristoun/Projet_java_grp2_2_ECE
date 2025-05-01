@@ -25,7 +25,13 @@ public class GeneralDaoImpl {
             res = statement.executeQuery("select * from " + this.table);        
             if(res == null) {
                 System.out.println("No values");
-            }    
+            } else {
+                while (res.next()) {
+                    int id = res.getInt("id_user");
+                    String name = res.getString("name");
+                    System.out.println("ID: " + id + ", Name: " + name);
+                }
+            }
         }catch(SQLException e) {
             e.printStackTrace();
         }
