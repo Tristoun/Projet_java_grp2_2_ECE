@@ -25,13 +25,46 @@ public class GeneralDaoImpl {
             res = statement.executeQuery("select * from " + this.table);        
             if(res == null) {
                 System.out.println("No values");
-            }    
+            } else {
+                while (res.next()) {
+                    int id = res.getInt("id_user");
+                    String name = res.getString("name");
+                    System.out.println("ID: " + id + ", Name: " + name);
+                }
+            }
         }catch(SQLException e) {
             e.printStackTrace();
         }
 
         return res; //Close the connection after using the data in controller
     }
+
+    public ResultSet getSpecific(String columnName, Object value) {
+        ResultSet res = null;
+        try {
+            Connection connexion = DaoFactory.getConnection();
+            String query = "SELECT * FROM " + this.table + " WHERE " + columnName + " LIKE ?";
+            System.out.println("Executing query: " + query);
+            PreparedStatement statement = connexion.prepareStatement(query);
+            statement.setString(1, "%" + value + "%");
+
+            res = statement.executeQuery();
+            if (!res.isBeforeFirst()) {
+                System.out.println("No values");
+            }else {
+                while (res.next()) {
+                    int id = res.getInt("id_user");
+                    String name = res.getString("name");
+                    System.out.println("ID: " + id + ", Name: " + name);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+
 
     /**
      * Insérer un dictionnaire dans la bdd, Map est un type permettant de créer un "dictionnaire" comme en python
