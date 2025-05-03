@@ -1,5 +1,5 @@
 package DAO;
 
 
-public interface SpecialistDAO {
+public interface SpecialistDao {
 }
