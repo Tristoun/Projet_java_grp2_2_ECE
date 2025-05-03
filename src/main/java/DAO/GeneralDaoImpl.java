@@ -148,4 +148,21 @@ public class GeneralDaoImpl {
             e.getStackTrace();
         }
     }
+
+    public Object search(String columnName, String value) {
+        Object return_object = null;
+        try {
+            Connection connexion = DaoFactory.getConnection();
+            String query = "SELECT * FROM "+this.table+" WHERE "+columnName+"LIKE "+value+"%";
+            PreparedStatement statement = connexion.prepareStatement(query);
+            //statement.setObject(1, columnName); //celui la c etat pour remplacer * et avoir que le blaze mais c pas fou
+            //statement.setInt(1, value); ca c pour preparer la requete mais il veut un int et pas un string
+            return_object = statement.executeUpdate();
+        } catch(SQLException e) {
+            e.getStackTrace();
+        }
+        finally {
+            return return_object;
+        }
+    }
 }
