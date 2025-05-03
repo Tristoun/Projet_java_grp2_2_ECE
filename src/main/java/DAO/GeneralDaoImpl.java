@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
 import java.util.Set;
+import java.lang.String;
 
 public class GeneralDaoImpl {
     private String table;
