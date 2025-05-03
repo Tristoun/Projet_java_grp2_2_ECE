@@ -4,7 +4,6 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.*;
 import DAO.DaoFactory;
-import DAO.GeneralDaoImpl;
 import DAO.UserDaoImpl;
 import java.sql.ResultSet;
 
@@ -25,9 +24,14 @@ public class Main {
         userbdd.put("password", "4567");
         userDao.insert(userbdd);
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(new File("userbdd.json"), userbdd);
+        try {
+            mapper.writeValue(new File("userbdd.json"), userbdd);
 
-        System.out.println("JSON saved!");
+            System.out.println("JSON saved!");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 
         userDao.setById("id_user", 2, "name", "bob2");
         userDao.delete("id_user", 1);
