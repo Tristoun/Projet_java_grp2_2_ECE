@@ -28,7 +28,7 @@ public class Main {
         userDao.delete("id_user", 1);
 
         try {
-            dao.getConnection().close(); //Close the connection if used
+            DaoFactory.getConnection().close(); //Close the connection if used
         } catch (SQLException e) {
             e.printStackTrace();
         }
