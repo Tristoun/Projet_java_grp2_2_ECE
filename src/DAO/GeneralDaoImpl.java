@@ -40,12 +40,12 @@ public class GeneralDaoImpl {
         return res; //Close the connection after using the data in controller
     }
 
-    public ResultSet getSpecific(String columnName, Object value) {
+    public ResultSet getSpecific(String columnName, Object value, String ColumnToGet) {
         ResultSet res = null;
         try {
             Connection connexion = DaoFactory.getConnection();
-            String query = "SELECT * FROM " + this.table + " WHERE " + columnName + "=?";
-            System.out.println("Executing query: " + query);
+            String query = "SELECT * FROM " + this.table + " WHERE " + columnName + " = ?";
+            System.out.println(query);
             PreparedStatement statement = connexion.prepareStatement(query);
             statement.setObject(1, value);
 
@@ -54,9 +54,8 @@ public class GeneralDaoImpl {
                 System.out.println("No values");
             }else {
                 while (res.next()) {
-                    int id = res.getInt("id_user");
-                    String name = res.getString("name");
-                    System.out.println("ID: " + id + ", Name: " + name);
+                    Object result = res.getObject(ColumnToGet);
+                    System.out.println(ColumnToGet + ":" + result);
                 }
             }
         } catch (SQLException e) {
@@ -153,11 +152,24 @@ public class GeneralDaoImpl {
         Object return_object = null;
         try {
             Connection connexion = DaoFactory.getConnection();
-            String query = "SELECT * FROM "+this.table+" WHERE "+columnName+"LIKE "+value+"%";
+            String query = "SELECT * FROM "+ this.table + " WHERE " + columnName + " LIKE " + value;
+            System.out.println(query);
             PreparedStatement statement = connexion.prepareStatement(query);
             //statement.setObject(1, columnName); //celui la c etat pour remplacer * et avoir que le blaze mais c pas fou
             //statement.setInt(1, value); ca c pour preparer la requete mais il veut un int et pas un string
-            return_object = statement.executeUpdate();
+            ResultSet res = statement.executeQuery();
+            return_object = res;
+
+            while (res.next()) {
+                int nombreColonne = res.getMetaData().getColumnCount();
+                for (int i = 1; i <= nombreColonne; i++) {
+                    String nomColonne = res.getMetaData().getColumnName(i);
+                    Object valeurColonne = res.getObject(i);
+                    System.out.print(nomColonne + ": " + valeurColonne + "/");
+                }
+                System.out.println(); // Newline for next row
+            }
+
         } catch(SQLException e) {
             e.getStackTrace();
         }

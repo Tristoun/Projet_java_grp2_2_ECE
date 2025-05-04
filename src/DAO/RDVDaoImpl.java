@@ -25,6 +25,11 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
         rdv_ajoute.put("comment", rdv.getComment());
         insert(rdv_ajoute);
     }
+    public void chercherRDV(int userID){
+
+        GeneralDaoImpl dao = new GeneralDaoImpl("rdv");
+        dao.search("id_user", String.valueOf(userID));
+    }
 
 
 }

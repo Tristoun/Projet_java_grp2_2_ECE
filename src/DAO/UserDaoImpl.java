@@ -13,7 +13,7 @@ public class UserDaoImpl extends GeneralDaoImpl{
     }
 
     public void returnProfilPatient(int id_patient){
-        getSpecific("id_user", id_patient);
+        getSpecific("id_user", id_patient, "name");
     }
 
     public void returnAllProfiles() {

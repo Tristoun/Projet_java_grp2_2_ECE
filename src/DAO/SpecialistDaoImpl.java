@@ -14,7 +14,7 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
 
     @Override
     public void returnProfilPatient(int id_patient) {
-        getSpecific("id_user", id_patient);
+        getSpecific("id_user", id_patient, "name");
     }
 
     @Override
