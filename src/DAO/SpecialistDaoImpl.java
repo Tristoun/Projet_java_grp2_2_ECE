@@ -5,13 +5,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SpecialistDAOImpl extends GeneralDaoImpl implements SpecialistDAO, UserDAO {
+public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDAO, UserDAO {
 
-
-
-    public SpecialistDAOImpl() {
-        super("specialiste");
+    public SpecialistDaoImpl() {
+        super("Specialiste");
     }
+
 
     @Override
     public void returnProfilPatient(int id_patient) {
