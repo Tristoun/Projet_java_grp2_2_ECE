@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, UserDao {
 
     public SpecialistDaoImpl() {
-        super("Specialiste");
+        super("specialiste");
     }
 
 
@@ -25,6 +25,13 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
     @Override
     public void editProfileUser(int id_patient, String newName){
         setById("id_user", id_patient, "name", newName);
+    }
+
+    public void deleteSpecialist(int idSpecialist){
+        deleteFromTable("id_specialiste",idSpecialist,"specialiste");
+        deleteFromTable("id_specialiste",idSpecialist,"specialisation_doc");
+        deleteFromTable("id_specialiste",idSpecialist,"rdv");
+        deleteFromTable("id_specialiste",idSpecialist,"lieu_specialiste");
     }
 
 

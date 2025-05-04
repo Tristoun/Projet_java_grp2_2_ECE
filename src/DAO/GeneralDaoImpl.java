@@ -130,6 +130,19 @@ public class GeneralDaoImpl {
         }
     }
 
+    public void deleteFromTable(String columnName, int value, String tableName) {
+        try {
+            Connection connextion = DaoFactory.getConnection();
+            String query = "DELETE FROM " + tableName + " WHERE " + columnName + " = ? ";
+            PreparedStatement statement = connextion.prepareStatement(query);
+            statement.setInt(1, value);
+            statement.executeUpdate();
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Set an element in the table (must be change to enable multiple set with Map)
      * @param columnName name of the column

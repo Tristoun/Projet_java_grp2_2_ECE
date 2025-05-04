@@ -4,6 +4,7 @@ import java.util.Map;
 import java.io.*;
 import DAO.DaoFactory;
 import DAO.RDVDaoImpl;
+import DAO.SpecialistDaoImpl;
 import DAO.UserDaoImpl;
 import java.sql.ResultSet;
 
@@ -16,6 +17,7 @@ public class Main {
         DaoFactory.init("info_doctolib", "root", "");
         UserDaoImpl userDao = new UserDaoImpl();
         RDVDaoImpl rdvdao = new RDVDaoImpl("rdv");
+        SpecialistDaoImpl spcdao  = new SpecialistDaoImpl();
 
         ResultSet res = userDao.getAll();
         GeneralVue.showOutput(res);
@@ -29,6 +31,8 @@ public class Main {
         userDao.setById("id_user", 2, "name", "bob2");
         userDao.delete("id_user", 1);
         userDao.editProfileUser(6,"neweditedname");
+
+        spcdao.deleteSpecialist(1);
 
         rdvdao.chercherRDV(1);
 
