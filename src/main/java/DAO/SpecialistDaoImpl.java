@@ -1,8 +1,6 @@
 package DAO;
 
 //import Models.Specialist;
-import Models.User;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -28,11 +26,6 @@ public class SpecialistDAOImpl extends GeneralDaoImpl implements SpecialistDAO, 
     @Override
     public void editProfileUser(int id_patient, String newName){
         setById("id_user", id_patient, "name", newName);
-    }
-
-    @Override
-    public int verifierSiAdmin(User patient) {
-        return 0;
     }
 
 
