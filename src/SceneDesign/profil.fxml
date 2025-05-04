@@ -60,7 +60,7 @@
          <font>
             <Font size="16.0" />
          </font></Button>
-      <Button layoutX="545.0" layoutY="29.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="110.0" stylesheets="@styles.css" text="Historique">
+      <Button layoutX="545.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchHistoric" prefHeight="42.0" prefWidth="98.0" stylesheets="@styles.css" text="Historique">
          <font>
             <Font size="16.0" />
          </font></Button>
