@@ -3,6 +3,9 @@ package DAO;
 import java.util.HashMap;
 import java.util.Map;
 
+import Models.User;
+
+
 public class UserDaoImpl extends GeneralDaoImpl{
 
     public UserDaoImpl() {
@@ -30,4 +33,11 @@ public class UserDaoImpl extends GeneralDaoImpl{
      }
 
     */
+   public int verifierSiAdmin(User patient){
+       int role = patient.getStatus();
+       if (role == 2){
+           return 1;
+       }
+       return 0;
+   }
 }
