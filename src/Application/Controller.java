@@ -13,94 +13,118 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.ResourceBundle.Control;
-
 import javax.swing.Action;
-
 import DAO.DaoFactory;
 import DAO.UserDaoImpl;
-
 import Application.DrawApp;
 
 public class Controller {
-
-    @FXML 
+    @FXML
     private Label labelUsername;
     @FXML
     private Label labelPassword;
-
     @FXML
     private TextField usernameInput;
     @FXML
     private PasswordField passwordInput;
+    
+    private FXMLLoader loader;
+    private AnchorPane root;
+    private String username;
+    private String password;
+    private int idUser;
+    
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+    
+    public int getIdUser() {
+        return idUser;
+    }
 
-    String username;
-    String password;
-    int idUser;
-
-    public AnchorPane switchScene(String path, ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
-        AnchorPane root = loader.load();
+    public void switchScene(String path, ActionEvent event) throws IOException {
+        this.loader = new FXMLLoader(getClass().getResource(path));
+        this.root = loader.load();
+        
+        Controller newController = loader.getController();
+        newController.setIdUser(this.idUser);
+        
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        return root;
-    }
-
-    public AnchorPane switchProfil(ActionEvent event) {
-        AnchorPane root = null;
-        UserDaoImpl userDaoImpl = new UserDaoImpl();
-        try {
-            root = switchScene("../SceneDesign/profil.fxml", event);
-            DrawApp.drawProfil(root, userDaoImpl, idUser);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return root;
-    }
-
-    public AnchorPane switchSearch(ActionEvent event) {
-        AnchorPane root = null;
-        try {
-            root = switchScene("../SceneDesign/search.fxml", event);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return root;
     }
     
+    public void switchProfil(ActionEvent event) {
+        UserDaoImpl userDaoImpl = new UserDaoImpl();
+        try {
+            switchScene("../SceneDesign/profil.fxml", event);
+            // The DrawApp method should now work with the correctly passed idUser
+            Controller profilController = loader.getController();
+            DrawApp.drawProfil(root, userDaoImpl, profilController.getIdUser());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public AnchorPane switchSearch(ActionEvent event) {
+        try {
+            switchScene("../SceneDesign/search.fxml", event);
+            return root;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    public void logOut(ActionEvent event) {
+        try {
+            this.idUser = -1; //Remove id from user
+            switchScene("../SceneDesign/login.fxml", event);
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void submitLogIn(ActionEvent event) {
         UserDaoImpl userDaoImpl = new UserDaoImpl();
         try {
             username = usernameInput.getText();
             password = passwordInput.getText();
-    
+
             System.out.println(username + " " + password);
             idUser = userDaoImpl.logIn(username, password);
             
             if(idUser != -1 && idUser != -2) {
                 switchProfil(event);
             }
+            else {
+                root = (AnchorPane) ((Node)event.getSource()).getScene().getRoot();
+                DrawApp.drawLabel(root, 250, 480, "Wrong username or password", 20);
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-
+    
     public void register(ActionEvent event) {
         UserDaoImpl userDaoImpl = new UserDaoImpl();
         try {
             username = usernameInput.getText();
             password = passwordInput.getText();
-    
+            
             System.out.println(username + " " + password);
             idUser = userDaoImpl.registerUser(username, password);
+            
             if(idUser != -1 && idUser != -2) {
                 switchProfil(event);
+            }
+            else {
+                root = (AnchorPane) ((Node)event.getSource()).getScene().getRoot();
+                DrawApp.drawLabel(root, 250, 480, "Error", 20);
             }
         } catch (Exception e) {
             System.out.println(e);

@@ -1,3 +1,4 @@
+import Application.Controller;
 import DAO.DaoFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +18,6 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/SceneDesign/login.fxml"));
         AnchorPane root = loader.load();
         Scene scene = new Scene(root); // Set scene size and background color
-
         //String css = this.getClass().getResource("application.css").toExternalForm();
         //scene.getStylesheets().add(css);
 
