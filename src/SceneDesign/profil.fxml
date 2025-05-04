@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" styleClass="panel" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controller">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0">
          <fill>
@@ -56,7 +56,7 @@
             <Font size="42.0" />
          </font>
       </Label>
-      <Button layoutX="439.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchSearch" prefHeight="42.0" prefWidth="98.0" stylesheets="@styles.css" text="Consulter">
+      <Button layoutX="427.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchSearch" prefHeight="42.0" prefWidth="110.0" stylesheets="@styles.css" text="Consulter">
          <font>
             <Font size="16.0" />
          </font></Button>
@@ -64,9 +64,13 @@
          <font>
             <Font size="16.0" />
          </font></Button>
-      <Button layoutX="331.0" layoutY="30.0" mnemonicParsing="false" onAction="#switchProfil" prefHeight="42.0" prefWidth="98.0" stylesheets="@styles.css" text="Mon Compte" />
-      <Button layoutX="670.0" layoutY="29.0" mnemonicParsing="false" onAction="#logOut" prefHeight="44.0" prefWidth="110.0" styleClass="logout" stylesheets="@styles.css" text="Log out">
+      <Button layoutX="311.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchProfil" prefHeight="42.0" prefWidth="110.0" stylesheets="@styles.css" text="Mon Compte">
          <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Button layoutX="682.0" layoutY="26.0" mnemonicParsing="false" onAction="#logOut" prefHeight="49.0" prefWidth="104.0" styleClass="logout" stylesheets="@styles.css" text="Log out">
+         <font>
+            <Font size="16.0" />
             <Font size="16.0" />
          </font>
       </Button>
