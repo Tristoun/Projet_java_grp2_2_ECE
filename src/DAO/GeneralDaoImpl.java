@@ -167,7 +167,7 @@ public class GeneralDaoImpl {
                     Object valeurColonne = res.getObject(i);
                     System.out.print(nomColonne + ": " + valeurColonne + "/");
                 }
-                System.out.println(); // Newline for next row
+                System.out.println();
             }
 
         } catch(SQLException e) {
