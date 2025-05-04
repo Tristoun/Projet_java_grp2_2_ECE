@@ -44,7 +44,8 @@ public class GeneralDaoImpl {
         ResultSet res = null;
         try {
             Connection connexion = DaoFactory.getConnection();
-            String query = "SELECT * FROM " + this.table + " WHERE " + columnName + "=?";
+
+            String query = "SELECT * FROM " + this.table + " WHERE " + columnName + " = ?";
             System.out.println("Executing query: " + query);
             PreparedStatement statement = connexion.prepareStatement(query);
             statement.setObject(1, value);
@@ -52,17 +53,12 @@ public class GeneralDaoImpl {
             res = statement.executeQuery();
             if(res == null) {
                 System.out.println("No values");
-            }else {
-                while (res.next()) {
-                    int id = res.getInt("id_user");
-                    String name = res.getString("name");
-                    System.out.println("ID: " + id + ", Name: " + name);
-                }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
-        return res;
+        return res; 
     }
 
 

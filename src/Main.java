@@ -1,8 +1,9 @@
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.io.*;
+
 import DAO.DaoFactory;
+import DAO.GeneralDaoImpl;
 import DAO.UserDaoImpl;
 import java.sql.ResultSet;
 
@@ -22,7 +23,6 @@ public class Main {
         userbdd.put("name", "michel");
         userbdd.put("password", "4567");
         userDao.insert(userbdd);
-
 
         userDao.setById("id_user", 2, "name", "bob2");
         userDao.delete("id_user", 1);

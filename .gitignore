@@ -2,8 +2,6 @@
 .idea
 /bin
 .vscode
-/out
-/target
-/not.idea
-src/main/java/module-info.java
-
+not.idea
+target
+out

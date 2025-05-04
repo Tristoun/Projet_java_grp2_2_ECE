@@ -5,11 +5,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SpecialistDAOImpl extends GeneralDaoImpl implements SpecialistDao, UserDao {
+public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, UserDao {
 
 
 
-    public SpecialistDAOImpl() {
+    public SpecialistDaoImpl() {
         super("specialiste");
     }
 
@@ -54,4 +54,3 @@ public class SpecialistDAOImpl extends GeneralDaoImpl implements SpecialistDao, 
     }
     */
 }
-
