@@ -49,5 +49,11 @@
                </stops>
             </LinearGradient>
          </fill></Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="133.0" layoutX="58.0" layoutY="267.0" stroke="BLACK" strokeType="INSIDE" width="138.0" />
+      <Label layoutX="260.0" layoutY="306.0" prefHeight="56.0" prefWidth="246.0" text="Username :">
+         <font>
+            <Font size="42.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

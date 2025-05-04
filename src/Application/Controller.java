@@ -62,13 +62,7 @@ public class Controller {
             
             if(idUser != -1 && idUser != -2) {
                 AnchorPane root = switchScene("../SceneDesign/profil.fxml", event);
-                DrawApp.drawButton(root, 60.0, 198.0,"S'inscrire en tant que spécialiste"); //Change to have a function where draw for each layout.
-                ResultSet res = userDaoImpl.getSpecific("id_user", idUser);
-                if(res !=null) {
-                    if(res.next()) {
-                        DrawApp.drawLabel(root, 50.0, 125.0, res.getString("name"));
-                    }
-                }
+                DrawApp.drawProfil(root, userDaoImpl, idUser);
 
             }
         } catch (Exception e) {
@@ -86,8 +80,7 @@ public class Controller {
             idUser = userDaoImpl.registerUser(username, password);
             if(idUser != -1 && idUser != -2) {
                 AnchorPane root = switchScene("../SceneDesign/profil.fxml", event);
-                DrawApp.drawButton(root, 60.0, 198.0, "S'inscrire en tant que spécialiste");
-                ResultSet res = userDaoImpl.getSpecific("name", idUser);
+                DrawApp.drawProfil(root, userDaoImpl, idUser);
             }
         } catch (Exception e) {
             System.out.println(e);
