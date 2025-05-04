@@ -33,6 +33,7 @@ public class Main {
         userDao.editProfileUser(6,"neweditedname");
 
         spcdao.deleteSpecialist(1);
+        userDao.deleteUser(13);
 
         rdvdao.chercherRDV(1);
 

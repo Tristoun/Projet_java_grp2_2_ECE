@@ -40,4 +40,9 @@ public class UserDaoImpl extends GeneralDaoImpl{
        }
        return 0;
    }
+
+    public void deleteUser(int idUser){
+        deleteFromTable("id_user",idUser,"rdv");
+        deleteFromTable("id_user",idUser,"user");
+    }
 }
