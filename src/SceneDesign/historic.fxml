@@ -11,7 +11,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controller">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="800.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="643.0">
          <fill>
             <LinearGradient endX="0.6333333333333333" endY="0.9285714285714286">
                <stops>
@@ -28,18 +29,23 @@
                </stops>
             </LinearGradient>
          </fill></Rectangle>
-      <Label layoutX="21.0" layoutY="22.0" text="Doctolib ECE" textFill="WHITE">
+      <Label layoutX="24.0" layoutY="22.0" text="Doctolib ECE" textFill="WHITE">
          <font>
             <Font name="Poppins SemiBold" size="40.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="183.0" layoutY="617.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="183.0" layoutX="8.0" layoutY="617.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="792.0">
          <fill>
             <LinearGradient endX="0.6523809523809525" endY="1.0" startX="0.14761904761904762">
                <stops>
                   <Stop>
                      <color>
-                        <Color red="0.9511452317237854" green="0.9642929434776306" blue="0.9736841917037964" opacity="0.6399999856948853" />
+                        <Color red="1.0" green="1.0" blue="1.0" opacity="0.6399999856948853" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.006711409395973154">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" opacity="0.6399999856948853" />
                      </color>
                   </Stop>
                   <Stop offset="1.0">
@@ -50,12 +56,6 @@
                </stops>
             </LinearGradient>
          </fill></Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="133.0" layoutX="58.0" layoutY="267.0" stroke="BLACK" strokeType="INSIDE" width="138.0" />
-      <Label layoutX="260.0" layoutY="306.0" prefHeight="56.0" prefWidth="246.0" text="Username :">
-         <font>
-            <Font size="42.0" />
-         </font>
-      </Label>
       <Button layoutX="439.0" layoutY="29.0" mnemonicParsing="false" onAction="#switchSearch" prefHeight="42.0" prefWidth="98.0" stylesheets="@styles.css" text="Consulter">
          <font>
             <Font size="16.0" />

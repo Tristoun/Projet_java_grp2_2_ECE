@@ -62,7 +62,6 @@ public class Controller {
         UserDaoImpl userDaoImpl = new UserDaoImpl();
         try {
             switchScene("../SceneDesign/profil.fxml", event);
-            // The DrawApp method should now work with the correctly passed idUser
             Controller profilController = loader.getController();
             DrawApp.drawProfil(root, userDaoImpl, profilController.getIdUser());
         } catch (IOException e) {
@@ -70,13 +69,11 @@ public class Controller {
         }
     }
     
-    public AnchorPane switchSearch(ActionEvent event) {
+    public void switchSearch(ActionEvent event) {
         try {
             switchScene("../SceneDesign/search.fxml", event);
-            return root;
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
         }
     }
 
@@ -85,6 +82,14 @@ public class Controller {
             this.idUser = -1; //Remove id from user
             switchScene("../SceneDesign/login.fxml", event);
         }catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void switchHistoric(ActionEvent event) {
+        try {
+            switchScene("../SceneDesign/historic.fxml", event);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -124,7 +129,7 @@ public class Controller {
             }
             else {
                 root = (AnchorPane) ((Node)event.getSource()).getScene().getRoot();
-                DrawApp.drawLabel(root, 250, 480, "Error", 20);
+                DrawApp.drawLabel(root, 200, 480, "Please specify correct username or password", 20);
             }
         } catch (Exception e) {
             System.out.println(e);
