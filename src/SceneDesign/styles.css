@@ -30,3 +30,7 @@
     -fx-background-radius: 8px;
     -fx-cursor: hand;    
 }
+
+.panel {
+    -fx-background-color: #ffffff;  
+}
