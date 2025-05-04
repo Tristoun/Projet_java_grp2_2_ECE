@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
 import java.util.Set;
+import java.lang.String;
 
 public class GeneralDaoImpl {
     private String table;
@@ -43,25 +44,21 @@ public class GeneralDaoImpl {
         ResultSet res = null;
         try {
             Connection connexion = DaoFactory.getConnection();
-            String query = "SELECT * FROM " + this.table + " WHERE " + columnName + " LIKE ?";
+
+            String query = "SELECT * FROM " + this.table + " WHERE " + columnName + " = ?";
             System.out.println("Executing query: " + query);
             PreparedStatement statement = connexion.prepareStatement(query);
-            statement.setString(1, "%" + value + "%");
+            statement.setObject(1, value);
 
             res = statement.executeQuery();
             if(res == null) {
                 System.out.println("No values");
-            }else {
-                while (res.next()) {
-                    int id = res.getInt("id_user");
-                    String name = res.getString("name");
-                    System.out.println("ID: " + id + ", Name: " + name);
-                }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
-        return res;
+        return res; 
     }
 
 
@@ -146,5 +143,21 @@ public class GeneralDaoImpl {
         } catch(SQLException e) {
             e.getStackTrace();
         }
+    }
+
+    public Object search(String columnName, String value) {
+        Object return_object = null;
+        try {
+            Connection connexion = DaoFactory.getConnection();
+            String query = "SELECT * FROM "+this.table+" WHERE "+columnName+"LIKE "+value+"%";
+            PreparedStatement statement = connexion.prepareStatement(query);
+            //statement.setObject(1, columnName); //celui la c etat pour remplacer * et avoir que le blaze mais c pas fou
+            //statement.setInt(1, value); ca c pour preparer la requete mais il veut un int et pas un string
+            return_object = statement.executeUpdate();
+        } catch(SQLException e) {
+            e.getStackTrace();
+        }
+        return return_object;
+
     }
 }

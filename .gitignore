@@ -2,3 +2,6 @@
 .idea
 /bin
 .vscode
+not.idea
+target
+out
