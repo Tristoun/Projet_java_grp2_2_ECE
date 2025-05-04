@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDAO, UserDAO {
+public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, UserDao {
 
     public SpecialistDaoImpl() {
         super("Specialiste");
