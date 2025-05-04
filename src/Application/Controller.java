@@ -51,6 +51,29 @@ public class Controller {
         return root;
     }
 
+    public AnchorPane switchProfil(ActionEvent event) {
+        AnchorPane root = null;
+        UserDaoImpl userDaoImpl = new UserDaoImpl();
+        try {
+            root = switchScene("../SceneDesign/profil.fxml", event);
+            DrawApp.drawProfil(root, userDaoImpl, idUser);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return root;
+    }
+
+    public AnchorPane switchSearch(ActionEvent event) {
+        AnchorPane root = null;
+        try {
+            root = switchScene("../SceneDesign/search.fxml", event);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return root;
+    }
+    
+
     public void submitLogIn(ActionEvent event) {
         UserDaoImpl userDaoImpl = new UserDaoImpl();
         try {
@@ -61,9 +84,7 @@ public class Controller {
             idUser = userDaoImpl.logIn(username, password);
             
             if(idUser != -1 && idUser != -2) {
-                AnchorPane root = switchScene("../SceneDesign/profil.fxml", event);
-                DrawApp.drawProfil(root, userDaoImpl, idUser);
-
+                switchProfil(event);
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -79,8 +100,7 @@ public class Controller {
             System.out.println(username + " " + password);
             idUser = userDaoImpl.registerUser(username, password);
             if(idUser != -1 && idUser != -2) {
-                AnchorPane root = switchScene("../SceneDesign/profil.fxml", event);
-                DrawApp.drawProfil(root, userDaoImpl, idUser);
+                switchProfil(event);
             }
         } catch (Exception e) {
             System.out.println(e);

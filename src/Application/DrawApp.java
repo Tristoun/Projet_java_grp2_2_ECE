@@ -40,10 +40,14 @@ public class DrawApp {
 
         try {
             ResultSet res = userDaoImpl.getSpecific("id_user", idUser);
+            System.out.println(idUser);
             if(res !=null) {
                 if(res.next()) {
                     drawLabel(root, 525.0, 305.0, res.getString("name"), 42);
                 }
+            }
+            else {
+                System.out.println("CPT");
             }
         }catch(SQLException e) {
             e.getStackTrace();
