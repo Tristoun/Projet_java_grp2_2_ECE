@@ -161,8 +161,7 @@ public class GeneralDaoImpl {
         } catch(SQLException e) {
             e.getStackTrace();
         }
-        finally {
-            return return_object;
-        }
+        return return_object;
+
     }
 }
