@@ -44,10 +44,10 @@ public class GeneralDaoImpl {
         ResultSet res = null;
         try {
             Connection connexion = DaoFactory.getConnection();
-            String query = "SELECT * FROM " + this.table + " WHERE " + columnName + " LIKE ?";
+            String query = "SELECT * FROM " + this.table + " WHERE " + columnName + "=?";
             System.out.println("Executing query: " + query);
             PreparedStatement statement = connexion.prepareStatement(query);
-            statement.setString(1, "%" + value + "%");
+            statement.setObject(1, value);
 
             res = statement.executeQuery();
             if(res == null) {
