@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" styleClass="panel" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controller">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="800.0">
          <fill>
@@ -48,12 +52,150 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <TextField layoutX="255.0" layoutY="122.0" prefHeight="49.0" prefWidth="212.0" />
-      <Label layoutX="120.0" layoutY="192.0" text="Filtres :">
+      <TextField layoutX="183.0" layoutY="122.0" prefHeight="49.0" prefWidth="308.0" promptText="Recherche par Nom">
          <font>
-            <Font size="36.0" />
+            <Font size="21.0" />
+         </font>
+         <effect>
+            <InnerShadow>
+               <color>
+                  <Color red="0.46052631735801697" green="0.45839425921440125" blue="0.45839425921440125" />
+               </color>
+            </InnerShadow>
+         </effect></TextField>
+      <Label layoutX="67.0" layoutY="228.0" text="Filtrer par : " textFill="#106ecd">
+         <font>
+            <Font size="23.0" />
          </font>
       </Label>
-      <Button layoutX="488.0" layoutY="135.0" mnemonicParsing="false" stylesheets="@styles.css" text="Search" />
+      <Button layoutX="523.0" layoutY="131.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="71.0" stylesheets="@styles.css" text="Search" />
+      <ChoiceBox layoutX="233.0" layoutY="227.0" prefHeight="31.0" prefWidth="185.0" />
+      <Label layoutX="233.0" layoutY="203.0" text=" Profession du Spécialiste" textFill="#106ecd">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <DatePicker layoutX="461.0" layoutY="227.0" prefHeight="31.0" prefWidth="185.0" />
+      <Label layoutX="501.0" layoutY="203.0" text="Date de RDV" textFill="#106ecd">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="15.0" arcWidth="15.0" height="135.0" layoutX="21.0" layoutY="320.0" stroke="BLACK" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="759.0">
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0" startX="0.04285714285714286">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.1246345043182373" green="0.7568530440330505" blue="0.8684210777282715" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.37280702590942383" green="0.3486842215061188" blue="0.7105262875556946" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill></Rectangle>
+      <Rectangle arcHeight="15.0" arcWidth="15.0" height="135.0" layoutX="21.0" layoutY="478.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="759.0">
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0" startX="0.04285714285714286">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.1246345043182373" green="0.7568530440330505" blue="0.8684210777282715" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.37280702590942383" green="0.3486842215061188" blue="0.7105262875556946" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <Rectangle arcHeight="15.0" arcWidth="15.0" height="135.0" layoutX="21.0" layoutY="636.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="759.0">
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0" startX="0.04285714285714286">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.1246345043182373" green="0.7568530440330505" blue="0.8684210777282715" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.37280702590942383" green="0.3486842215061188" blue="0.7105262875556946" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <Circle fill="WHITE" layoutX="95.0" layoutY="387.0" radius="53.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <Circle fill="WHITE" layoutX="95.0" layoutY="546.0" radius="53.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <Circle fill="WHITE" layoutX="95.0" layoutY="704.0" radius="53.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <Label layoutX="169.0" layoutY="395.0" prefHeight="29.0" prefWidth="149.0" text="Spécialité(s)" textFill="WHITE">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="166.0" layoutY="358.0" prefHeight="29.0" prefWidth="167.0" text="Nom - Prénom" textFill="WHITE">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Button layoutX="634.0" layoutY="358.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="126.0" text="Prendre RDV">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button layoutX="634.0" layoutY="518.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="126.0" text="Prendre RDV">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button layoutX="634.0" layoutY="676.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="126.0" text="Prendre RDV">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Label layoutX="166.0" layoutY="518.0" prefHeight="29.0" prefWidth="167.0" text="Nom - Prénom" textFill="WHITE">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="169.0" layoutY="552.0" prefHeight="29.0" prefWidth="149.0" text="Spécialité(s)" textFill="WHITE">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="175.0" layoutY="669.0" prefHeight="29.0" prefWidth="167.0" text="Nom - Prénom" textFill="WHITE">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="175.0" layoutY="704.0" prefHeight="29.0" prefWidth="149.0" text="Spécialité(s)" textFill="WHITE">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="353.0" layoutY="362.0" prefHeight="67.0" prefWidth="237.0" text="Notes / Commentaires / Description" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="353.0" layoutY="512.0" prefHeight="67.0" prefWidth="237.0" text="Notes / Commentaires / Description" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="353.0" layoutY="671.0" prefHeight="67.0" prefWidth="237.0" text="Notes / Commentaires / Description" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
