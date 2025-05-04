@@ -37,8 +37,6 @@ public class DrawApp {
     }
 
     public static void drawProfil(AnchorPane root, UserDaoImpl userDaoImpl, int idUser) {
-        SpecialistDaoImpl specialistDaoImpl = new SpecialistDaoImpl();
-
 
         try {
             ResultSet res = userDaoImpl.getSpecific("id_user", idUser);
