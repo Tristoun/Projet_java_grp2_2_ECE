@@ -1,0 +1,32 @@
+.button {
+
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #51daec, #577ed4);  
+    
+    -fx-text-fill: white;      
+    -fx-font-weight: bold;   
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+    -fx-transition: background-color 0.3s ease-in-out;
+    
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #1a978d, #32c0c5); 
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;    
+}
+
+.logout { /* pour le faire ressortir sans que ça soit choquant*/
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #577ed4, #51daec);  
+    -fx-text-fill: white;      
+    -fx-font-weight: bold;   
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+    -fx-transition: background-color 0.3s ease-in-out;
+}
+
+.logout:hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #742422, #d35959); 
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;    
+}

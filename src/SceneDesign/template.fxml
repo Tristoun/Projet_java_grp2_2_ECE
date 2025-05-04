@@ -56,12 +56,18 @@
                </stops>
             </LinearGradient>
          </fill></Rectangle>
-      <Button layoutX="427.0" layoutY="29.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="110.0" text="Recherche RDV" />
-      <Button layoutX="549.0" layoutY="29.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="110.0" text="Historique RDV" />
-      <Button layoutX="304.0" layoutY="29.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="110.0" text="Mon Compte" />
-      <Button layoutX="697.0" layoutY="29.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="83.0" text="Déconnexion">
+      <Button layoutX="439.0" layoutY="29.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="98.0" stylesheets="@styles.css" text="Consulter">
          <font>
-            <Font size="11.0" />
+            <Font size="16.0" />
+         </font></Button>
+      <Button layoutX="545.0" layoutY="29.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="98.0" stylesheets="@styles.css" text="Historique">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
+      <Button layoutX="331.0" layoutY="30.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="98.0" stylesheets="@styles.css" text="Mon Compte" />
+      <Button layoutX="670.0" layoutY="29.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="110.0" styleClass="logout" stylesheets="@styles.css" text="Log out">
+         <font>
+            <Font size="16.0" />
          </font>
       </Button>
    </children>

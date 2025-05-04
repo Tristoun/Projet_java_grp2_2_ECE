@@ -14,7 +14,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         DaoFactory.init("info_doctolib", "root", "patapouf");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/SceneDesign/login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/SceneDesign/template.fxml"));
         AnchorPane root = loader.load();
         Scene scene = new Scene(root); // Set scene size and background color
 
