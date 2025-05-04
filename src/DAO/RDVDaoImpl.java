@@ -4,6 +4,7 @@ import Models.RDV;
 import java.util.*;
 
 public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
+    GeneralDaoImpl dao = new GeneralDaoImpl("rdv");
 
     public RDVDaoImpl(String table) {
         super(table);
@@ -26,10 +27,14 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
         insert(rdv_ajoute);
     }
     public void chercherRDV(int userID){
-
-        GeneralDaoImpl dao = new GeneralDaoImpl("rdv");
         dao.search("id_user", String.valueOf(userID));
     }
+
+    public void afficherDispos(int specialistID){
+        dao.getSpecific("id_specialiste", specialistID,"heure");
+    }
+
+
 
 
 }

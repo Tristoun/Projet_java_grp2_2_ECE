@@ -36,6 +36,7 @@ public class Main {
         userDao.deleteUser(13);
 
         rdvdao.chercherRDV(1);
+        rdvdao.afficherDispos(2);
 
         try {
             DaoFactory.getConnection().close(); //Close the connection if used
