@@ -10,15 +10,16 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
         super("specialiste");
     }
 
-    @Override
+    @Override //Jcrois que ca sert a rien de Override il y a rien qui s'appelle comme ca
     public void returnProfilSpecialist(int id_specialist) {
         getSpecific("id_user", id_specialist);
-    }
+    } //ca renvoie un resultset mais la c void donc sert a rien
 
     @Override
     public void returnAllProfiles() {
         getAll();
-    }
+    } //est ce qu'il y a besoin de cette fonction ou est ce qu on peut faire ca direct avec general ?
+    //la aussi c void enft
 
     @Override
     public void editProfileSpecialist(int id_specialist, String newName) {

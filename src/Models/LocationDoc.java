@@ -8,13 +8,13 @@ public class LocationDoc {
         this.id_location = id_location;
         this.id_specialist = id_specialist;
     }
-    public int getId_location() {
+    public int getIdLocation() {
         return id_location;
     }
-    public int getId_specialist() {
+    public int getIdSpecialist() {
         return id_specialist;
     }
-    public void setId_location_doc(int id_location, int id_specialist) {
+    public void setIdLocation_doc(int id_location, int id_specialist) {
         this.id_location = id_location;
         this.id_specialist = id_specialist;
     }
