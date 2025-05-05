@@ -1,21 +1,18 @@
 package DAO;
 
 //import Models.Specialist;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
-public class SpecialistDAOImpl extends GeneralDaoImpl implements SpecialistDAO, UserDAO {
+public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
 
 
 
-    public SpecialistDAOImpl() {
+    public SpecialistDaoImpl() {
         super("specialiste");
     }
 
     @Override
-    public void returnProfilPatient(int id_patient) {
-        getSpecific("id_user", id_patient);
+    public void returnProfilSpecialist(int id_specialist) {
+        getSpecific("id_user", id_specialist);
     }
 
     @Override
@@ -24,9 +21,11 @@ public class SpecialistDAOImpl extends GeneralDaoImpl implements SpecialistDAO, 
     }
 
     @Override
-    public void editProfileUser(int id_patient, String newName){
-        setById("id_user", id_patient, "name", newName);
+    public void editProfileSpecialist(int id_specialist, String newName) {
+        setById("id_user", id_specialist, "name", newName);
     }
+
+
 
 
     /*public void ModifierSpecialiste(Specialist personne, String description, String schedule, float tarif) {
