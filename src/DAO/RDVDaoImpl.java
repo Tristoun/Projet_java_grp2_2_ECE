@@ -12,9 +12,11 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
     public void supprimerRDV(RDV rdv) {
         delete("id_rdv", rdv.getId_rdv());
     }
+
     public void modifierRDV(RDV rdv, String column, Object value) {
         setById("id_rdv",rdv.getId_rdv(),column, rdv);
     }
+
     public void ajouterRDV(RDV rdv) {
         Map<String, Object> rdv_ajoute = new HashMap<>();
         rdv_ajoute.put("id_rdv", rdv.getId_rdv());
@@ -26,5 +28,5 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
         insert(rdv_ajoute);
     }
 
-
+    //public void rechercheRDVParDate()
 }
