@@ -3,7 +3,10 @@ package DAO;
 //import Models.Specialist;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import com.mysql.cj.protocol.Resultset;
 
 public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, UserDAO {
 
@@ -19,8 +22,9 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
     }
 
     @Override
-    public void returnAllProfiles() {
-        getAll();
+    public ResultSet returnAllProfiles() {
+        ResultSet res = this.getAll();
+        return res;
     }
 
     @Override

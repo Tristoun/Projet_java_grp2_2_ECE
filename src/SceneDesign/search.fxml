@@ -98,46 +98,8 @@
                </stops>
             </LinearGradient>
          </fill></Rectangle>
-      <Rectangle arcHeight="15.0" arcWidth="15.0" height="135.0" layoutX="21.0" layoutY="478.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="759.0">
-         <fill>
-            <LinearGradient endX="1.0" endY="1.0" startX="0.04285714285714286">
-               <stops>
-                  <Stop>
-                     <color>
-                        <Color red="0.1246345043182373" green="0.7568530440330505" blue="0.8684210777282715" />
-                     </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                     <color>
-                        <Color red="0.37280702590942383" green="0.3486842215061188" blue="0.7105262875556946" />
-                     </color>
-                  </Stop>
-               </stops>
-            </LinearGradient>
-         </fill>
-      </Rectangle>
-      <Rectangle arcHeight="15.0" arcWidth="15.0" height="135.0" layoutX="21.0" layoutY="636.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="759.0">
-         <fill>
-            <LinearGradient endX="1.0" endY="1.0" startX="0.04285714285714286">
-               <stops>
-                  <Stop>
-                     <color>
-                        <Color red="0.1246345043182373" green="0.7568530440330505" blue="0.8684210777282715" />
-                     </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                     <color>
-                        <Color red="0.37280702590942383" green="0.3486842215061188" blue="0.7105262875556946" />
-                     </color>
-                  </Stop>
-               </stops>
-            </LinearGradient>
-         </fill>
-      </Rectangle>
       <Circle fill="WHITE" layoutX="95.0" layoutY="387.0" radius="53.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-      <Circle fill="WHITE" layoutX="95.0" layoutY="546.0" radius="53.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-      <Circle fill="WHITE" layoutX="95.0" layoutY="704.0" radius="53.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-      <Label layoutX="169.0" layoutY="395.0" prefHeight="29.0" prefWidth="149.0" text="Spécialité(s)" textFill="WHITE">
+      <Label layoutX="166.0" layoutY="395.0" prefHeight="29.0" prefWidth="149.0" text="Spécialité(s)" textFill="WHITE">
          <font>
             <Font size="23.0" />
          </font>
@@ -152,47 +114,7 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="634.0" layoutY="518.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="126.0" text="Prendre RDV">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
-      <Button layoutX="634.0" layoutY="676.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="126.0" text="Prendre RDV">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
-      <Label layoutX="166.0" layoutY="518.0" prefHeight="29.0" prefWidth="167.0" text="Nom - Prénom" textFill="WHITE">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <Label layoutX="169.0" layoutY="552.0" prefHeight="29.0" prefWidth="149.0" text="Spécialité(s)" textFill="WHITE">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <Label layoutX="175.0" layoutY="669.0" prefHeight="29.0" prefWidth="167.0" text="Nom - Prénom" textFill="WHITE">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <Label layoutX="175.0" layoutY="704.0" prefHeight="29.0" prefWidth="149.0" text="Spécialité(s)" textFill="WHITE">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
       <Label layoutX="353.0" layoutY="362.0" prefHeight="67.0" prefWidth="237.0" text="Notes / Commentaires / Description" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <Label layoutX="353.0" layoutY="512.0" prefHeight="67.0" prefWidth="237.0" text="Notes / Commentaires / Description" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <Label layoutX="353.0" layoutY="671.0" prefHeight="67.0" prefWidth="237.0" text="Notes / Commentaires / Description" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
             <Font size="23.0" />
          </font>

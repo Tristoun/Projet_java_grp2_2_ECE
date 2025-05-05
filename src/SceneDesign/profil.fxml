@@ -51,7 +51,7 @@
             </LinearGradient>
          </fill></Rectangle>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="133.0" layoutX="60.0" layoutY="136.0" stroke="BLACK" strokeType="INSIDE" width="138.0" />
-      <Label layoutX="229.0" layoutY="136.0" prefHeight="42.0" prefWidth="252.0" text="Nom Prénom">
+      <Label layoutX="229.0" layoutY="136.0" prefHeight="42.0" prefWidth="127.0" text="Prénom : ">
          <font>
             <Font size="25.0" />
          </font>
