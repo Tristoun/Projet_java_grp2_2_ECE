@@ -5,9 +5,13 @@ import java.util.Map;
 import DAO.DaoFactory;
 import DAO.GeneralDaoImpl;
 import DAO.UserDaoImpl;
+import DAO.RDVDaoImpl;
 import java.sql.ResultSet;
 
 
+import Models.RDV;
+import Models.Specialist;
+import Models.User;
 import Vue.*;
 
 
@@ -18,11 +22,10 @@ public class Main {
 
         ResultSet res = userDao.getAll();
         GeneralVue.showOutput(res);
+        User user = new User(2,"Bernard","1234",0);
+        Specialist specialiste = new Specialist(3,"Dr Michmich","1234","Sympatoche",15.2,3.5);
+        RDV rdv = new RDV(1,2,3,null,2,"pas ouf"); //Le rating on l ajoutera apres
 
-        Map<String, Object> userbdd = new HashMap<>();
-        userbdd.put("name", "michel");
-        userbdd.put("password", "4567");
-        userDao.insert(userbdd);
 
         userDao.setById("id_user", 2, "name", "bob2");
         userDao.delete("id_user", 1);
