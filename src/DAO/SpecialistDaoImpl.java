@@ -34,6 +34,10 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
         deleteFromTable("id_specialiste",idSpecialist,"lieu_specialiste");
     }
 
+    public void insertSpecialist(String colonneToSet, Object value, String colonneToGet, String tableName ) {
+        insertSomething(colonneToSet,value,"id_lieu","lieu_specialiste");
+    }
+
 
     /*public void ModifierSpecialiste(Specialist personne, String description, String schedule, float tarif) {
         try {

@@ -25,6 +25,7 @@ public class UserDaoImpl extends GeneralDaoImpl{
     }
 
 
+
    /* public void SetByID(int idUser, String name, String password){
         Map<String, Object> updateData = new HashMap<>();
         updateData.put("id_user", idUser);

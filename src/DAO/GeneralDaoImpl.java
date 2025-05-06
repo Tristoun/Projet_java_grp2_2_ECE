@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.Map;
 import java.util.Set;
 import java.lang.String;
+import java.util.Scanner;
+
 
 public class GeneralDaoImpl {
     private String table;
@@ -22,7 +24,6 @@ public class GeneralDaoImpl {
             Connection connexion = DaoFactory.getConnection();
             Statement statement = connexion.createStatement();
 
-            // récupération des produits de la base de données avec la requete SELECT
             res = statement.executeQuery("select * from " + this.table);        
             if(res == null) {
                 System.out.println("No values");
@@ -37,7 +38,7 @@ public class GeneralDaoImpl {
             e.printStackTrace();
         }
 
-        return res; //Close the connection after using the data in controller
+        return res; 
     }
 
     public ResultSet getSpecific(String columnName, Object value, String ColumnToGet) {
@@ -189,5 +190,41 @@ public class GeneralDaoImpl {
         finally {
             return return_object;
         }
+    }
+
+    public int insertSomething(String ColumnName, Object value, String ColumnToGet, String TableName) {
+        ResultSet res = null;
+        int res2 = -10;
+        ResultSet res3 = null;
+        int res4 = 0;
+        try {
+            Connection connexion = DaoFactory.getConnection();
+            String query = "SELECT * FROM " + TableName + " WHERE " + ColumnName + " = " + value;
+            System.out.println(query);
+            PreparedStatement statement = connexion.prepareStatement(query);
+
+            res = statement.executeQuery();
+            if(res == null) {
+                System.out.println("No value found - need to insert new one and retrieve id");
+                String query2 = "INSERT INTO " + TableName + " ( " + ColumnName + " ) VALUES " + value;
+                System.out.println(query2);
+                PreparedStatement statement2 = connexion.prepareStatement(query2);
+                res2 = statement2.executeUpdate();
+            }
+
+            String query3 = " SELECT " + ColumnToGet + " FROM " + TableName + " WHERE " + ColumnName + " LIKE " + value ;
+            System.out.println(query3);
+            PreparedStatement statement3 = connexion.prepareStatement(query3);
+            res3 = statement3.executeQuery();
+
+            while (res3.next()) {
+                res4 = (int) res.getObject(ColumnToGet);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res4;
     }
 }
