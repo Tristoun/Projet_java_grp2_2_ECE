@@ -199,26 +199,31 @@ public class GeneralDaoImpl {
         int res4 = 0;
         try {
             Connection connexion = DaoFactory.getConnection();
-            String query = "SELECT * FROM " + TableName + " WHERE " + ColumnName + " = " + value;
-            System.out.println(query);
-            PreparedStatement statement = connexion.prepareStatement(query);
+            String query = "SELECT * FROM " + TableName + " WHERE " + ColumnName + " = ?";
+            PreparedStatement query_prepared = connexion.prepareStatement(query);
 
-            res = statement.executeQuery();
-            if(res == null) {
+            System.out.println(query);
+            query_prepared.setObject(1, value);
+
+            res = query_prepared.executeQuery();
+            if(!res.next()) {
                 System.out.println("No value found - need to insert new one and retrieve id");
-                String query2 = "INSERT INTO " + TableName + " ( " + ColumnName + " ) VALUES " + value;
+                String query2 = "INSERT INTO " + TableName + " ( " + ColumnName + " ) VALUES (?)";
                 System.out.println(query2);
-                PreparedStatement statement2 = connexion.prepareStatement(query2);
-                res2 = statement2.executeUpdate();
+                PreparedStatement query_prepared2 = connexion.prepareStatement(query2);
+                query_prepared2.setObject(1, value);
+
+                res2 = query_prepared2.executeUpdate();
             }
 
-            String query3 = " SELECT " + ColumnToGet + " FROM " + TableName + " WHERE " + ColumnName + " LIKE " + value ;
+            String query3 = " SELECT " + ColumnToGet + " FROM " + TableName + " WHERE " + ColumnName + " = ?" ;
             System.out.println(query3);
-            PreparedStatement statement3 = connexion.prepareStatement(query3);
-            res3 = statement3.executeQuery();
+            PreparedStatement query_prepared3 = connexion.prepareStatement(query3);
+            query_prepared3.setObject(1, value);
+            res3 = query_prepared3.executeQuery();
 
             while (res3.next()) {
-                res4 = (int) res.getObject(ColumnToGet);
+                res4 = (int) res3.getObject(ColumnToGet);
             }
 
 
