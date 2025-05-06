@@ -9,19 +9,19 @@ public class Specialisation {
         this.nom = nom;
     }
 
-    public int getId_specialisation() {
+    public int getIdSpecialisation() {
         return id_specialisation;
     }
 
-    public String getNom() {
+    public String getSpecialisationNom() {
         return nom;
     }
 
-    public void setId_specialisation(int id_specialisation) {
+    public void setIdSpecialisation(int id_specialisation) {
         this.id_specialisation = id_specialisation;
     }
 
-    public void setNom(String nom) {
+    public void setSpecialisationNom(String nom) {
         this.nom = nom;
     }
 }
