@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 import com.mysql.cj.protocol.Resultset;
 
-public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, UserDAO {
+public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, UserDao {
 
 
 
@@ -58,4 +58,3 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
     }
     */
 }
-

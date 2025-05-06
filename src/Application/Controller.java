@@ -35,6 +35,8 @@ public class Controller {
     private PasswordField passwordInput;
     @FXML
     private Label errorLabel;
+    @FXML 
+    private TextField searchInput;
     
     private FXMLLoader loader;
     private AnchorPane root;
@@ -74,30 +76,64 @@ public class Controller {
         }
     }
 
-    public void UpdateSearch() {
+    public void UpdateSearch(ActionEvent event) throws IOException {
+        if(this.root == null) {
+            switchScene("../SceneDesign/search.fxml", event);
+        }
+
         SpecialistDaoImpl speDao = new SpecialistDaoImpl();
         UserDaoImpl userDao = new UserDaoImpl();
-        ResultSet res = speDao.returnAllProfiles();
+        String search = "";
+        if(searchInput != null) {
+            search = searchInput.getText();
+        }
+        System.out.println(search);
+        ResultSet res;
+        int state = 0;
+        if(search != "") {
+            res = userDao.search("name", search);
+            state = 1;
+        }
+        else {
+            res = speDao.returnAllProfiles(); //Need to be change to implement specific search
+        }
         try {
             double x = 21.0;
             double y = 478.0; //+158 each block
-            System.out.println(res);
-            while (res.next()) {
-                String name = "";
-                int idUser = res.getInt("id_user");
-                System.out.println(idUser);
-                ResultSet resUser = userDao.getSpecific("id_user", idUser);
-                if(resUser.next()) {
-                    name = resUser.getString("name");
-                } 
+            if(res != null) {
+                while (res.next()) {
+                    String name = "";
+                    int idUser = res.getInt("id_user");
+                    System.out.println(idUser);
+                    String description = "";
+                    double note = 0.0; 
+                    double tarif = 0.0;
+                    if(state == 1) {
+                        name = res.getString("name");
+                        ResultSet resSpe = speDao.getSpecific("id_user", idUser);
+                        if(resSpe.next()) {
+                            description = resSpe.getString("description");
+                            note = resSpe.getDouble("moyenne_note");
+                            tarif = resSpe.getDouble("tarif");
+                            DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
+                            y += 158.0;
+                        }
 
-                String description = res.getString("description");
-                double note = res.getDouble("moyenne_note");
-                double tarif = res.getDouble("tarif");
-
-                DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
-                y += 158.0;
-
+                    }
+                    else {
+                        ResultSet resUser = userDao.getSpecific("id_user", idUser);
+                        if(resUser.next()) {
+                            name = resUser.getString("name");
+                        } 
+                        description = res.getString("description");
+                        note = res.getDouble("moyenne_note");
+                        tarif = res.getDouble("tarif"); 
+                        
+                        DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
+                        y += 158.0;   
+                    }
+    
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -107,7 +143,7 @@ public class Controller {
     public void switchSearch(ActionEvent event) {
         try {
             switchScene("../SceneDesign/search.fxml", event);
-            UpdateSearch();
+            UpdateSearch(event);
         } catch (IOException e) {
             e.printStackTrace();
         }
