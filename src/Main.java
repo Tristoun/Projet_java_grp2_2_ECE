@@ -16,7 +16,7 @@ import Vue.*;
 
 public class Main {
     public static void main(String args[]) {
-        DaoFactory.init("info_doctolib", "root", "patapouf");
+        DaoFactory.init("info_doctolib", "root", "");
         UserDaoImpl userDao = new UserDaoImpl();
 
         ResultSet res = userDao.getAll();
