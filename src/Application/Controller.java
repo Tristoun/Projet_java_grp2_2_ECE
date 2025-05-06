@@ -95,7 +95,7 @@ public class Controller {
             state = 1;
         }
         else {
-            res = speDao.returnAllProfiles(); //Need to be change to implement specific search
+            res = speDao.returnAllProfiles(); 
         }
         try {
             double x = 21.0;
@@ -103,30 +103,29 @@ public class Controller {
             if(res != null) {
                 while (res.next()) {
                     String name = "";
-                    int idUser = res.getInt("id_user");
+                    int idUser = res.getInt("idUser");
                     System.out.println(idUser);
                     String description = "";
                     double note = 0.0; 
                     double tarif = 0.0;
                     if(state == 1) {
                         name = res.getString("name");
-                        ResultSet resSpe = speDao.getSpecific("id_user", idUser);
+                        ResultSet resSpe = speDao.getSpecific("idUser", idUser);
                         if(resSpe.next()) {
                             description = resSpe.getString("description");
-                            note = resSpe.getDouble("moyenne_note");
+                            note = resSpe.getDouble("moyenneNote");
                             tarif = resSpe.getDouble("tarif");
                             DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
                             y += 158.0;
                         }
-
                     }
                     else {
-                        ResultSet resUser = userDao.getSpecific("id_user", idUser);
+                        ResultSet resUser = userDao.getSpecific("idUser", idUser);
                         if(resUser.next()) {
                             name = resUser.getString("name");
                         } 
                         description = res.getString("description");
-                        note = res.getDouble("moyenne_note");
+                        note = res.getDouble("moyenneNote");
                         tarif = res.getDouble("tarif"); 
                         
                         DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);

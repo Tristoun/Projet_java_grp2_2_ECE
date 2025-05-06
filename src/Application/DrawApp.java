@@ -81,7 +81,7 @@ public class DrawApp {
     public static void drawProfil(AnchorPane root, UserDaoImpl userDaoImpl, int idUser) {
 
         try {
-            ResultSet res = userDaoImpl.getSpecific("id_user", idUser);
+            ResultSet res = userDaoImpl.getSpecific("idUser", idUser);
             System.out.println(idUser);
             if(res !=null) {
                 if(res.next()) {
