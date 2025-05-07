@@ -18,22 +18,22 @@ public class RDV {
         this.rating = rating;
         this.comment = comment;
     }
-    public int getId_rdv() {
+    public int getIdRdv() {
         return id_rdv;
     }
-    public void setId_rdv(int id_rdv) {
+    public void setIdRdv(int id_rdv) {
         this.id_rdv = id_rdv;
     }
-    public int getId_patient() {
+    public int getIdPatient() {
         return id_patient;
     }
-    public void setId_patient(int id_patient) {
+    public void setIdPatient(int id_patient) {
         this.id_patient = id_patient;
     }
-    public int getId_specialiste() {
+    public int getIdSpecialiste() {
         return id_specialiste;
     }
-    public void setId_specialiste(int id_specialiste) {
+    public void setIdSpecialiste(int id_specialiste) {
         this.id_specialiste = id_specialiste;
     }
     public LocalDateTime getDate_rdv() {

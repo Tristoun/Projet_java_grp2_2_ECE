@@ -24,7 +24,7 @@ public class Location{
     public String getPostalCode() {
         return postalCode;
     }
-    public void setLocationId(int locationId) {
+    public void setIdLocation(int locationId) {
         this.locationId = locationId;
     }
     public void setAdress(String adress) {

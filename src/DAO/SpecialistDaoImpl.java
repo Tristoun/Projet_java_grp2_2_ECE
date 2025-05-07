@@ -35,7 +35,7 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
             PreparedStatement preparedStatement = connexion.prepareStatement(
                     "UPDATE specialiste SET description = ?, schedule = ?, tarif = ? WHERE id_specialiste = ?"
             );
-            int tempId = personne.getUserId();
+            int tempId = personne.getIdUser();
             preparedStatement.setString(1, description);
             preparedStatement.setString(2, schedule);
             preparedStatement.setFloat(3, tarif);
