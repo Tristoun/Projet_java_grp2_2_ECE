@@ -6,10 +6,9 @@ import Models.Specialisation;
 import java.util.HashMap;
 import java.util.Map;
 import java.sql.*;
-import java.util.ArrayList;
 
-public class SpecialisationDAOImpl extends GeneralDaoImpl implements SpecialisationDAO{
-    public SpecialisationDAOImpl() {
+public class SpecialisationDaoImpl extends GeneralDaoImpl implements SpecialisationDao {
+    public SpecialisationDaoImpl() {
         super("specialisation"); //?? pas sur
     }
 

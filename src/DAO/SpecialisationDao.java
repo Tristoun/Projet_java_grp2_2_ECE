@@ -4,7 +4,7 @@ import Models.Specialisation;
 
 import java.sql.ResultSet;
 
-public interface SpecialisationDAO {
+public interface SpecialisationDao {
     public void ajouterSpecialisation(Specialisation specialisation);
 
     public void supprimerSpecialisation(Specialisation specialisation);
@@ -13,3 +13,5 @@ public interface SpecialisationDAO {
 
     public ResultSet returnSpecialisation(int specialisationId);
 }
+
+

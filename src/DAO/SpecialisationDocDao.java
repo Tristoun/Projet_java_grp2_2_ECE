@@ -4,7 +4,7 @@ import Models.SpecialisationDoc;
 
 import java.sql.ResultSet;
 
-public interface SpecialisationDocDAO {
+public interface SpecialisationDocDao {
     public void ajouterSpecialisationDoc(SpecialisationDoc specialisationdoc);
     public void supprimerSpecialisationDoc(int idSpecialisationDoc);
     public void modifierSpecialisationSpecialisationDoc(SpecialisationDoc specialisationdoc, int idSpecialisation);

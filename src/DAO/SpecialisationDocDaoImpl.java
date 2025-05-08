@@ -6,16 +6,19 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SpecialisationDocDAOImpl extends GeneralDaoImpl implements SpecialisationDocDAO{
-    public SpecialisationDocDAOImpl() {
+public class SpecialisationDocDaoImpl extends GeneralDaoImpl implements SpecialisationDocDao {
+    public SpecialisationDocDaoImpl() {
         super("specialisation_doc"); //?? pas sur
     }
-    public void ajouterSpecialisationDoc(SpecialisationDoc specialisationdoc){
-        Map<String, Object> lieu_doc_ajoute = new HashMap<>();
-        lieu_doc_ajoute.put("idSpecialisation",specialisationdoc.getIdSpecialisation());
-        lieu_doc_ajoute.put("idSpecialiste",specialisationdoc.getIdSpecialist());
-        insert(lieu_doc_ajoute);
+    public void ajouterSpecialisationDoc(SpecialisationDoc specialisation_doc){
+        Map<String, Object> specialisation_doc_ajoute = new HashMap<>();
+        specialisation_doc_ajoute.put("idSpecialiste",specialisation_doc.getIdSpecialist());
+        specialisation_doc_ajoute.put("idSpecialisation",specialisation_doc.getIdSpecialisation());
+        System.out.println("Insertion : " + specialisation_doc_ajoute);
+
+        insert(specialisation_doc_ajoute);
     }
+
     public void supprimerSpecialisationDoc(int idSpecialisationDoc) { //, int idSpecialistDoc
         delete("specialisation_doc",idSpecialisationDoc); //faut changer ca pour que ca prenne en parametre 2 id mais laisser une fonction pour tt effacer qd un specialiste est supprime par exemple
     } //?? donc 3 cas : le lien est suppr mais les 2 existent, le specialiste est suppr, la specialisation est suppr (chacun en solo)

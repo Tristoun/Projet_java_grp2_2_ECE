@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.sql.*;
 
-public class LieuDAOImpl extends GeneralDaoImpl implements LieuDAO{
-    public LieuDAOImpl() {
+public class LieuDaoImpl extends GeneralDaoImpl implements LieuDao {
+    public LieuDaoImpl() {
         super("lieu"); //?? pas sur
     }
 

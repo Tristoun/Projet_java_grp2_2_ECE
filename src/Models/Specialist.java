@@ -7,12 +7,13 @@ public class Specialist extends User {
     private int specialistId;
     private String specialistUsername;
     private String specialistPassword;
+    private String specialistImage;
     private Map<String, Object> schedule;
     private String description;
     private double tarif;
     private double moyenneNote;
-    public Specialist(int specialistId, String specialistUsername, String specialistPassword,String description, double tarif, double moyenneNote) {
-        super(specialistId,specialistUsername,specialistPassword,1); //1 car tjrs specialiste
+    public Specialist(int specialistId, String specialistUsername, String specialistPassword, String specialistImage, String description, double tarif, double moyenneNote) {
+        super(specialistId,specialistUsername,specialistPassword,0,specialistImage); //1 car tjrs specialiste
         this.schedule = new HashMap<>();
         this.description = description;
         this.tarif = tarif;

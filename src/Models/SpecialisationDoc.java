@@ -8,12 +8,13 @@ public class SpecialisationDoc {
         this.idSpecialisation = idSpecialisation;
         this.idSpecialist = idSpecialist;
     }
-    public int getIdSpecialisation() {
-        return idSpecialisation;
-    }
     public int getIdSpecialist() {
         return idSpecialist;
     }
+    public int getIdSpecialisation() {
+        return idSpecialisation;
+    }
+
     public void setIdSpecialisationDoc(int idSpecialisation, int idSpecialist) {
         this.idSpecialisation = idSpecialisation;
         this.idSpecialist = idSpecialist;

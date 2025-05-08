@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LieuDocDAOImpl extends GeneralDaoImpl implements LieuDocDAO{
-    public LieuDocDAOImpl() {
+public class LieuDocDaoImpl extends GeneralDaoImpl implements LieuDocDao {
+    public LieuDocDaoImpl() {
         super("lieu_specialiste"); //?? pas sur
     }
     public void ajouterLieuDoc(LieuDoc lieudoc){
@@ -20,7 +20,7 @@ public class LieuDocDAOImpl extends GeneralDaoImpl implements LieuDocDAO{
         delete("lieu_specialiste",idLieuDoc);
     }
 
-    public void modifierLieuDoc(LieuDoc lieudoc, int idLieu) {
+    public void modifierLieuLieuDoc(LieuDoc lieudoc, int idLieu) {
         setById("idSpecialiste",lieudoc.getIdSpecialist(),"idLieu",idLieu);
     }
 

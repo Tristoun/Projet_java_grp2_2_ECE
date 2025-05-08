@@ -4,7 +4,7 @@ import Models.Lieu;
 
 import java.sql.ResultSet;
 
-public interface LieuDAO {
+public interface LieuDao {
     public void ajouterLieu(Lieu lieu);
 
     public void supprimerLieu(Lieu lieu);
