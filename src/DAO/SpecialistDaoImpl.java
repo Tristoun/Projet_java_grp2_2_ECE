@@ -1,8 +1,6 @@
 package DAO;
 
 //import Models.Specialist;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -95,6 +93,10 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
         lieuSpecialisteMap.put("id_specialiste", IDSpecialist);
         lieuSpecialisteMap.put("id_lieu", idLieu);
         insertInOtherTable(lieuSpecialisteMap, "lieu_specialiste");
+    }
+
+    public void editSpecialist(int idSpecialist, String columnName, Object newValue, String idColumn){
+        setById(idColumn, idSpecialist, columnName, newValue);
     }
 
 
