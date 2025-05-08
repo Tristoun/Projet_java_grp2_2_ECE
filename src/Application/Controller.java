@@ -12,12 +12,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle.Control;
 import javax.swing.Action;
 import DAO.DaoFactory;
+import DAO.SpecialistDaoImpl;
 import DAO.UserDaoImpl;
 import Application.DrawApp;
 
@@ -30,6 +33,10 @@ public class Controller {
     private TextField usernameInput;
     @FXML
     private PasswordField passwordInput;
+    @FXML
+    private Label errorLabel;
+    @FXML 
+    private TextField searchInput;
     
     private FXMLLoader loader;
     private AnchorPane root;
@@ -68,10 +75,74 @@ public class Controller {
             e.printStackTrace();
         }
     }
+
+    public void UpdateSearch(ActionEvent event) throws IOException {
+        if(this.root == null) {
+            switchScene("../SceneDesign/search.fxml", event);
+        }
+
+        SpecialistDaoImpl speDao = new SpecialistDaoImpl();
+        UserDaoImpl userDao = new UserDaoImpl();
+        String search = "";
+        if(searchInput != null) {
+            search = searchInput.getText();
+        }
+        System.out.println(search);
+        ResultSet res;
+        int state = 0;
+        if(search != "") {
+            res = userDao.search("name", search);
+            state = 1;
+        }
+        else {
+            res = speDao.returnAllProfiles(); 
+        }
+        try {
+            double x = 21.0;
+            double y = 478.0; //+158 each block
+            if(res != null) {
+                while (res.next()) {
+                    String name = "";
+                    int idUser = res.getInt("idUser");
+                    System.out.println(idUser);
+                    String description = "";
+                    double note = 0.0; 
+                    double tarif = 0.0;
+                    if(state == 1) {
+                        name = res.getString("name");
+                        ResultSet resSpe = speDao.getSpecific("idUser", idUser);
+                        if(resSpe.next()) {
+                            description = resSpe.getString("description");
+                            note = resSpe.getDouble("moyenneNote");
+                            tarif = resSpe.getDouble("tarif");
+                            DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
+                            y += 158.0;
+                        }
+                    }
+                    else {
+                        ResultSet resUser = userDao.getSpecific("idUser", idUser);
+                        if(resUser.next()) {
+                            name = resUser.getString("name");
+                        } 
+                        description = res.getString("description");
+                        note = res.getDouble("moyenneNote");
+                        tarif = res.getDouble("tarif"); 
+                        
+                        DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
+                        y += 158.0;   
+                    }
+    
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     
     public void switchSearch(ActionEvent event) {
         try {
             switchScene("../SceneDesign/search.fxml", event);
+            UpdateSearch(event);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -108,7 +179,10 @@ public class Controller {
             }
             else {
                 root = (AnchorPane) ((Node)event.getSource()).getScene().getRoot();
-                DrawApp.drawLabel(root, 250, 480, "Wrong username or password", 20);
+                if(errorLabel != null) {
+                    errorLabel.setText("");
+                }
+                errorLabel = DrawApp.drawLabel(root, 250, 480, "Wrong username or password", 20, Color.RED);
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -129,7 +203,10 @@ public class Controller {
             }
             else {
                 root = (AnchorPane) ((Node)event.getSource()).getScene().getRoot();
-                DrawApp.drawLabel(root, 200, 480, "Please specify correct username or password", 20);
+                if(errorLabel != null) {
+                    errorLabel.setText("");
+                }
+                errorLabel = DrawApp.drawLabel(root, 200, 480, "Please specify correct username or password", 20, Color.RED);
             }
         } catch (Exception e) {
             System.out.println(e);

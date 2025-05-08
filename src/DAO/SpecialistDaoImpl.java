@@ -3,10 +3,11 @@ package DAO;
 //import Models.Specialist;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
 
+public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, UserDao {
 
 
 
@@ -17,17 +18,18 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
     @Override
     public void returnProfilSpecialist(int id_specialist) {
         getSpecific("id_user", id_specialist);
-    }
+
 
     @Override
-    public void returnAllProfiles() {
-        getAll();
+    public ResultSet returnAllProfiles() {
+        ResultSet res = this.getAll();
+        return res;
     }
 
     @Override
     public void editProfileSpecialist(int id_specialist, String newName) {
         setById("id_user", id_specialist, "name", newName);
-    }
+
 
 
 
@@ -58,3 +60,15 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
     */
 }
 
+    @Override
+    public void returnProfilPatient(int id_patient) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'returnProfilPatient'");
+    }
+
+    @Override
+    public void editProfileUser(int id_patient, String newName) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'editProfileUser'");
+    }
+}

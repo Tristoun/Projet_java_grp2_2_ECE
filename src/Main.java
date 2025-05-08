@@ -27,8 +27,8 @@ public class Main {
         RDV rdv = new RDV(1,2,3,null,2,"pas ouf"); //Le rating on l ajoutera apres
 
 
-        userDao.setById("id_user", 2, "name", "bob2");
-        userDao.delete("id_user", 1);
+        userDao.setById("idUser", 2, "name", "bob2");
+        userDao.delete("idUser", 1);
 
         try {
             DaoFactory.getConnection().close(); //Close the connection if used
