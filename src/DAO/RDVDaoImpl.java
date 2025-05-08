@@ -8,18 +8,23 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
 
     public RDVDaoImpl() {
         super("rdv");
+<<<<<<< HEAD
     }
 
     public ResultSet getRdvUser(int idUser) {
         return getSpecific("idUser", idUser);
+=======
+>>>>>>> origin/creation_rdv
     }
 
     public void supprimerRDV(RDV rdv) {
         delete("idRdv", rdv.getId_rdv());
     }
+
     public void modifierRDV(RDV rdv, String column, Object value) {
         setById("idRdv",rdv.getId_rdv(),column, rdv);
     }
+
     public void ajouterRDV(RDV rdv) {
         Map<String, Object> rdv_ajoute = new HashMap<>();
         rdv_ajoute.put("idRdv", rdv.getId_rdv());
@@ -31,5 +36,13 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
         insert(rdv_ajoute);
     }
 
+    public ResultSet returnRDV(int rdvId) {
+        return getSpecific("id_rdv", rdvId);
+    }
 
+<<<<<<< HEAD
 }
+=======
+    //public void rechercheRDVParDate()
+}
+>>>>>>> origin/creation_rdv

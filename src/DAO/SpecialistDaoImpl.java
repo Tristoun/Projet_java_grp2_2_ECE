@@ -8,7 +8,10 @@ import java.sql.SQLException;
 
 import com.mysql.cj.protocol.Resultset;
 
-public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, UserDao {
+
+
+public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
+
 
 
 
@@ -17,17 +20,11 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
     }
 
     @Override
-    public void returnProfilPatient(int id_patient) {
-        getSpecific("idUser", id_patient);
-    }
-
-    @Override
     public ResultSet returnAllProfiles() {
         ResultSet res = this.getAll();
         return res;
     }
 
-    @Override
     public void editProfileUser(int id_patient, String newName){
         setById("idUser", id_patient, "name", newName);
     }
@@ -48,6 +45,13 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
         } 
         return name;
     }
+
+    @Override
+    public void editProfileSpecialist(int id_specialist, String newName) {
+        setById("id_user", id_specialist, "name", newName);
+    }
+
+
 
 
     /*public void ModifierSpecialiste(Specialist personne, String description, String schedule, float tarif) {

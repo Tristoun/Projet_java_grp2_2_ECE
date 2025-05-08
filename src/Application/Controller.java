@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -40,6 +41,8 @@ public class Controller {
     private Label errorLabel;
     @FXML 
     private TextField searchInput;
+    @FXML
+    private ChoiceBox<String> choiceTalent;
     
     private FXMLLoader loader;
     private AnchorPane root;
@@ -79,6 +82,10 @@ public class Controller {
         }
     }
 
+    public void setTalentBox() {
+
+    }
+
     public void UpdateSearch(ActionEvent event) throws IOException {
         if(this.root == null) {
             switchScene("../SceneDesign/search.fxml", event);
@@ -94,12 +101,13 @@ public class Controller {
         ResultSet res;
         int state = 0;
         if(search != "") {
-            res = userDao.search("name", search);
+            res = userDao.search("name", search); //Looking for a specialist with a specific name
             state = 1;
         }
         else {
             res = speDao.returnAllProfiles(); 
         }
+
         try {
             double x = 21.0;
             double y = 478.0; //+158 each block
@@ -111,7 +119,8 @@ public class Controller {
                     String description = "";
                     double note = 0.0; 
                     double tarif = 0.0;
-                    if(state == 1) {
+                   
+                    if(state == 1) { //Specific in case of search with an input
                         name = res.getString("name");
                         ResultSet resSpe = speDao.getSpecific("idUser", idUser);
                         if(resSpe.next()) {
@@ -167,7 +176,7 @@ public class Controller {
         double x = 21.0;
         double y = 108.0;
         while (res.next()) {   
-            
+
             int idSpe = res.getInt("idSpecialiste");
             String nameSpe = specialistDao.getName(idSpe);
             int note = res.getInt("note");

@@ -19,8 +19,13 @@ import java.util.Map;
 import Models.User;
 
 
+<<<<<<< HEAD
 public class UserDaoImpl extends GeneralDaoImpl{
     
+=======
+public class UserDaoImpl extends GeneralDaoImpl implements UserDao{
+
+>>>>>>> origin/creation_rdv
     public UserDaoImpl() {
         super("user");
     }
@@ -124,7 +129,9 @@ public class UserDaoImpl extends GeneralDaoImpl{
         return name;
     }
 
-
+    public void supprimerUser(int id_patient){
+        delete("id_user", id_patient);
+    }
    /* public void SetByID(int idUser, String name, String password){
         Map<String, Object> updateData = new HashMap<>();
         updateData.put("idUser", idUser);
