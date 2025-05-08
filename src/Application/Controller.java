@@ -325,17 +325,7 @@ public class Controller {
         }
     }
 
-    
-
-    
-
-    private RDVDaoImpl rdvDao;
-
-    public void RDVinit() {
-        rdvDao = new RDVDaoImpl();
-    }
-
-    public boolean patientIsAvailable(int idPatient, LocalDateTime date_rdv) { // cette fonction verif si le user a deja un creneau à cette heure là
+    public boolean patientIsAvailable(int idPatient, LocalDateTime date_rdv, RDVDaoImpl rdvDao ) { // cette fonction verif si le user a deja un creneau à cette heure là
         ResultSet resultSet = rdvDao.getRdvUser(idPatient); 
         try {
             while (resultSet.next()) {
@@ -348,6 +338,8 @@ public class Controller {
     }
 
     public List<RDV> getAllRDV(int IdSpecialiste){ //recup les rdv du specialiste => besoin sous forme liste pour exploiter res ou pas ?
+        RDVDaoImpl rdvDao = new RDVDaoImpl();
+
         ResultSet res = rdvDao.getSpecific("IdSpecialiste", IdSpecialiste);
         List<RDV> listerdv = new ArrayList<>();
 
@@ -369,8 +361,8 @@ public class Controller {
         return listerdv; 
     }
 
-    public String addRDV(RDV rdv) { 
-        if (patientIsAvailable(rdv.getId_patient(), rdv.getDate_rdv())) {
+    public String addRDV(RDV rdv, RDVDaoImpl rdvDao) { 
+        if (patientIsAvailable(rdv.getId_patient(), rdv.getDate_rdv(), rdvDao)) {
             rdvDao.ajouterRDV(rdv);  
             return "ok c bon";
         } else {
