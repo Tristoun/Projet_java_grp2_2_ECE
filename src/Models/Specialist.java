@@ -22,7 +22,9 @@ public class Specialist extends User {
     public void setSchedule(Map<String, Object> schedule) {
         this.schedule = schedule;
     }
-
+    public int getIdSpecialist() {
+        return specialistId;
+    }
     public void setDescription(String description) {
         this.description = description;
     }

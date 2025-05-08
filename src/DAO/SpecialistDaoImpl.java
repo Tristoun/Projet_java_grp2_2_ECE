@@ -1,10 +1,6 @@
 package DAO;
 
 //import Models.Specialist;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 
 public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, UserDao {
@@ -15,7 +11,7 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
         super("specialiste");
     }
 
-    @Override
+    @Override //Jcrois que ca sert a rien de Override il y a rien qui s'appelle comme ca
     public void returnProfilSpecialist(int id_specialist) {
         getSpecific("idUser", id_specialist);
     }
@@ -40,7 +36,7 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
             PreparedStatement preparedStatement = connexion.prepareStatement(
                     "UPDATE specialiste SET description = ?, schedule = ?, tarif = ? WHERE id_specialiste = ?"
             );
-            int tempId = personne.getUserId();
+            int tempId = personne.getIdUser();
             preparedStatement.setString(1, description);
             preparedStatement.setString(2, schedule);
             preparedStatement.setFloat(3, tarif);

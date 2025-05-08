@@ -11,7 +11,7 @@ public class User{
         this.password = password;
         this.status = status;
     }
-    public int getUserId() {
+    public int getIdUser() {
         return userId;
     }
     public String getUsername() {
@@ -23,7 +23,7 @@ public class User{
     public int getStatus() {
         return status;
     }
-    public void setUserId(int userId) {
+    public void setIdUser(int userId) {
         this.userId = userId;
     }
     public void setUsername(String username) {

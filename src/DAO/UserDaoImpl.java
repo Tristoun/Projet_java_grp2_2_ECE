@@ -110,7 +110,9 @@ public class UserDaoImpl extends GeneralDaoImpl{
     public void editProfileUser(int id_patient, String newName){
         setById("idUser", id_patient, "name", newName);
     }
-
+    public void supprimerUser(int id_patient){
+        delete("id_user", id_patient);
+    }
 
    /* public void SetByID(int idUser, String name, String password){
         Map<String, Object> updateData = new HashMap<>();
