@@ -17,9 +17,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.ResourceBundle.Control;
 import javax.swing.Action;
 import DAO.DaoFactory;
+import DAO.RDVDaoImpl;
 import DAO.SpecialistDaoImpl;
 import DAO.UserDaoImpl;
 import Application.DrawApp;
@@ -120,10 +123,7 @@ public class Controller {
                         }
                     }
                     else {
-                        ResultSet resUser = userDao.getSpecific("idUser", idUser);
-                        if(resUser.next()) {
-                            name = resUser.getString("name");
-                        } 
+                        name = userDao.getName(idUser);
                         description = res.getString("description");
                         note = res.getDouble("moyenneNote");
                         tarif = res.getDouble("tarif"); 
@@ -157,9 +157,38 @@ public class Controller {
         }
     }
 
+    public void getHistoric(ActionEvent event) throws SQLException {
+        RDVDaoImpl rdvdao = new RDVDaoImpl();
+        SpecialistDaoImpl specialistDao = new SpecialistDaoImpl();
+        UserDaoImpl userdao = new UserDaoImpl();
+        
+        ResultSet res =  rdvdao.getRdvUser(idUser);
+        String nameUser = userdao.getName(idUser);
+        double x = 21.0;
+        double y = 108.0;
+        while (res.next()) {   
+            
+            int idSpe = res.getInt("idSpecialiste");
+            String nameSpe = specialistDao.getName(idSpe);
+            int note = res.getInt("note");
+            String description = res.getString("description");
+            Timestamp timestamp = res.getTimestamp("heure");
+            Date date = new Date(timestamp.getTime());
+
+            DrawApp.drawHistoric(root, nameUser, nameSpe, date, note, description, x, y);
+            y += 158.0;
+        }
+    }
+
+
     public void switchHistoric(ActionEvent event) {
         try {
             switchScene("../SceneDesign/historic.fxml", event);
+            try {
+                getHistoric(event);
+            } catch(SQLException e) {
+                e.getStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

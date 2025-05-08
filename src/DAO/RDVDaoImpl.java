@@ -1,12 +1,17 @@
 package DAO;
 import Models.RDV;
 
+import java.sql.ResultSet;
 import java.util.*;
 
 public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
 
-    public RDVDaoImpl(String table) {
-        super(table);
+    public RDVDaoImpl() {
+        super("rdv");
+    }
+
+    public ResultSet getRdvUser(int idUser) {
+        return getSpecific("idUser", idUser);
     }
 
     public void supprimerRDV(RDV rdv) {
@@ -20,7 +25,7 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
         rdv_ajoute.put("idRdv", rdv.getId_rdv());
         rdv_ajoute.put("idUser", rdv.getId_patient());
         rdv_ajoute.put("idSpecialiste", rdv.getId_specialiste());
-        rdv_ajoute.put("date_rdv", rdv.getDate_rdv());
+        rdv_ajoute.put("heure", rdv.getDate_rdv());
         rdv_ajoute.put("rating", rdv.getRating());
         rdv_ajoute.put("comment", rdv.getComment());
         insert(rdv_ajoute);

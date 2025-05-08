@@ -1,7 +1,9 @@
 package Application;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 
 import DAO.SpecialistDaoImpl;
 import DAO.UserDaoImpl;
@@ -75,6 +77,18 @@ public class DrawApp {
         String tarifString = Double.toString(tarif)+"$";
         drawLabel(root, x+380.0, y+65, tarifString, 23, Color.BLACK);
         drawButton(root, x+613.0, y+38.0, "Prendre RDV", 16, 126.0, 56.0);
+    }
+
+    public static void drawHistoric(AnchorPane root, String nameUser, String nameSpe, Date heure, int note, String description, double x, double y) {
+        drawRectangle(root, x, y, 759.0, 135.0);
+        drawCircle(root, 53.0, x+74.0, y+67.0);
+        drawLabel(root, x+145.0, y+38.0, nameUser, 23, Color.BLACK);
+        drawLabel(root, x+145.0, y+75.0, nameSpe, 23, Color.BLACK);
+        String noteString = Integer.toString(note)+"/5";
+        drawLabel(root, x+380.0, y+40.0, noteString, 23, Color.BLACK); 
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String formattedDate = formatter.format(heure);
+        drawLabel(root, x+380, y+80.0, formattedDate, 23, Color.BLACK);
     }
 
 
