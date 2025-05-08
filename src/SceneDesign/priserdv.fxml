@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DrawApp.java">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controller">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="800.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="100.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="643.0">
@@ -72,7 +72,7 @@
          </fill>
       </Rectangle>
       <Ellipse fill="WHITE" layoutX="130.0" layoutY="226.0" radiusX="80.0" radiusY="80.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-      <Label layoutX="228.0" layoutY="146.0" text="Nom du docteur" textFill="WHITE">
+      <Label layoutX="228.0" layoutY="146.0" text="Nom du docteur :" textFill="WHITE">
          <font>
             <Font name="Poppins SemiBold" size="25.0" />
          </font>

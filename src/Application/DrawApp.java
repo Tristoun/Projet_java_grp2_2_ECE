@@ -23,6 +23,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DrawApp {
@@ -96,7 +97,7 @@ public class DrawApp {
     }
 
 
-    public static void drawSpecialistSearch(AnchorPane root, String nom, String specialite, double note, double tarif, double x, double y) { //Must be improve by adding image 
+    public static Button drawSpecialistSearch(AnchorPane root, String nom, String specialite, double note, double tarif, double x, double y) { //Must be improve by adding image 
         drawRectangle(root, x, y, 759.0, 135.0);
         drawCircle(root, 53.0, x+74.0, y+67.0);
         drawLabel(root, x+145.0, y+38.0, nom, 23, Color.BLACK);
@@ -105,7 +106,9 @@ public class DrawApp {
         drawLabel(root, x+380.0, y+40.0, noteString, 23, Color.BLACK); 
         String tarifString = Double.toString(tarif)+"$";
         drawLabel(root, x+380.0, y+65, tarifString, 23, Color.BLACK);
-        drawButton(root, x+613.0, y+38.0, "Prendre RDV", 16, 126.0, 56.0);
+        Button button = drawButton(root, x+613.0, y+38.0, "Prendre RDV", 16, 126.0, 56.0);
+        return button;
+
     }
 
     public static void drawHistoric(AnchorPane root, String nameUser, String nameSpe, Date heure, int note, String description, double x, double y) {
@@ -118,6 +121,16 @@ public class DrawApp {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = formatter.format(heure);
         drawLabel(root, x+380, y+80.0, formattedDate, 23, Color.BLACK);
+    }
+
+    public static void drawTakeRdv(AnchorPane root, String name, ArrayList<String> lstSpecialisation) {
+        drawLabel(root, 455, 146, name, 25, Color.WHITE);
+        double x = 350;
+        double y = 182;
+        for(String talent : lstSpecialisation) {
+            drawLabel(root, x, y, talent, 16, Color.WHITE);
+            y += 20;
+        }
     }
 
 

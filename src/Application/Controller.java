@@ -138,6 +138,29 @@ public class Controller {
         return lstDocSpe;
     }
 
+    public ArrayList<String> getTalentSpecialist(int idSpe) {
+        ArrayList<String> lstTalent = new ArrayList<>();
+        SpecialisationDocDAOImpl speDocDao = new SpecialisationDocDAOImpl();
+        SpecialisationDAOImpl specialisationDao = new SpecialisationDAOImpl();
+        ResultSet res = speDocDao.getSpecific("idSpecialiste", idSpe);
+        try {
+            while (res.next()) {
+                int idSpecialisation = res.getInt("idSpecialisation");
+                
+                ResultSet resSpe = specialisationDao.getSpecific("idSpecialisation", idSpecialisation);
+                if(resSpe.next()) {
+                    String nom = resSpe.getString("nom");
+                    lstTalent.add(nom);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lstTalent;
+
+        
+    }
+
     public void UpdateSearch(ActionEvent event) throws IOException {
         if(this.root == null) {
             switchScene("../SceneDesign/search.fxml", event);
@@ -187,7 +210,7 @@ public class Controller {
 
         try {
             double x = 21.0;
-            double y = 478.0; //+158 each block
+            double y = 295.0; //+158 each block
             if(res != null) {
                 while (res.next()) {
                     String name = "";
@@ -199,6 +222,7 @@ public class Controller {
                     int idSpe = -1;
                     List<RDV> rdvlist;
                     boolean available = true;
+                    Button button = null;
                     if(state != 1) {
                         idSpe  = res.getInt("idSpecialiste");
                     }
@@ -217,7 +241,7 @@ public class Controller {
                                     description = resSpe.getString("description");
                                     note = resSpe.getDouble("moyenneNote");
                                     tarif = resSpe.getDouble("tarif");
-                                    DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
+                                    button = DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
                                     y += 158.0;
                                 }
                             }
@@ -235,14 +259,19 @@ public class Controller {
                                 note = res.getDouble("moyenneNote");
                                 tarif = res.getDouble("tarif"); 
                                 
-                                DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
+                                button = DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
                                 y += 158.0;   
                             }   
                         }
                     }
-                    
-
+                    if(button != null) {
+                        int finalIdSpe = idSpe; //Create new to assign for each button
+                        button.setOnAction(e -> {
+                            switchTakeRdv(e, finalIdSpe);
+                        });
+                    }
                 }
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -263,6 +292,20 @@ public class Controller {
             this.idUser = -1; //Remove id from user
             switchScene("../SceneDesign/login.fxml", event);
         }catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void switchTakeRdv(ActionEvent event, int idSpe) {
+        SpecialistDaoImpl speDao = new SpecialistDaoImpl();
+        try {
+            switchScene("../SceneDesign/priserdv.fxml", event);
+            ArrayList<String> lstSpecialisation = getTalentSpecialist(idSpe);
+            String name = speDao.getName(idSpe);
+            DrawApp.drawTakeRdv(root, name, lstSpecialisation);
+        }catch(IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
