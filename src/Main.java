@@ -25,15 +25,15 @@ public class Main {
 
         ResultSet res = userDao.getAll();
         GeneralVue.showOutput(res);
-        //User user = new User(2,"Bernard","1234",0);
+        //User user = new User(11,"Bernard","1234",0);
         //Specialist specialiste = new Specialist(3,"Dr Michmich","1234","Sympatoche",15.2,3.5);
         //specialistDao. //pas encore fait faut discuter avec Matteo Matteo
-        //RDV rdv = new RDV(1,2,3,null,2,"pas ouf"); //Le rating on l ajoutera apres
-        //rdvDao.ajouterRDV(rdv);//pb la
+        RDV rdv = new RDV(4,7,1,null,2,"pas ouf"); //Le rating on l ajoutera apres
+        rdvDao.ajouterRDV(rdv);//pb la
         //Location location = new Location(4,"12 Rue de moi","Atonavisfrere","69005");
         //locationDao.ajouterLocation(location);
-        //LocationDoc locationDoc = new LocationDoc(4,1);
-        //locationDocDao.ajouterLocationDoc(locationDoc);
+        LocationDoc locationDoc = new LocationDoc(4,1);
+        locationDocDao.ajouterLocationDoc(locationDoc);
         //Specialisation dentiste = new Specialisation(1,"dentiste");
         //specialisationDao.ajouterSpecialisation(dentiste);
 
@@ -44,7 +44,7 @@ public class Main {
 
 
         userDao.setById("id_user", 2, "name", "bob2");
-        userDao.delete("id_user", 1);
+        //userDao.delete("id_user", 1);
 
         try {
             DaoFactory.getConnection().close(); //Close the connection if used

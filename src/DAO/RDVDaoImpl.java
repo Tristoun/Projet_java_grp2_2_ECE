@@ -21,7 +21,7 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
     public void ajouterRDV(RDV rdv) {
         Map<String, Object> rdv_ajoute = new HashMap<>();
         rdv_ajoute.put("id_rdv", rdv.getIdRdv());
-        rdv_ajoute.put("id_useer", rdv.getIdPatient());
+        rdv_ajoute.put("id_user", rdv.getIdPatient());
         rdv_ajoute.put("id_specialiste", rdv.getIdSpecialiste());
         rdv_ajoute.put("heure", rdv.getDate_rdv());
         rdv_ajoute.put("note", rdv.getRating());

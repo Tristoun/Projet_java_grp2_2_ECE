@@ -13,7 +13,7 @@ public class LocationDocDAOImpl extends GeneralDaoImpl implements LocationDocDAO
     public void ajouterLocationDoc(LocationDoc locationdoc){
         Map<String, Object> lieu_doc_ajoute = new HashMap<>();
         lieu_doc_ajoute.put("id_lieu",locationdoc.getIdLocation());
-        lieu_doc_ajoute.put("id_specialist",locationdoc.getIdSpecialist());
+        lieu_doc_ajoute.put("id_specialiste",locationdoc.getIdSpecialist());
         insert(lieu_doc_ajoute);
     }
     public void supprimerLocationDoc(int idLocationDoc){
