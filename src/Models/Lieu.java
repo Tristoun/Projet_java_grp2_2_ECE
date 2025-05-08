@@ -1,19 +1,19 @@
 package Models;
 
-public class Location{
-    private int locationId;
+public class Lieu{
+    private int idLieu;
     private String adress;
     private String city;
     private String postalCode;
 
-    public Location(int locationId, String adress, String city, String postalCode) {
-        this.locationId = locationId;
+    public Lieu(int idLieu, String adress, String city, String postalCode) {
+        this.idLieu = idLieu;
         this.adress = adress;
         this.city = city;
         this.postalCode = postalCode;
     }
-    public int getLocationId() {
-        return locationId;
+    public int getIdLieu() {
+        return idLieu;
     }
     public String getAdress() {
         return adress;
@@ -24,8 +24,8 @@ public class Location{
     public String getPostalCode() {
         return postalCode;
     }
-    public void setIdLocation(int locationId) {
-        this.locationId = locationId;
+    public void setIdLieu(int idLieu) {
+        this.idLieu = idLieu;
     }
     public void setAdress(String adress) {
         this.adress = adress;

@@ -99,19 +99,19 @@ public class UserDaoImpl extends GeneralDaoImpl{
     
     }
 
-    public void returnProfilPatient(int id_patient){
-        getSpecific("idUser", id_patient);
+    public void returnProfilPatient(int idPatient){
+        getSpecific("idUser", idPatient);
     }
 
     public void returnAllProfiles() {
         getAll();
     }
 
-    public void editProfileUser(int id_patient, String newName){
-        setById("idUser", id_patient, "name", newName);
+    public void editProfileUser(int idPatient, String newName){
+        setById("idUser", idPatient, "name", newName);
     }
-    public void supprimerUser(int id_patient){
-        delete("id_user", id_patient);
+    public void supprimerUser(int idPatient){
+        delete("id_user", idPatient);
     }
 
    /* public void SetByID(int idUser, String name, String password){

@@ -1,7 +1,7 @@
 package DAO;
 
 //import Models.Specialist;
-
+import java.sql.ResultSet;
 
 public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, UserDao {
 
@@ -12,8 +12,8 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
     }
 
     @Override //Jcrois que ca sert a rien de Override il y a rien qui s'appelle comme ca
-    public void returnProfilSpecialist(int id_specialist) {
-        getSpecific("idUser", id_specialist);
+    public void returnProfilSpecialist(int idSpecialist) {
+        getSpecific("idUser", idSpecialist);
     }
 
     @Override
@@ -23,8 +23,8 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
     }
 
     @Override
-    public void editProfileSpecialist(int id_specialist, String newName) {
-        setById("idUser", id_specialist, "name", newName);
+    public void editProfileSpecialist(int idSpecialist, String newName) {
+        setById("idUser", idSpecialist, "name", newName);
 
 
 
@@ -34,7 +34,7 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
         try {
             Connection connexion = daoFactory.getConnection();
             PreparedStatement preparedStatement = connexion.prepareStatement(
-                    "UPDATE specialiste SET description = ?, schedule = ?, tarif = ? WHERE id_specialiste = ?"
+                    "UPDATE specialiste SET description = ?, schedule = ?, tarif = ? WHERE idSpecialiste = ?"
             );
             int tempId = personne.getIdUser();
             preparedStatement.setString(1, description);
@@ -57,14 +57,19 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
 }
 
     @Override
-    public void returnProfilPatient(int id_patient) {
+    public void returnProfilPatient(int idPatient) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'returnProfilPatient'");
     }
 
     @Override
-    public void editProfileUser(int id_patient, String newName) {
+    public void editProfileUser(int idPatient, String newName) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'editProfileUser'");
+    }
+
+    @Override
+    public void supprimerUser(int idPatient) {
+        //a faire
     }
 }

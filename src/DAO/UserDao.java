@@ -4,9 +4,9 @@ import java.sql.ResultSet;
 
 public interface UserDao {
 
-    public void returnProfilPatient(int id_patient);
+    public void returnProfilPatient(int idPatient);
     public ResultSet returnAllProfiles();
-    public void editProfileUser(int id_patient, String newName);
+    public void editProfileUser(int idPatient, String newName);
 
-    public void supprimerUser(int id_patient);
+    public void supprimerUser(int idPatient);
 }

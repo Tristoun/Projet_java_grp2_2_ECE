@@ -1,24 +1,24 @@
 package Models;
 
 public class Specialisation {
-    private int id_specialisation;
+    private int idSpecialisation;
     private String nom;
 
-    public Specialisation(int id_specialisation, String nom) {
-        this.id_specialisation = id_specialisation;
+    public Specialisation(int idSpecialisation, String nom) {
+        this.idSpecialisation = idSpecialisation;
         this.nom = nom;
     }
 
     public int getIdSpecialisation() {
-        return id_specialisation;
+        return idSpecialisation;
     }
 
     public String getSpecialisationNom() {
         return nom;
     }
 
-    public void setIdSpecialisation(int id_specialisation) {
-        this.id_specialisation = id_specialisation;
+    public void setIdSpecialisation(int idSpecialisation) {
+        this.idSpecialisation = idSpecialisation;
     }
 
     public void setSpecialisationNom(String nom) {

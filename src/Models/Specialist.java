@@ -10,13 +10,13 @@ public class Specialist extends User {
     private Map<String, Object> schedule;
     private String description;
     private double tarif;
-    private double moyenne_note;
-    public Specialist(int specialistId, String specialistUsername, String specialistPassword,String description, double tarif, double moyenne_note) {
+    private double moyenneNote;
+    public Specialist(int specialistId, String specialistUsername, String specialistPassword,String description, double tarif, double moyenneNote) {
         super(specialistId,specialistUsername,specialistPassword,1); //1 car tjrs specialiste
         this.schedule = new HashMap<>();
         this.description = description;
         this.tarif = tarif;
-        this.moyenne_note = moyenne_note;
+        this.moyenneNote = moyenneNote;
     }
 
     public void setSchedule(Map<String, Object> schedule) {
@@ -37,14 +37,14 @@ public class Specialist extends User {
     public double getTarif() {
         return tarif;
     }
-    public double getMoyenne_note() {
-        return moyenne_note;
+    public double getmoyenneNote() {
+        return moyenneNote;
     }
     public void setTarif(double tarif) {
         this.tarif = tarif;
     }
-    public void setMoyenne_note(double moyenne_note) {
-        this.moyenne_note = moyenne_note;
+    public void setmoyenneNote(double moyenneNote) {
+        this.moyenneNote = moyenneNote;
     }
     public String getSpecialistUsername() {
         return specialistUsername;

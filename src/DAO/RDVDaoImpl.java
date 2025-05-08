@@ -11,21 +11,21 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
     }
 
     public void supprimerRDV(RDV rdv) {
-        delete("idRdv", rdv.getId_rdv());
+        delete("idRdv", rdv.getIdRdv());
     }
 
     public void modifierRDV(RDV rdv, String column, Object value) {
-        setById("idRdv",rdv.getId_rdv(),column, rdv);
+        setById("idRdv",rdv.getIdRdv(),column, rdv);
     }
 
     public void ajouterRDV(RDV rdv) {
         Map<String, Object> rdv_ajoute = new HashMap<>();
-        rdv_ajoute.put("idRdv", rdv.getId_rdv());
-        rdv_ajoute.put("idUser", rdv.getId_patient());
-        rdv_ajoute.put("idSpecialiste", rdv.getId_specialiste());
-        rdv_ajoute.put("heure", rdv.getDate_rdv());
-        rdv_ajoute.put("rating", rdv.getRating());
-        rdv_ajoute.put("comment", rdv.getComment());
+        rdv_ajoute.put("idRdv", rdv.getIdRdv());
+        rdv_ajoute.put("idUser", rdv.getIdPatient());
+        rdv_ajoute.put("idSpecialiste", rdv.getIdSpecialiste());
+        rdv_ajoute.put("heure", rdv.getdateRdv());
+        rdv_ajoute.put("note", rdv.getRating());
+        rdv_ajoute.put("description", rdv.getComment());
         insert(rdv_ajoute);
     }
 

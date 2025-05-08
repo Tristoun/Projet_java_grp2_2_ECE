@@ -12,8 +12,8 @@ public class SpecialisationDocDAOImpl extends GeneralDaoImpl implements Speciali
     }
     public void ajouterSpecialisationDoc(SpecialisationDoc specialisationdoc){
         Map<String, Object> lieu_doc_ajoute = new HashMap<>();
-        lieu_doc_ajoute.put("id_specialisation",specialisationdoc.getIdSpecialisation());
-        lieu_doc_ajoute.put("id_specialist",specialisationdoc.getIdSpecialist());
+        lieu_doc_ajoute.put("idSpecialisation",specialisationdoc.getIdSpecialisation());
+        lieu_doc_ajoute.put("idSpecialiste",specialisationdoc.getIdSpecialist());
         insert(lieu_doc_ajoute);
     }
     public void supprimerSpecialisationDoc(int idSpecialisationDoc) { //, int idSpecialistDoc
@@ -21,14 +21,14 @@ public class SpecialisationDocDAOImpl extends GeneralDaoImpl implements Speciali
     } //?? donc 3 cas : le lien est suppr mais les 2 existent, le specialiste est suppr, la specialisation est suppr (chacun en solo)
 
     public void modifierSpecialisationSpecialisationDoc(SpecialisationDoc specialisationdoc, int idSpecialisation) { //le blaze est normal c juste que c Specialisation, ou ca : dans SpecialisationDoc
-        setById("id_specialiste",specialisationdoc.getIdSpecialist(),"id_specialisation",idSpecialisation);
+        setById("idSpecialiste",specialisationdoc.getIdSpecialist(),"idSpecialisation",idSpecialisation);
     }
 
     public void modifierSpecialistSpecialisationDoc(SpecialisationDoc specialisationdoc, int idSpecialist) {
-        setById("id_specialisation",specialisationdoc.getIdSpecialisation(),"id_specialiste",idSpecialist);
+        setById("idSpecialisation",specialisationdoc.getIdSpecialisation(),"idSpecialiste",idSpecialist);
     }
 
     public ResultSet returnSpecialisationDoc(int specialisationDocId) {
-        return getSpecific("id_specialisation", specialisationDocId); //?? modifier pour faire a 2 entrees
+        return getSpecific("idSpecialisation", specialisationDocId); //?? modifier pour faire a 2 entrees
     }
 }

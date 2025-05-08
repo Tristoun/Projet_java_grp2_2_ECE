@@ -95,7 +95,7 @@ public class Controller {
             state = 1;
         }
         else {
-            res = speDao.returnAllProfiles(); 
+            res = speDao.returnAllProfiles(); //?? G un pb la (Vianney)
         }
         try {
             double x = 21.0;

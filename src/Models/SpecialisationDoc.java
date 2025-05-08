@@ -1,21 +1,21 @@
 package Models;
 
 public class SpecialisationDoc {
-    private int id_specialisation;
-    private int id_specialist;
+    private int idSpecialisation;
+    private int idSpecialist;
 
-    public SpecialisationDoc(int id_specialisation, int id_specialist) {
-        this.id_specialisation = id_specialisation;
-        this.id_specialist = id_specialist;
+    public SpecialisationDoc(int idSpecialisation, int idSpecialist) {
+        this.idSpecialisation = idSpecialisation;
+        this.idSpecialist = idSpecialist;
     }
     public int getIdSpecialisation() {
-        return id_specialisation;
+        return idSpecialisation;
     }
     public int getIdSpecialist() {
-        return id_specialist;
+        return idSpecialist;
     }
-    public void setIdSpecialisationDoc(int id_specialisation, int id_specialist) {
-        this.id_specialisation = id_specialisation;
-        this.id_specialist = id_specialist;
+    public void setIdSpecialisationDoc(int idSpecialisation, int idSpecialist) {
+        this.idSpecialisation = idSpecialisation;
+        this.idSpecialist = idSpecialist;
     }
 }

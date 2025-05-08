@@ -1,7 +1,4 @@
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.io.*;
 
 import DAO.*;
 
@@ -18,8 +15,8 @@ public class Main {
         UserDaoImpl userDao = new UserDaoImpl();
         SpecialistDaoImpl specialistDao = new SpecialistDaoImpl();
         RDVDaoImpl rdvDao = new RDVDaoImpl();
-        LocationDAOImpl locationDao = new LocationDAOImpl();
-        LocationDocDAOImpl locationDocDao = new LocationDocDAOImpl();
+        LieuDAOImpl lieuDao = new LieuDAOImpl();
+        LieuDocDAOImpl lieuDocDao = new LieuDocDAOImpl();
         SpecialisationDAOImpl specialisationDao = new SpecialisationDAOImpl();
         SpecialisationDocDAOImpl specialisationDocDao = new SpecialisationDocDAOImpl();
 
@@ -30,10 +27,10 @@ public class Main {
         //specialistDao. //pas encore fait faut discuter avec Matteo Matteo
         RDV rdv = new RDV(4,7,1,null,2,"pas ouf"); //Le rating on l ajoutera apres
         rdvDao.ajouterRDV(rdv);//pb la
-        //Location location = new Location(4,"12 Rue de moi","Atonavisfrere","69005");
-        //locationDao.ajouterLocation(location);
-        LocationDoc locationDoc = new LocationDoc(4,1);
-        locationDocDao.ajouterLocationDoc(locationDoc);
+        //Lieu lieu = new Lieu(4,"12 Rue de moi","Atonavisfrere","69005");
+        //lieuDao.ajouterLieu(lieu);
+        LieuDoc lieuDoc = new LieuDoc(4,1);
+        lieuDocDao.ajouterLieuDoc(lieuDoc);
         //Specialisation dentiste = new Specialisation(1,"dentiste");
         //specialisationDao.ajouterSpecialisation(dentiste);
 
