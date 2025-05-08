@@ -40,6 +40,8 @@ public class Main {
 
         spcdao.insertSpecialist(14,"spétest","adresse1",33333,"ville1");
 
+        spcdao.editSpecialist(3, "tarif", "3", "id_specialiste");
+
         try {
             DaoFactory.getConnection().close(); //Close the connection if used
         } catch (SQLException e) {
