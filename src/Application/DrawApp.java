@@ -10,6 +10,7 @@ import DAO.UserDaoImpl;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -66,6 +67,17 @@ public class DrawApp {
         return circle;
     }
 
+    public static ChoiceBox<String> drawChoiceBox(AnchorPane root, ChoiceBox<String> choiceBox, double x, double y, int wi, int height) {
+        choiceBox.setLayoutX(x);
+        choiceBox.setLayoutY(y);
+        choiceBox.setPrefWidth(wi);
+        choiceBox.setPrefHeight(height);
+        
+        root.getChildren().add(choiceBox);
+        
+        return choiceBox;
+    }
+
 
     public static void drawSpecialistSearch(AnchorPane root, String nom, String specialite, double note, double tarif, double x, double y) { //Must be improve by adding image 
         drawRectangle(root, x, y, 759.0, 135.0);
@@ -90,6 +102,7 @@ public class DrawApp {
         String formattedDate = formatter.format(heure);
         drawLabel(root, x+380, y+80.0, formattedDate, 23, Color.BLACK);
     }
+
 
 
     public static void drawProfil(AnchorPane root, UserDaoImpl userDaoImpl, int idUser) {

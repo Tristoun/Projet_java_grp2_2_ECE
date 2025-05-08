@@ -51,6 +51,12 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
         setById("id_user", id_specialist, "name", newName);
     }
 
+    @Override
+    public void returnProfilSpecialist(int id_specialist) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'returnProfilSpecialist'");
+    }
+
 
 
 

@@ -1,5 +1,7 @@
 package Application;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,10 +22,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Date;
+import java.util.List;
 import java.util.ResourceBundle.Control;
 import javax.swing.Action;
 import DAO.DaoFactory;
 import DAO.RDVDaoImpl;
+import DAO.SpecialisationDAOImpl;
 import DAO.SpecialistDaoImpl;
 import DAO.UserDaoImpl;
 import Application.DrawApp;
@@ -41,9 +45,7 @@ public class Controller {
     private Label errorLabel;
     @FXML 
     private TextField searchInput;
-    @FXML
-    private ChoiceBox<String> choiceTalent;
-    
+
     private FXMLLoader loader;
     private AnchorPane root;
     private String username;
@@ -83,6 +85,22 @@ public class Controller {
     }
 
     public void setTalentBox() {
+        ChoiceBox<String> choiceTalent = new ChoiceBox<>();
+        SpecialisationDAOImpl talentDao = new SpecialisationDAOImpl();
+
+        ResultSet res = talentDao.getAll();
+        ObservableList<String> lstTalent = FXCollections.observableArrayList();
+        String nameTalent = "";
+        try {
+            while (res.next()) {
+                nameTalent = res.getString("nom");
+                lstTalent.add(nameTalent);
+            }
+            choiceTalent.setItems(lstTalent);
+            DrawApp.drawChoiceBox(root, choiceTalent, 233, 227, 185, 31);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -90,7 +108,7 @@ public class Controller {
         if(this.root == null) {
             switchScene("../SceneDesign/search.fxml", event);
         }
-
+        setTalentBox(); //Set specialisation in choice box 
         SpecialistDaoImpl speDao = new SpecialistDaoImpl();
         UserDaoImpl userDao = new UserDaoImpl();
         String search = "";

@@ -19,13 +19,8 @@ import java.util.Map;
 import Models.User;
 
 
-<<<<<<< HEAD
 public class UserDaoImpl extends GeneralDaoImpl{
     
-=======
-public class UserDaoImpl extends GeneralDaoImpl implements UserDao{
-
->>>>>>> origin/creation_rdv
     public UserDaoImpl() {
         super("user");
     }

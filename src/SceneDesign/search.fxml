@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -69,7 +68,6 @@
          </font>
       </Label>
       <Button layoutX="523.0" layoutY="131.0" mnemonicParsing="false" onAction="#UpdateSearch" prefHeight="31.0" prefWidth="71.0" stylesheets="@styles.css" text="Search" />
-      <ChoiceBox fx:id="choiceTalent" layoutX="233.0" layoutY="227.0" prefHeight="31.0" prefWidth="185.0" />
       <Label layoutX="233.0" layoutY="203.0" text=" Profession du Spécialiste" textFill="#106ecd">
          <font>
             <Font size="16.0" />
