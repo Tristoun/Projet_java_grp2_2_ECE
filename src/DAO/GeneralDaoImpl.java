@@ -26,12 +26,6 @@ public class GeneralDaoImpl {
             res = statement.executeQuery("select * from " + this.table);        
             if(res == null) {
                 System.out.println("No values");
-            } else {
-                while (res.next()) {
-                    int id = res.getInt("id_user");
-                    String name = res.getString("name");
-                    System.out.println("ID: " + id + ", Name: " + name);
-                }
             }
         }catch(SQLException e) {
             e.printStackTrace();
@@ -44,24 +38,29 @@ public class GeneralDaoImpl {
         ResultSet res = null;
         try {
             Connection connexion = DaoFactory.getConnection();
+
             String query = "SELECT * FROM " + this.table + " WHERE " + columnName + " = ?";
             System.out.println(query);
+
             PreparedStatement statement = connexion.prepareStatement(query);
             statement.setObject(1, value);
 
             res = statement.executeQuery();
             if(res == null) {
                 System.out.println("No values");
+
             }else {
                 while (res.next()) {
                     Object result = res.getObject(ColumnToGet);
                     System.out.println(ColumnToGet + ":" + result);
                 }
+
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
-        return res;
+        return res; 
     }
 
     public ResultSet getSpecificFromTable(String columnName, Object value, String ColumnToGet, String tableName) {
@@ -183,7 +182,7 @@ public class GeneralDaoImpl {
      */
     public void delete(String columnName, int value) {
         try {
-            Connection connextion = DaoFactory.getConnection();
+            Connection connextion = DaoFactory.getConnection(); //relisez cette ligne et quand vous trouvez le probleme c win
             String query = "DELETE FROM "+this.table+"WHERE "+columnName+"=?";
             PreparedStatement statement = connextion.prepareStatement(query);
             statement.setInt(1, value);
@@ -225,6 +224,7 @@ public class GeneralDaoImpl {
         }
     }
 
+
     public void setByIdOtherTable(String idName, Object idValue, String columnName, Object value, Object tableName) {
         try {
             Connection connexion = DaoFactory.getConnection();
@@ -239,7 +239,7 @@ public class GeneralDaoImpl {
     }
 
 
-
+/* Fonction search écrite, mais non utilisée dans une branche
     public Object search(String columnName, String value) {
         Object return_object = null;
         try {
@@ -261,13 +261,22 @@ public class GeneralDaoImpl {
                 }
                 System.out.println();
             }
+            */
+
+    public ResultSet search(String columnName, String value) {
+        ResultSet return_object = null;
+        try {
+            Connection connexion = DaoFactory.getConnection();
+            String query = "SELECT * FROM " + this.table + " WHERE " + columnName + " LIKE '" + value + "%'";
+            PreparedStatement statement = connexion.prepareStatement(query);
+            //statement.setObject(1, columnName); //celui la c etat pour remplacer * et avoir que le blaze mais c pas fou
+            //statement.setInt(1, value); ca c pour preparer la requete mais il veut un int et pas un string
+            return_object = statement.executeQuery();
 
         } catch(SQLException e) {
             e.getStackTrace();
         }
-        finally {
-            return return_object;
-        }
+        return return_object;
     }
 
     public int insertSomething(String ColumnName, Object value, String ColumnToGet, String TableName) {

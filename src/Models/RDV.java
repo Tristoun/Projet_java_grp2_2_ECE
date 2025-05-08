@@ -3,44 +3,44 @@ import java.time.LocalDateTime;
 
 
 public class RDV {
-    protected int id_rdv;
-    protected int id_patient;
-    protected int id_specialiste;
-    protected LocalDateTime date_rdv;
+    protected int idRdv;
+    protected int idPatient;
+    protected int idSpecialist;
+    protected LocalDateTime dateRdv;
     protected double rating;
     protected String comment;
 
-    public RDV (int id_rdv, int id_patient, int id_specialiste, LocalDateTime date_rdv, double rating, String comment) {
-        this.id_rdv = id_rdv;
-        this.id_patient = id_patient;
-        this.id_specialiste = id_specialiste;
-        this.date_rdv = date_rdv;
+    public RDV (int idRdv, int idPatient, int idSpecialist, LocalDateTime dateRdv, double rating, String comment) {
+        this.idRdv = idRdv;
+        this.idPatient = idPatient;
+        this.idSpecialist = idSpecialist;
+        this.dateRdv = dateRdv;
         this.rating = rating;
         this.comment = comment;
     }
-    public int getId_rdv() {
-        return id_rdv;
+    public int getIdRdv() {
+        return idRdv;
     }
-    public void setId_rdv(int id_rdv) {
-        this.id_rdv = id_rdv;
+    public void setIdRdv(int idRdv) {
+        this.idRdv = idRdv;
     }
-    public int getId_patient() {
-        return id_patient;
+    public int getIdPatient() {
+        return idPatient;
     }
-    public void setId_patient(int id_patient) {
-        this.id_patient = id_patient;
+    public void setIdPatient(int idPatient) {
+        this.idPatient = idPatient;
     }
-    public int getId_specialiste() {
-        return id_specialiste;
+    public int getIdSpecialiste() {
+        return idSpecialist;
     }
-    public void setId_specialiste(int id_specialiste) {
-        this.id_specialiste = id_specialiste;
+    public void setIdSpecialiste(int idSpecialist) {
+        this.idSpecialist = idSpecialist;
     }
-    public LocalDateTime getDate_rdv() {
-        return date_rdv;
+    public LocalDateTime getdateRdv() {
+        return dateRdv;
     }
-    public void setDate_rdv(LocalDateTime date_rdv) {
-        this.date_rdv = date_rdv;
+    public void setdateRdv(LocalDateTime dateRdv) {
+        this.dateRdv = dateRdv;
     }
     public double getRating() {
         return rating;

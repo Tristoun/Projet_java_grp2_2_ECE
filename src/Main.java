@@ -6,9 +6,9 @@ import DAO.DaoFactory;
 import DAO.RDVDaoImpl;
 import DAO.SpecialistDaoImpl;
 import DAO.UserDaoImpl;
+import DAO.*;
 import java.sql.ResultSet;
-
-
+import Models.*;
 import Vue.*;
 
 
@@ -16,18 +16,52 @@ public class Main {
     public static void main(String args[]) {
         DaoFactory.init("info_doctolib", "root", "");
         UserDaoImpl userDao = new UserDaoImpl();
-        RDVDaoImpl rdvdao = new RDVDaoImpl("rdv");
+      
+
+
         SpecialistDaoImpl spcdao  = new SpecialistDaoImpl();
+
+        SpecialistDaoImpl specialistDao = new SpecialistDaoImpl();
+        RDVDaoImpl rdvDao = new RDVDaoImpl();
+        LieuDaoImpl lieuDao = new LieuDaoImpl();
+        LieuDocDaoImpl lieuDocDao = new LieuDocDaoImpl();
+        SpecialisationDaoImpl specialisationDao = new SpecialisationDaoImpl();
+        SpecialisationDocDaoImpl specialisationDocDao = new SpecialisationDocDaoImpl();
+
 
         ResultSet res = userDao.getAll();
         GeneralVue.showOutput(res);
+        //User user = new User(11,"Bernard","1234",0);
+        //Specialist specialiste = new Specialist(3,"Dr Michmich","1234","Sympatoche",15.2,3.5);
+        //specialistDao. //pas encore fait faut discuter avec Matteo Matteo
+        RDV rdv = new RDV(4,7,1,null,2,"pas ouf");
+        rdvDao.ajouterRDV(rdv);//pb la
+        //Lieu lieu = new Lieu(4,"12 Rue de moi","Atonavisfrere","69005");
+        //lieuDao.ajouterLieu(lieu);
+        //LieuDoc lieuDoc = new LieuDoc(4,1);
+        //lieuDocDao.ajouterLieuDoc(lieuDoc);
+        //Specialisation dentiste = new Specialisation(1,"dentiste");
+        //specialisationDao.ajouterSpecialisation(dentiste);
 
-        Map<String, Object> userbdd = new HashMap<>();
-        userbdd.put("name", "michel");
-        userbdd.put("password", "4567");
-        userDao.insert(userbdd);
+        SpecialisationDoc specialisationDoc = new SpecialisationDoc(4,32);
+        specialisationDocDao.ajouterSpecialisationDoc(specialisationDoc);
 
 
+
+
+        /*int newId = userDao.logIn("bob","1234");
+        boolean estcequilestadmin = userDao.verifierSiAdmin(3);
+        System.out.println("Admin: "+estcequilestadmin);
+        User nouveau_user = new User(2,"jacques","789",0,"non");
+        boolean etla = userDao.verifierSiAdmin(nouveau_user);
+        System.out.println("Admin 2: "+etla);*/
+
+
+
+
+
+/*
+Serie de tests de fonctions
         userDao.setById("id_user", 2, "name", "bob2");
         userDao.delete("id_user", 1);
         userDao.editProfileUser(6,"neweditedname");
@@ -41,6 +75,11 @@ public class Main {
         spcdao.insertSpecialist(14,"spétest","adresse1",33333,"ville1");
 
         spcdao.editSpecialist(3,"id_specialiste","3","tarif");
+
+        //userDao.setById("id_user", 2, "name", "bob2");
+        //userDao.delete("id_user", 1);
+        */
+
 
         try {
             DaoFactory.getConnection().close(); //Close the connection if used

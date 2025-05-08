@@ -2,11 +2,15 @@ package DAO;
 
 //import Models.Specialist;
 import java.sql.ResultSet;
+
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, UserDao {
+
+
 
     public SpecialistDaoImpl() {
         super("specialiste");
@@ -16,17 +20,25 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
     @Override
     public void returnProfilPatient(int id_patient) {
         getSpecific("id_user", id_patient, "name");
+
+    @Override //Jcrois que ca sert a rien de Override il y a rien qui s'appelle comme ca
+    public void returnProfilSpecialist(int idSpecialist) {
+        getSpecific("idUser", idSpecialist);
+
     }
 
     @Override
-    public void returnAllProfiles() {
-        getAll();
+    public ResultSet returnAllProfiles() {
+        ResultSet res = this.getAll();
+        return res;
     }
 
     @Override
-    public void editProfileUser(int id_patient, String newName){
-        setById("id_user", id_patient, "name", newName);
-    }
+    public void editProfileSpecialist(int idSpecialist, String newName) {
+        setById("idUser", idSpecialist, "name", newName);
+
+
+
 
     public void deleteSpecialist(int idSpecialist){
         deleteFromTable("id_specialiste",idSpecialist,"specialiste");
@@ -104,9 +116,9 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
         try {
             Connection connexion = daoFactory.getConnection();
             PreparedStatement preparedStatement = connexion.prepareStatement(
-                    "UPDATE specialiste SET description = ?, schedule = ?, tarif = ? WHERE id_specialiste = ?"
+                    "UPDATE specialiste SET description = ?, schedule = ?, tarif = ? WHERE idSpecialiste = ?"
             );
-            int tempId = personne.getUserId();
+            int tempId = personne.getIdUser();
             preparedStatement.setString(1, description);
             preparedStatement.setString(2, schedule);
             preparedStatement.setFloat(3, tarif);
@@ -126,3 +138,20 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
     */
 }
 
+    @Override
+    public void returnProfilPatient(int idPatient) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'returnProfilPatient'");
+    }
+
+    @Override
+    public void editProfileUser(int idPatient, String newName) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'editProfileUser'");
+    }
+
+    @Override
+    public void supprimerUser(int idPatient) {
+        //a faire
+    }
+}

@@ -4,14 +4,16 @@ public class User{
     private int userId;
     private String username;
     private String password;
-    private int status; //0=user lambda, 1=specialiste, 2 = admin
-    public User(int userId, String username, String password, int status) {
+    private int admin; //0=user lambda, 1=specialiste, 2 = admin
+    private String image;
+    public User(int userId, String username, String password, int admin, String image) {
         this.userId = userId;
         this.username = username;
         this.password = password;
-        this.status = status;
+        this.admin = admin;
+        this.image = image;
     }
-    public int getUserId() {
+    public int getIdUser() {
         return userId;
     }
     public String getUsername() {
@@ -20,10 +22,10 @@ public class User{
     public String getPassword() {
         return password;
     }
-    public int getStatus() {
-        return status;
+    public int getAdmin() {
+        return admin;
     }
-    public void setUserId(int userId) {
+    public void setIdUser(int userId) {
         this.userId = userId;
     }
     public void setUsername(String username) {
@@ -32,6 +34,12 @@ public class User{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public void setImage(String image) {
+        this.image = image;
+    }
+    public String getImage() {
+        return image;
     }
 
 
