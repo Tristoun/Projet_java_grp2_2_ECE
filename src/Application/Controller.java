@@ -21,7 +21,9 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle.Control;
 import javax.swing.Action;
@@ -30,7 +32,10 @@ import DAO.RDVDaoImpl;
 import DAO.SpecialisationDAOImpl;
 import DAO.SpecialistDaoImpl;
 import DAO.UserDaoImpl;
+import Models.RDV;
 import Application.DrawApp;
+import DAO.RDVDao;
+import DAO.RDVDaoImpl;
 
 public class Controller {
     @FXML
@@ -266,6 +271,59 @@ public class Controller {
             }
         } catch (Exception e) {
             System.out.println(e);
+        }
+    }
+
+    
+
+    
+
+    private RDVDaoImpl rdvDao;
+
+    public void RDVinit() {
+        rdvDao = new RDVDaoImpl();
+    }
+
+    public boolean patientIsAvailable(int idPatient, LocalDateTime date_rdv) { // cette fonction verif si le user a deja un creneau à cette heure là
+        ResultSet resultSet = rdvDao.getRdvUser(idPatient); 
+        try {
+            while (resultSet.next()) {
+                LocalDateTime existingDate = resultSet.getTimestamp("heure").toLocalDateTime();
+                if (existingDate.equals(date_rdv)) {return false; }
+            }
+        } 
+        catch (SQLException e) {e.printStackTrace();}
+        return true;
+    }
+
+    public List<RDV> getAllRDV(int IdSpecialiste){ //recup les rdv du specialiste => besoin sous forme liste pour exploiter res ou pas ?
+        ResultSet res = rdvDao.getSpecific("IdSpecialiste", IdSpecialiste);
+        List<RDV> listerdv = new ArrayList<>();
+
+        try {
+            while (res.next()) {
+                RDV rdv = new RDV(res.getInt("idRdv"), //pb avec nom des colonnes dans db ?
+                res.getInt("idUser"), 
+                res.getInt("idSpecialiste"),
+                res.getTimestamp("heure").toLocalDateTime(),
+                res.getDouble("note"),
+                res.getString("description"));
+                
+                listerdv.add(rdv);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return listerdv; 
+    }
+
+    public String addRDV(RDV rdv) { 
+        if (patientIsAvailable(rdv.getId_patient(), rdv.getDate_rdv())) {
+            rdvDao.ajouterRDV(rdv);  
+            return "ok c bon";
+        } else {
+            return "t'as déjà un rdv à cette heure là mon pote";
         }
     }
 }

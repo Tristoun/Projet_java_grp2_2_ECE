@@ -9,14 +9,21 @@ import DAO.SpecialistDaoImpl;
 import DAO.UserDaoImpl;
 import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+
+// pour affichage viewtable dynamique priserdv
+import Models.RDV;
+import DAO.RDVDaoImpl;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.collections.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class DrawApp {
 
@@ -121,5 +128,10 @@ public class DrawApp {
         }catch(SQLException e) {
             e.getStackTrace();
         }
+    }
+
+
+    public static void drawRDV(AnchorPane root ) {
+        
     }
 }
