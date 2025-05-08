@@ -32,6 +32,23 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
         setById("idUser", id_patient, "name", newName);
     }
 
+    public String getName(int id) throws SQLException {
+        ResultSet res = getSpecific("idSpecialiste", id);
+        int idUser;
+        String name = "";
+        UserDaoImpl userDao = new UserDaoImpl();
+        if(res.next()) {
+            try {
+                idUser = res.getInt("idUser");
+                name = userDao.getName(idUser);
+                System.out.println("Specialiste name : " + name);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } 
+        return name;
+    }
+
 
     /*public void ModifierSpecialiste(Specialist personne, String description, String schedule, float tarif) {
         try {

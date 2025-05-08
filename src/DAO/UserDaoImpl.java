@@ -111,6 +111,19 @@ public class UserDaoImpl extends GeneralDaoImpl{
         setById("idUser", id_patient, "name", newName);
     }
 
+    public String getName(int idUser) throws SQLException {
+        ResultSet res = getSpecific("idUser", idUser);
+        String name = "";
+        if(res.next()) {
+            try {
+                name = res.getString("name");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } 
+        return name;
+    }
+
 
    /* public void SetByID(int idUser, String name, String password){
         Map<String, Object> updateData = new HashMap<>();
