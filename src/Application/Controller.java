@@ -11,8 +11,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -21,6 +23,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -54,6 +57,7 @@ public class Controller {
 
     private FXMLLoader loader;
     private ChoiceBox<String> choiceTalent = new ChoiceBox<>();
+    private DatePicker datePicker = new DatePicker();
     private AnchorPane root;
     private String username;
     private String password;
@@ -74,6 +78,7 @@ public class Controller {
         Controller newController = loader.getController();
         newController.setIdUser(this.idUser);
         newController.choiceTalent = this.choiceTalent; //Could be update to update only on search page
+        newController.datePicker = this.datePicker;
         
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -154,6 +159,13 @@ public class Controller {
         String valueTalent = this.choiceTalent.getValue();
         boolean searchTalent = false;
 
+        LocalDate selectedDate = datePicker.getValue();
+        boolean searchDate = false;
+
+        if(selectedDate != null) {
+            searchDate = true;
+        }
+
         ArrayList<Integer> lstDocSpe = getListSpecialistByTalent(valueTalent, specialisationDao, speDocDao);
         if(valueTalent == null) { //Use if no value is used 
             this.choiceTalent = setTalentBox(); //Set specialisation in choice box 
@@ -163,7 +175,7 @@ public class Controller {
         }
         
         DrawApp.drawChoiceBox(root, this.choiceTalent, 233, 227, 185, 31);
-        
+        DrawApp.drawDatePicker(root, datePicker, 461, 227, 185, 31);
         
         if(search != "") {
             res = userDao.search("name", search); //Looking for a specialist with a specific name
@@ -185,36 +197,51 @@ public class Controller {
                     double note = 0.0; 
                     double tarif = 0.0;
                     int idSpe = -1;
+                    List<RDV> rdvlist;
+                    boolean available = true;
                     if(state != 1) {
                         idSpe  = res.getInt("idSpecialiste");
                     }
-
-
                     //Be aware of specialisation
                     if(state == 1) { //Specific in case of search with an input
                         name = res.getString("name");
                         ResultSet resSpe = speDao.getSpecific("idUser", idUser);
                         if(resSpe.next()) {
-                            if(lstDocSpe.contains(resSpe.getInt("idSpecialiste"))  || searchTalent == false ) {
-                                description = resSpe.getString("description");
-                                note = resSpe.getDouble("moyenneNote");
-                                tarif = resSpe.getDouble("tarif");
-                                DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
-                                y += 158.0;
+                            idSpe = resSpe.getInt("idSpecialiste");
+                            if(searchDate == true) {
+                                rdvlist = getAllRDV(idSpe);
+                                available = specialisteIsAvailable(rdvlist, selectedDate);
+                            }
+                            if(available == true) {
+                                if(lstDocSpe.contains(idSpe)  || searchTalent == false ) {
+                                    description = resSpe.getString("description");
+                                    note = resSpe.getDouble("moyenneNote");
+                                    tarif = resSpe.getDouble("tarif");
+                                    DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
+                                    y += 158.0;
+                                }
                             }
                         }
                     }
                     else {
-                        if(lstDocSpe.contains(idSpe) || searchTalent == false ) {
-                            name = userDao.getName(idUser);
-                            description = res.getString("description");
-                            note = res.getDouble("moyenneNote");
-                            tarif = res.getDouble("tarif"); 
-                            
-                            DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
-                            y += 158.0;   
-                        }   
+                        if(searchDate == true) {
+                            rdvlist = getAllRDV(idSpe);
+                            available = specialisteIsAvailable(rdvlist, selectedDate);
+                        }
+                        if(available == true) {
+                            if(lstDocSpe.contains(idSpe) || searchTalent == false ) {
+                                name = userDao.getName(idUser);
+                                description = res.getString("description");
+                                note = res.getDouble("moyenneNote");
+                                tarif = res.getDouble("tarif"); 
+                                
+                                DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
+                                y += 158.0;   
+                            }   
+                        }
                     }
+                    
+
                 }
             }
         } catch (SQLException e) {
@@ -334,6 +361,16 @@ public class Controller {
             }
         } 
         catch (SQLException e) {e.printStackTrace();}
+        return true;
+    }
+
+    public boolean specialisteIsAvailable(List<RDV> lstRdv, LocalDate dateRdv) {
+        for (RDV rdv : lstRdv) {
+            LocalDate date = rdv.getDate_rdv().toLocalDate();
+            if (dateRdv.equals(date)) {
+                return false; 
+            }
+        }
         return true;
     }
 

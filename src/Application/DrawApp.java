@@ -85,6 +85,16 @@ public class DrawApp {
         return choiceBox;
     }
 
+    public static DatePicker drawDatePicker(AnchorPane root, DatePicker datePicker, double x, double y, int wi, int hei) {
+        datePicker.setLayoutX(x);
+        datePicker.setLayoutY(y);
+        datePicker.setPrefWidth(wi);
+        datePicker.setPrefHeight(hei);
+
+        root.getChildren().add(datePicker);
+        return datePicker;
+    }
+
 
     public static void drawSpecialistSearch(AnchorPane root, String nom, String specialite, double note, double tarif, double x, double y) { //Must be improve by adding image 
         drawRectangle(root, x, y, 759.0, 135.0);
