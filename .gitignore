@@ -2,7 +2,8 @@
 .idea
 /bin
 .vscode
-not.idea
-target
-out
-Projet_java_grp2_2_ECE.iml
+/out
+/target
+/not.idea
+src/main/java/module-info.java
+projet.iml

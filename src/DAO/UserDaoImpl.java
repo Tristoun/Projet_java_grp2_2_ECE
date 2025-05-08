@@ -26,6 +26,11 @@ public class UserDaoImpl extends GeneralDaoImpl{
         super("user");
     }
 
+
+    public void returnProfilPatient(int id_patient){
+        getSpecific("id_user", id_patient, "name");
+  }
+
     /**
      * Login function allows the user to log in or create an account with a username and password
      * @param username the user's username
@@ -102,7 +107,8 @@ public class UserDaoImpl extends GeneralDaoImpl{
 
     public void returnProfilPatient(int idPatient){
         getSpecific("idUser", idPatient);
-    }
+
+    
 
     public void returnAllProfiles() {
         getAll();
@@ -114,6 +120,7 @@ public class UserDaoImpl extends GeneralDaoImpl{
     public void supprimerUser(int idPatient){
         delete("id_user", idPatient);
     }
+
 
    /* public void SetByID(int idUser, String name, String password){
         Map<String, Object> updateData = new HashMap<>();
@@ -136,9 +143,16 @@ public class UserDaoImpl extends GeneralDaoImpl{
        return role == 1;
    }
 
+
+    public void deleteUser(int idUser){
+        deleteFromTable("id_user",idUser,"rdv");
+        deleteFromTable("id_user",idUser,"user");
+    }
+
    public boolean verifierSiAdmin(User user){
        int role = user.getAdmin();
        return role==1;
    }
+
 
 }

@@ -1,10 +1,13 @@
 import java.sql.SQLException;
-
+import java.util.HashMap;
+import java.util.Map;
+import java.io.*;
+import DAO.DaoFactory;
+import DAO.RDVDaoImpl;
+import DAO.SpecialistDaoImpl;
+import DAO.UserDaoImpl;
 import DAO.*;
-
 import java.sql.ResultSet;
-
-
 import Models.*;
 import Vue.*;
 
@@ -13,12 +16,18 @@ public class Main {
     public static void main(String args[]) {
         DaoFactory.init("info_doctolib", "root", "");
         UserDaoImpl userDao = new UserDaoImpl();
+      
+
+
+        SpecialistDaoImpl spcdao  = new SpecialistDaoImpl();
+
         SpecialistDaoImpl specialistDao = new SpecialistDaoImpl();
         RDVDaoImpl rdvDao = new RDVDaoImpl();
         LieuDaoImpl lieuDao = new LieuDaoImpl();
         LieuDocDaoImpl lieuDocDao = new LieuDocDaoImpl();
         SpecialisationDaoImpl specialisationDao = new SpecialisationDaoImpl();
         SpecialisationDocDaoImpl specialisationDocDao = new SpecialisationDocDaoImpl();
+
 
         ResultSet res = userDao.getAll();
         GeneralVue.showOutput(res);
@@ -51,8 +60,26 @@ public class Main {
 
 
 
+/*
+Serie de tests de fonctions
+        userDao.setById("id_user", 2, "name", "bob2");
+        userDao.delete("id_user", 1);
+        userDao.editProfileUser(6,"neweditedname");
+
+        spcdao.deleteSpecialist(1);
+        userDao.deleteUser(13);
+
+        rdvdao.chercherRDV(1);
+        rdvdao.afficherDispos(2);
+
+        spcdao.insertSpecialist(14,"spétest","adresse1",33333,"ville1");
+
+        spcdao.editSpecialist(3,"id_specialiste","3","tarif");
+
         //userDao.setById("id_user", 2, "name", "bob2");
         //userDao.delete("id_user", 1);
+        */
+
 
         try {
             DaoFactory.getConnection().close(); //Close the connection if used

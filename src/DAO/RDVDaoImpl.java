@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.util.*;
 
 public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
+    GeneralDaoImpl dao = new GeneralDaoImpl("rdv");
 
     public RDVDaoImpl() {
         super("rdv");
@@ -29,6 +30,15 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
 
         insert(rdv_ajoute);
     }
+    public void chercherRDV(int userID){
+        dao.search("id_user", String.valueOf(userID));
+    }
+
+    public void afficherDispos(int specialistID){
+        dao.getSpecific("id_specialiste", specialistID,"heure");
+    }
+
+
 
     public ResultSet returnRDV(int rdvId) {
         return getSpecific("idRdv", rdvId);

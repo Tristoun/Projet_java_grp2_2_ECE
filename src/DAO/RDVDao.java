@@ -8,4 +8,6 @@ public interface RDVDao{
 
     public void modifierRDV(RDV rdv, String column, Object value);
 
+    public void chercherRDV(int userID);
+
 }
