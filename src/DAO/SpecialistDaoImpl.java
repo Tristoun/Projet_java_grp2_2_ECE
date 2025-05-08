@@ -17,7 +17,7 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
 
     @Override
     public void returnProfilSpecialist(int id_specialist) {
-        getSpecific("id_user", id_specialist);
+        getSpecific("idUser", id_specialist);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
 
     @Override
     public void editProfileSpecialist(int id_specialist, String newName) {
-        setById("id_user", id_specialist, "name", newName);
+        setById("idUser", id_specialist, "name", newName);
 
 
 
