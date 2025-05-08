@@ -107,6 +107,28 @@ public class Controller {
 
     }
 
+    public ArrayList<Integer> getListSpecialistByTalent(String valueTalent, SpecialisationDAOImpl specialisationDao, SpecialisationDocDAOImpl speDocDao) {
+        ArrayList<Integer> lstDocSpe = new ArrayList<>();
+
+        this.choiceTalent.setValue(valueTalent);
+        ResultSet resSpecialisation = specialisationDao.getSpecific("nom", valueTalent);
+        int idSpecialisation = -1;
+        try {
+            if(resSpecialisation.next()) {
+                idSpecialisation = resSpecialisation.getInt("idSpecialisation");
+                ResultSet resDocSpe = speDocDao.getSpecific("idSpecialisation", idSpecialisation);
+                while(resDocSpe.next()) {   
+                    lstDocSpe.add(resDocSpe.getInt("idSpecialiste"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(lstDocSpe);        
+        return lstDocSpe;
+    }
+
     public void UpdateSearch(ActionEvent event) throws IOException {
         if(this.root == null) {
             switchScene("../SceneDesign/search.fxml", event);
@@ -126,31 +148,16 @@ public class Controller {
         int state = 0;
         
         String valueTalent = this.choiceTalent.getValue();
-        ArrayList<Integer> lstDocSpe = new ArrayList<>();
         boolean searchTalent = false;
+
+        ArrayList<Integer> lstDocSpe = getListSpecialistByTalent(valueTalent, specialisationDao, speDocDao);
         if(valueTalent == null) { //Use if no value is used 
             this.choiceTalent = setTalentBox(); //Set specialisation in choice box 
         }
-        else {
-            this.choiceTalent.setValue(valueTalent);
-            ResultSet resSpecialisation = specialisationDao.getSpecific("nom", valueTalent);
-            int idSpecialisation = -1;
-            try {
-                if(resSpecialisation.next()) {
-                    idSpecialisation = resSpecialisation.getInt("idSpecialisation");
-                    ResultSet resDocSpe = speDocDao.getSpecific("idSpecialisation", idSpecialisation);
-                    while(resDocSpe.next()) {   
-                        lstDocSpe.add(resDocSpe.getInt("idSpecialiste"));
-                    }
-                    searchTalent = true;
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            System.out.println(lstDocSpe);
-
+        if(valueTalent != null) {
+            searchTalent = true;
         }
+        
         DrawApp.drawChoiceBox(root, this.choiceTalent, 233, 227, 185, 31);
         
         
@@ -195,14 +202,13 @@ public class Controller {
                     }
                     else {
                         if(lstDocSpe.contains(idSpe) || searchTalent == false ) {
-
-                        name = userDao.getName(idUser);
-                        description = res.getString("description");
-                        note = res.getDouble("moyenneNote");
-                        tarif = res.getDouble("tarif"); 
-                        
-                        DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
-                        y += 158.0;   
+                            name = userDao.getName(idUser);
+                            description = res.getString("description");
+                            note = res.getDouble("moyenneNote");
+                            tarif = res.getDouble("tarif"); 
+                            
+                            DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
+                            y += 158.0;   
                         }   
                     }
                 }
