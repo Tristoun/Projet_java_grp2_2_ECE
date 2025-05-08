@@ -4,12 +4,12 @@ public class User{
     private int userId;
     private String username;
     private String password;
-    private int status; //0=user lambda, 1=specialiste, 2 = admin
-    public User(int userId, String username, String password, int status) {
+    private int admin; //0=user lambda, 1=specialiste, 2 = admin
+    public User(int userId, String username, String password, int admin) {
         this.userId = userId;
         this.username = username;
         this.password = password;
-        this.status = status;
+        this.admin = admin;
     }
     public int getIdUser() {
         return userId;
@@ -20,8 +20,8 @@ public class User{
     public String getPassword() {
         return password;
     }
-    public int getStatus() {
-        return status;
+    public int getAdmin() {
+        return admin;
     }
     public void setIdUser(int userId) {
         this.userId = userId;

@@ -25,17 +25,24 @@ public class Main {
         //User user = new User(11,"Bernard","1234",0);
         //Specialist specialiste = new Specialist(3,"Dr Michmich","1234","Sympatoche",15.2,3.5);
         //specialistDao. //pas encore fait faut discuter avec Matteo Matteo
-        RDV rdv = new RDV(4,7,1,null,2,"pas ouf"); //Le rating on l ajoutera apres
-        rdvDao.ajouterRDV(rdv);//pb la
+        //RDV rdv = new RDV(4,7,1,null,2,"pas ouf"); //Le rating on l ajoutera apres
+        //rdvDao.ajouterRDV(rdv);//pb la
         //Lieu lieu = new Lieu(4,"12 Rue de moi","Atonavisfrere","69005");
         //lieuDao.ajouterLieu(lieu);
-        LieuDoc lieuDoc = new LieuDoc(4,1);
-        lieuDocDao.ajouterLieuDoc(lieuDoc);
+        //LieuDoc lieuDoc = new LieuDoc(4,1);
+        //lieuDocDao.ajouterLieuDoc(lieuDoc);
         //Specialisation dentiste = new Specialisation(1,"dentiste");
         //specialisationDao.ajouterSpecialisation(dentiste);
 
-        SpecialisationDoc specialisationDoc = new SpecialisationDoc(1,1);
-        specialisationDocDao.ajouterSpecialisationDoc(specialisationDoc);
+        //SpecialisationDoc specialisationDoc = new SpecialisationDoc(1,1);
+        //specialisationDocDao.ajouterSpecialisationDoc(specialisationDoc);
+        int newId = userDao.logIn("bob","1234");
+        boolean estcequilestadmin = userDao.verifierSiAdmin(1);
+        System.out.println("Admin: "+estcequilestadmin);
+        User nouveau_user = new User(2,"jacques","789",0);
+        boolean etla = userDao.verifierSiAdmin(nouveau_user);
+        System.out.println("Admin 2: "+etla);
+
 
 
 

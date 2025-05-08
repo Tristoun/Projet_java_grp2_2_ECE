@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
+
 import Models.User;
 
 
@@ -122,12 +123,22 @@ public class UserDaoImpl extends GeneralDaoImpl{
      }
 
     */
-   public int verifierSiAdmin(User patient){
-       int role = patient.getStatus();
-       if (role == 2){
-           return 1;
+   public boolean verifierSiAdmin(int id_user) {
+       ResultSet resultset = getSpecific("idUser", id_user);
+       int role = 0;
+       try {
+           if (resultset.next()) {
+               role = resultset.getInt("admin");
+           }
+       } catch (SQLException e) {
+           e.printStackTrace();
        }
-       return 0;
+       return role == 1;
+   }
+
+   public boolean verifierSiAdmin(User user){
+       int role = user.getAdmin();
+       return role==1;
    }
 
 }
