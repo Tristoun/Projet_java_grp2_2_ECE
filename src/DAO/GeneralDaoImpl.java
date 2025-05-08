@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.Map;
 import java.util.Set;
 import java.lang.String;
-import java.util.Scanner;
 
 
 public class GeneralDaoImpl {
@@ -65,6 +64,30 @@ public class GeneralDaoImpl {
         return res;
     }
 
+    public ResultSet getSpecificFromTable(String columnName, Object value, String ColumnToGet, String tableName) {
+        ResultSet res = null;
+        Object result = null;
+        try {
+            Connection connexion = DaoFactory.getConnection();
+            String query = "SELECT " + ColumnToGet +" FROM " + tableName + " WHERE " + columnName + " = ?";
+            System.out.println(query);
+            PreparedStatement statement = connexion.prepareStatement(query);
+            statement.setObject(1, value);
+
+            res = statement.executeQuery();  // Initialize the ResultSet with the query result
+
+
+            if (res.next()) {
+                result = res.getObject(ColumnToGet);
+                System.out.println("FOUND : " + result);
+            } else {
+                System.out.println("Nothing found");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
 
 
     /**
@@ -91,6 +114,46 @@ public class GeneralDaoImpl {
         } 
 
         String query = "INSERT INTO "+this.table+"("+columns.toString()+") VALUES ("+values.toString()+")";
+        System.out.println(query); //Affiche le résultat de la query  !!! A RETIRER
+
+        try {
+            Connection connexion = DaoFactory.getConnection();
+            PreparedStatement statement = connexion.prepareStatement(query);
+
+            int pos = 1;
+            for(String keyString : keys) {
+                statement.setObject(pos, dictionnary.get(keyString)); //On utilise setObject car on se sait pas qu'elle type de valeur on rentre, on s'adapte
+                pos++;
+            }
+
+            int res = statement.executeUpdate();
+            if(res != 1) {
+                System.out.println("Error while insert values");
+            }
+        } catch(SQLException e) {
+            e.getStackTrace();
+        }
+    }
+
+    public void insertInOtherTable(Map<String, Object> dictionnary, String table) {
+        StringBuilder columns = new StringBuilder();
+        StringBuilder values = new StringBuilder();
+
+        Set<String> keys = dictionnary.keySet();
+        int index = 0;
+
+        for(String keysColumn : keys) {
+            columns.append(keysColumn);
+            values.append("?");
+
+            if(index < keys.size()-1) {
+                columns.append(", ");
+                values.append(", ");
+                index++;
+            }
+        }
+
+        String query = "INSERT INTO "+ table +" ( "+columns.toString()+") VALUES ("+values.toString()+")";
         System.out.println(query); //Affiche le résultat de la query  !!! A RETIRER
 
         try {
@@ -161,6 +224,21 @@ public class GeneralDaoImpl {
             e.getStackTrace();
         }
     }
+
+    public void setByIdOtherTable(String idName, Object idValue, String columnName, Object value, Object tableName) {
+        try {
+            Connection connexion = DaoFactory.getConnection();
+            String query = "UPDATE " + tableName + " SET "+columnName + " = ? WHERE " + idName + " = ? ";
+            PreparedStatement statement = connexion.prepareStatement(query);
+            statement.setObject(1, value);
+            statement.setInt(2, (Integer) idValue);
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            e.getStackTrace();
+        }
+    }
+
+
 
     public Object search(String columnName, String value) {
         Object return_object = null;

@@ -38,6 +38,8 @@ public class Main {
         rdvdao.chercherRDV(1);
         rdvdao.afficherDispos(2);
 
+        spcdao.insertSpecialist(14,"spétest","adresse1",33333,"ville1");
+
         try {
             DaoFactory.getConnection().close(); //Close the connection if used
         } catch (SQLException e) {
