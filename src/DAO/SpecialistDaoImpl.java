@@ -49,6 +49,12 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
         return name;
     }
 
+    @Override
+    public void editProfileSpecialist(int id_specialist, String newName) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'editProfileSpecialist'");
+    }
+
 
 
 
