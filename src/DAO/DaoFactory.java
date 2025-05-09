@@ -22,7 +22,7 @@ public class DaoFactory {
     }
 
     public static Connection getConnection() throws SQLException {
-        if (url == null) {
+        if (url == null) { //?? J'ai ce message qui s active
             throw new SQLException("Database connection details are not initialized.");
         }
         return DriverManager.getConnection(url, username, password);

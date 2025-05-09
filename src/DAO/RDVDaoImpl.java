@@ -1,30 +1,45 @@
 package DAO;
 import Models.RDV;
 
+import java.sql.ResultSet;
 import java.util.*;
 
 public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
 
-    public RDVDaoImpl(String table) {
-        super(table);
+    public RDVDaoImpl() {
+        super("rdv");
+    }
+
+    public ResultSet getRdvUser(int idUser) {
+        return getSpecific("idUser", idUser);
     }
 
     public void supprimerRDV(RDV rdv) {
-        delete("id_rdv", rdv.getId_rdv());
+        delete("idRdv", rdv.getId_rdv());
     }
-    public void modifierRDV(RDV rdv, String column, Object value) {
-        setById("id_rdv",rdv.getId_rdv(),column, rdv);
+
+    public void modifierRDV(RDV rdv) {
+        int id = rdv.getId_rdv();
+        setById("idRdv", id, "heure", rdv.getDate_rdv());
+        setById("idRdv", id, "note", rdv.getRating());
+        setById("idRdv", id, "description", rdv.getComment());
     }
+
     public void ajouterRDV(RDV rdv) {
         Map<String, Object> rdv_ajoute = new HashMap<>();
-        rdv_ajoute.put("id_rdv", rdv.getId_rdv());
-        rdv_ajoute.put("id_patient", rdv.getId_patient());
-        rdv_ajoute.put("id_specialiste", rdv.getId_specialiste());
-        rdv_ajoute.put("date_rdv", rdv.getDate_rdv());
+        rdv_ajoute.put("idRdv", rdv.getId_rdv());
+        rdv_ajoute.put("idUser", rdv.getId_patient());
+        rdv_ajoute.put("idSpecialiste", rdv.getId_specialiste());
+        rdv_ajoute.put("heure", rdv.getDate_rdv());
         rdv_ajoute.put("rating", rdv.getRating());
         rdv_ajoute.put("comment", rdv.getComment());
         insert(rdv_ajoute);
     }
 
+    public ResultSet returnRDV(int rdvId) {
+        return getSpecific("id_rdv", rdvId);
+    }
 
 }
+
+

@@ -26,12 +26,6 @@ public class GeneralDaoImpl {
             res = statement.executeQuery("select * from " + this.table);        
             if(res == null) {
                 System.out.println("No values");
-            } else {
-                while (res.next()) {
-                    int id = res.getInt("id_user");
-                    String name = res.getString("name");
-                    System.out.println("ID: " + id + ", Name: " + name);
-                }
             }
         }catch(SQLException e) {
             e.printStackTrace();
@@ -116,7 +110,7 @@ public class GeneralDaoImpl {
      */
     public void delete(String columnName, int value) {
         try {
-            Connection connextion = DaoFactory.getConnection();
+            Connection connextion = DaoFactory.getConnection(); //relisez cette ligne et quand vous trouvez le probleme c win
             String query = "DELETE FROM "+this.table+"WHERE "+columnName+"=?";
             PreparedStatement statement = connextion.prepareStatement(query);
             statement.setInt(1, value);
@@ -139,25 +133,27 @@ public class GeneralDaoImpl {
             PreparedStatement statement = connexion.prepareStatement(query);
             statement.setObject(1, value);
             statement.setInt(2, idValue);
-            statement.executeUpdate();
+            int res = statement.executeUpdate();
+            if(res != 1) {
+                System.out.println("Error while updating");
+            }
         } catch(SQLException e) {
             e.getStackTrace();
         }
     }
 
-    public Object search(String columnName, String value) {
-        Object return_object = null;
+    public ResultSet search(String columnName, String value) {
+        ResultSet return_object = null;
         try {
             Connection connexion = DaoFactory.getConnection();
-            String query = "SELECT * FROM "+this.table+" WHERE "+columnName+"LIKE "+value+"%";
+            String query = "SELECT * FROM " + this.table + " WHERE " + columnName + " LIKE '" + value + "%'";
             PreparedStatement statement = connexion.prepareStatement(query);
             //statement.setObject(1, columnName); //celui la c etat pour remplacer * et avoir que le blaze mais c pas fou
             //statement.setInt(1, value); ca c pour preparer la requete mais il veut un int et pas un string
-            return_object = statement.executeUpdate();
+            return_object = statement.executeQuery();
         } catch(SQLException e) {
             e.getStackTrace();
         }
         return return_object;
-
     }
 }

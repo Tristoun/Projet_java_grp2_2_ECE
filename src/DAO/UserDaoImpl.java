@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Models.User;
+import Vue.GeneralVue;
 
 
 public class UserDaoImpl extends GeneralDaoImpl{
@@ -31,20 +32,24 @@ public class UserDaoImpl extends GeneralDaoImpl{
      * @param password the user's password
      * @return idUser the user's ID in the database, or -1 if login failed
      */
-    public int logIn(String username, String password) {
+    public User logIn(String username, String password) {
         int id = -1;
-
+        User patient = null;
         try {
             Connection connexion = DaoFactory.getConnection();
 
-            String query = "SELECT id_user FROM user WHERE name=? AND password=?";
+            String query = "SELECT * FROM user WHERE name=? AND password=?";
             PreparedStatement statement = connexion.prepareStatement(query);
             statement.setString(1, username);
             statement.setString(2, password);
             ResultSet res = statement.executeQuery();
-
+            System.out.println(res);
             if (res.next()) {
-                id = res.getInt("id_user");
+                id = res.getInt("idUser");
+                System.out.println("ID : " + id);
+                int admin = res.getInt("admin");
+                System.out.println("ADMIN : " + admin);
+                patient = new User(id, username, password, admin);
             }
             res.close();
             statement.close();
@@ -52,7 +57,8 @@ public class UserDaoImpl extends GeneralDaoImpl{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return id;
+        System.out.println(patient);
+        return patient;
     }
 
     public int registerUser(String username, String password) {
@@ -63,7 +69,7 @@ public class UserDaoImpl extends GeneralDaoImpl{
         try {
             Connection connexion = DaoFactory.getConnection();
 
-            String query = "SELECT id_user FROM user WHERE name=?";
+            String query = "SELECT idUser FROM user WHERE name=?";
             PreparedStatement statement = connexion.prepareStatement(query);
             statement.setString(1, username);
             ResultSet res = statement.executeQuery();
@@ -81,7 +87,7 @@ public class UserDaoImpl extends GeneralDaoImpl{
                 res = statement.executeQuery();
 
                 if (res.next()) {
-                    id = res.getInt("id_user");
+                    id = res.getInt("idUser");
                 }
             } else {
                 id = -2; //L'utilisateur existe déjà 
@@ -100,21 +106,38 @@ public class UserDaoImpl extends GeneralDaoImpl{
     }
 
     public void returnProfilPatient(int id_patient){
-        getSpecific("id_user", id_patient);
+        getSpecific("idUser", id_patient);
     }
 
     public void returnAllProfiles() {
         getAll();
     }
 
-    public void editProfileUser(int id_patient, String newName){
-        setById("id_user", id_patient, "name", newName);
+    public void editProfileUser(User user){
+        setById("idUser", user.getUserId(), "name", user.getUsername());
+        setById("idUser", user.getUserId(), "password", user.getPassword());
+        setById("idUser", user.getUserId(), "admin", user.getStatus());
     }
 
+    public String getName(int idUser) throws SQLException {
+        ResultSet res = getSpecific("idUser", idUser);
+        String name = "";
+        if(res.next()) {
+            try {
+                name = res.getString("name");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } 
+        return name;
+    }
 
+    public void supprimerUser(int id_patient){
+        delete("id_user", id_patient);
+    }
    /* public void SetByID(int idUser, String name, String password){
         Map<String, Object> updateData = new HashMap<>();
-        updateData.put("id_user", idUser);
+        updateData.put("idUser", idUser);
         updateData.put("name", name);
         GeneralDaoImpl.setByID(updateData, 5);
      }
@@ -122,7 +145,7 @@ public class UserDaoImpl extends GeneralDaoImpl{
     */
    public int verifierSiAdmin(User patient){
        int role = patient.getStatus();
-       if (role == 2){
+       if (role == 1){
            return 1;
        }
        return 0;

@@ -6,6 +6,6 @@ public interface RDVDao{
 
     public void supprimerRDV(RDV rdv);
 
-    public void modifierRDV(RDV rdv, String column, Object value);
+    public void modifierRDV(RDV rdv);
 
 }

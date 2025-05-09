@@ -8,93 +8,59 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, UserDao {
+import Models.Specialist;
+
+
+
+
+public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
+
+
 
     public SpecialistDaoImpl() {
         super("specialiste");
     }
 
 
-    @Override
-    public void returnProfilPatient(int id_patient) {
-        getSpecific("id_user", id_patient, "name");
+    public void returnProfilSpecialist(int id_specialist) {
+        getSpecific("idUser", id_specialist);
     }
 
-    @Override
-    public void returnAllProfiles() {
-        getAll();
+    public ResultSet returnAllProfiles() {
+        ResultSet res = this.getAll();
+        return res;
     }
 
-    @Override
     public void editProfileUser(int id_patient, String newName){
-        setById("id_user", id_patient, "name", newName);
+        UserDaoImpl userDaoImpl = new UserDaoImpl();
+        userDaoImpl.setById("idUser", id_patient, "name", newName);
     }
 
-    public void deleteSpecialist(int idSpecialist){
-        deleteFromTable("id_specialiste",idSpecialist,"specialiste");
-        deleteFromTable("id_specialiste",idSpecialist,"specialisation_doc");
-        deleteFromTable("id_specialiste",idSpecialist,"rdv");
-        deleteFromTable("id_specialiste",idSpecialist,"lieu_specialiste");
+
+    public String getName(int id) throws SQLException {
+        ResultSet res = getSpecific("idSpecialiste", id);
+        int idUser;
+        String name = "";
+        UserDaoImpl userDao = new UserDaoImpl();
+        if(res.next()) {
+            try {
+                idUser = res.getInt("idUser");
+                name = userDao.getName(idUser);
+                System.out.println("Specialiste name : " + name);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } 
+        return name;
     }
 
-    public void insertSpecialist(int idUser, Object nomSpecialisation, String adresse, int codePostal, String ville) {
-        Object IDSpecialist = insertSomething("id_user",idUser,"id_specialiste","specialiste");
-        System.out.println("ID SPEcialist : " + IDSpecialist);
-        setByIdOtherTable("id_specialiste", (Integer) IDSpecialist, "id_user", IDSpecialist,"specialiste");
-
-        String IDSpecialisation2 = String.valueOf(getSpecificFromTable("nom",nomSpecialisation,"id_specialisation","specialisation"));
-        System.out.println("IDSPECIALISATIONN : " + IDSpecialisation2);
-
-        ResultSet rs = getSpecificFromTable("nom", nomSpecialisation, "id_specialisation", "specialisation");
-        String IDSpecialisation = null;
-
-        try {
-            if (rs != null && rs.next()) {
-                IDSpecialisation = rs.getString("id_specialisation");
-                System.out.println("ID Specialisation: " + IDSpecialisation);
-            } else {
-                System.out.println("No specialisation found for: " + nomSpecialisation);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        Map<String, Object> mapSpec = new HashMap<>();
-        mapSpec.put("id_specialiste", IDSpecialist);
-        mapSpec.put("id_specialisation", IDSpecialisation);
-        insertInOtherTable(mapSpec, "specialisation_doc");
-
-        System.out.println("ID SPEcialisation : " + IDSpecialisation);
-
-
-        //Object IDSpecialisation = insertSomething("nom",nomSpecialisation,"id_specialisation","specialisation");
-
-
-      //  Object tempResult = insertSomething("id_specialisation",IDSpecialisation,"id_specialiste","specialisation_doc");
-        //setByIdOtherTable("id_specialiste", (Integer) IDSpecialist, "id_specialisation", tempResult,"specialisation_doc");
-        Map<String, Object> lieuMap = new HashMap<>();
-        lieuMap.put("adresse", adresse);
-        lieuMap.put("ville", ville);
-        lieuMap.put("code_postal", codePostal);
-        insertInOtherTable(lieuMap, "lieu");
-
-        ResultSet resultLieu = getSpecificFromTable("adresse",adresse,"id_lieu","lieu");
-        String idLieu = null;
-
-        try {
-            if (resultLieu != null && resultLieu.next()) {
-                idLieu = resultLieu.getString("id_lieu");
-                System.out.println("ID Lieu: " + idLieu);
-            } else {
-                System.out.println("nothing found");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        Map<String, Object> lieuSpecialisteMap = new HashMap<>();
-        lieuSpecialisteMap.put("id_specialiste", IDSpecialist);
-        lieuSpecialisteMap.put("id_lieu", idLieu);
-        insertInOtherTable(lieuSpecialisteMap, "lieu_specialiste");
+    @Override
+    public void editProfileSpecialist(Specialist specialiste) {
+        int id = specialiste.getIdSpecialist();
+        editProfileUser(specialiste.getUser().getUserId(), specialiste.getNameUser());
+        setById("idSpecialiste", id, "description", specialiste.getDescription());
+        setById("idSpecialiste", id, "tarif", specialiste.getTarif());
+        setById("idSpecialiste", id, "moyenneNote", specialiste.getMoyenne_note());
     }
 
 
@@ -122,5 +88,6 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao, 
         }
     }
     */
+
 }
 
