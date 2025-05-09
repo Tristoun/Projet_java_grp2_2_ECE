@@ -37,6 +37,7 @@ import DAO.SpecialisationDocDAOImpl;
 import DAO.SpecialistDaoImpl;
 import DAO.UserDaoImpl;
 import Models.RDV;
+import Models.User;
 import Application.DrawApp;
 import DAO.RDVDao;
 import DAO.RDVDaoImpl;
@@ -62,6 +63,7 @@ public class Controller {
     private String username;
     private String password;
     private int idUser;
+
     
     public void setIdUser(int idUser) {
         this.idUser = idUser;
@@ -69,6 +71,10 @@ public class Controller {
     
     public int getIdUser() {
         return idUser;
+    }
+
+    public AnchorPane getRoot() {
+        return this.root;
     }
 
     public void switchScene(String path, ActionEvent event) throws IOException {
@@ -323,7 +329,7 @@ public class Controller {
 
             int idSpe = res.getInt("idSpecialiste");
             String nameSpe = specialistDao.getName(idSpe);
-            int note = res.getInt("note");
+            double note = res.getDouble("note");
             String description = res.getString("description");
             Timestamp timestamp = res.getTimestamp("heure");
             Date date = new Date(timestamp.getTime());
@@ -354,9 +360,17 @@ public class Controller {
             password = passwordInput.getText();
 
             System.out.println(username + " " + password);
-            idUser = userDaoImpl.logIn(username, password);
-            
+            User patient = null;
+            patient = userDaoImpl.logIn(username, password);
+            idUser = patient.getUserId();
+
             if(idUser != -1 && idUser != -2) {
+                if(userDaoImpl.verifierSiAdmin(patient) == 1) {
+                    System.out.println("GO ADMIN");
+                    ControllerAdmin controlAdmin = new ControllerAdmin();
+                    controlAdmin.modifUser(event);
+                    return;
+                }
                 switchProfil(event);
             }
             else {

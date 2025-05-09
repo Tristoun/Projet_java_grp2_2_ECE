@@ -96,6 +96,16 @@ public class DrawApp {
         return datePicker;
     }
 
+    public static <T> TableView<T> drawTableView(AnchorPane root, TableView<T> tableView, double x, double y, int wi, int hei){
+        tableView.setLayoutX(x);
+        tableView.setLayoutY(y);
+        tableView.setPrefWidth(wi);
+        tableView.setPrefHeight(hei);
+
+        root.getChildren().add(tableView);
+        return tableView;
+    }
+
 
     public static Button drawSpecialistSearch(AnchorPane root, String nom, String specialite, double note, double tarif, double x, double y) { //Must be improve by adding image 
         drawRectangle(root, x, y, 759.0, 135.0);
@@ -111,12 +121,12 @@ public class DrawApp {
 
     }
 
-    public static void drawHistoric(AnchorPane root, String nameUser, String nameSpe, Date heure, int note, String description, double x, double y) {
+    public static void drawHistoric(AnchorPane root, String nameUser, String nameSpe, Date heure, double note, String description, double x, double y) {
         drawRectangle(root, x, y, 759.0, 135.0);
         drawCircle(root, 53.0, x+74.0, y+67.0);
         drawLabel(root, x+145.0, y+38.0, nameUser, 23, Color.BLACK);
         drawLabel(root, x+145.0, y+75.0, nameSpe, 23, Color.BLACK);
-        String noteString = Integer.toString(note)+"/5";
+        String noteString = Double.toString(note)+"/5";
         drawLabel(root, x+380.0, y+40.0, noteString, 23, Color.BLACK); 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = formatter.format(heure);

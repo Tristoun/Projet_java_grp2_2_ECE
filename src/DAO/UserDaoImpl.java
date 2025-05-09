@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Models.User;
+import Vue.GeneralVue;
 
 
 public class UserDaoImpl extends GeneralDaoImpl{
@@ -31,20 +32,24 @@ public class UserDaoImpl extends GeneralDaoImpl{
      * @param password the user's password
      * @return idUser the user's ID in the database, or -1 if login failed
      */
-    public int logIn(String username, String password) {
+    public User logIn(String username, String password) {
         int id = -1;
-
+        User patient = null;
         try {
             Connection connexion = DaoFactory.getConnection();
 
-            String query = "SELECT idUser FROM user WHERE name=? AND password=?";
+            String query = "SELECT * FROM user WHERE name=? AND password=?";
             PreparedStatement statement = connexion.prepareStatement(query);
             statement.setString(1, username);
             statement.setString(2, password);
             ResultSet res = statement.executeQuery();
-
+            System.out.println(res);
             if (res.next()) {
                 id = res.getInt("idUser");
+                System.out.println("ID : " + id);
+                int admin = res.getInt("admin");
+                System.out.println("ADMIN : " + admin);
+                patient = new User(id, username, password, admin);
             }
             res.close();
             statement.close();
@@ -52,7 +57,8 @@ public class UserDaoImpl extends GeneralDaoImpl{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return id;
+        System.out.println(patient);
+        return patient;
     }
 
     public int registerUser(String username, String password) {
@@ -137,7 +143,7 @@ public class UserDaoImpl extends GeneralDaoImpl{
     */
    public int verifierSiAdmin(User patient){
        int role = patient.getStatus();
-       if (role == 2){
+       if (role == 1){
            return 1;
        }
        return 0;

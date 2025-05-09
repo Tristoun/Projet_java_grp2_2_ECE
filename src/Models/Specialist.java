@@ -3,25 +3,25 @@ package Models;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Specialist extends User {
+public class Specialist {
     private int specialistId;
-    private String specialistUsername;
-    private String specialistPassword;
+    private User user;
     private Map<String, Object> schedule;
     private String description;
     private double tarif;
     private double moyenne_note;
-    public Specialist(int specialistId, String specialistUsername, String specialistPassword,String description, double tarif, double moyenne_note) {
-        super(specialistId,specialistUsername,specialistPassword,1); //1 car tjrs specialiste
-        this.schedule = new HashMap<>();
+    public Specialist(int specialistId, User user, String description, double tarif, double moyenne_note) { //Improve with passing a user of a string
+        this.specialistId = specialistId;
+        this.user = user;
         this.description = description;
         this.tarif = tarif;
         this.moyenne_note = moyenne_note;
     }
 
-    public void setSchedule(Map<String, Object> schedule) {
-        this.schedule = schedule;
+    public String getNameUser() {
+        return user.getUsername();
     }
+
     public int getIdSpecialist() {
         return specialistId;
     }
@@ -46,7 +46,5 @@ public class Specialist extends User {
     public void setMoyenne_note(double moyenne_note) {
         this.moyenne_note = moyenne_note;
     }
-    public String getSpecialistUsername() {
-        return specialistUsername;
-    }
+
 }
