@@ -162,9 +162,4 @@ public class DrawApp {
             e.getStackTrace();
         }
     }
-
-
-    public static void drawRDV(AnchorPane root ) {
-        
-    }
 }

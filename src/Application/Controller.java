@@ -1,5 +1,6 @@
 package Application;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -25,6 +27,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -314,6 +317,8 @@ public class Controller {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        tableRDV(event, idSpe);
+        // fonction antoine appellée ici
     }
 
     public void getHistoric(ActionEvent event) throws SQLException {
@@ -462,5 +467,52 @@ public class Controller {
         } else {
             return "t'as déjà un rdv à cette heure là mon pote";
         }
+    }
+
+    public void tableRDV(ActionEvent event, int IdSpecialiste) {
+        RDVDaoImpl rdvDaoImpl = new RDVDaoImpl();
+        // UserDaoImpl userDao = new UserDaoImpl();                 Je pense pas en avoir besoin sauf peut-être pour modif données bdd après ?
+        TableView<LocalDateTime> table = new TableView<>(); 
+        TableColumn<LocalDateTime, String> slotColonne = new TableColumn<>("Créneaux disponibles");
+        
+        slotColonne.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toString()));
+        
+        ObservableList<LocalDateTime> creneauxDisposObs = FXCollections.observableArrayList(); // liste des creneaux disponibles OBSERVABLE
+
+        List<RDV> listrdvspe = getAllRDV(IdSpecialiste); // liste des rdvs du specialiste
+        List<LocalDateTime> allPossibleSlots = genereSlots(LocalDate.now()); // peut-être pas localdate.now ??
+
+        // enlève créneaux déjà réservés
+        List<LocalDateTime> dispos = new ArrayList<>(allPossibleSlots);
+
+        for (RDV rdv : listrdvspe){
+            LocalDateTime dejareserve = rdv.getDate_rdv(); // getDate retourne bien une heure et pas un jour
+            dispos.removeIf(slot -> slot.equals(dejareserve));
+        }
+        
+        creneauxDisposObs.setAll(dispos);
+
+        table.getColumns().add(slotColonne);
+        table.setItems(creneauxDisposObs);
+
+        //table.setOnMouseClicked() machin machine if patientisavailable
+        /* 
+        try {
+            switchScene("../SceneDesign/priserdv.fxml", event);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        */
+
+        DrawApp.drawTableView(root, table, 50, 365, 700, 390);
+    }
+
+    public List<LocalDateTime> genereSlots(LocalDate date) { // j'ai pas trouve comment faire d'autre qu'en generant une liste de creneaux possibles
+        List<LocalDateTime> slots = new ArrayList<>();
+        LocalDateTime startOfDay = LocalDateTime.of(date, LocalTime.of(9, 0)); // heure de début
+        for (int i = 0; i < 14; i++) { // nb créneaux
+            slots.add(startOfDay.plusMinutes(i*30)); // pour créneau de une heure mettre plusHours(i)
+        }
+        return slots;
     }
 }
