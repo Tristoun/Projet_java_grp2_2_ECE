@@ -33,8 +33,13 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
         insert(rdv_ajoute);
     }
 
+<<<<<<< HEAD
     public ResultSet returnRDV(int rdvId) {
         return getSpecific("id_rdv", rdvId);
     }
 
 }
+=======
+    //public void rechercheRDVParDate()
+}
+>>>>>>> dev

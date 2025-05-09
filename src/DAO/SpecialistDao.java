@@ -2,7 +2,8 @@ package DAO;
 
 import java.sql.ResultSet;
 
-public interface SpecialistDao { //il manque le suppr ou on le laisse a user ?
+
+public interface SpecialistDao {
     public void returnProfilSpecialist(int id_specialist);
     
     public ResultSet returnAllProfiles();
