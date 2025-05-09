@@ -10,4 +10,6 @@ public interface UserDao {
     public void editProfileUser(int id_patient, String newName);
 
     public void supprimerUser(int id_patient);
+
 }
+

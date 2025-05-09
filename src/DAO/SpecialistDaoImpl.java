@@ -6,7 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.mysql.cj.protocol.Resultset;
+import Models.Specialist;
+
 
 
 
@@ -15,18 +16,23 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
 
 
 
+
     public SpecialistDaoImpl() {
         super("specialiste");
     }
 
-    @Override
+    public void returnProfilSpecialist(int id_specialist) {
+        getSpecific("idUser", id_specialist);
+    }
+
     public ResultSet returnAllProfiles() {
         ResultSet res = this.getAll();
         return res;
     }
 
     public void editProfileUser(int id_patient, String newName){
-        setById("idUser", id_patient, "name", newName);
+        UserDaoImpl userDaoImpl = new UserDaoImpl();
+        userDaoImpl.setById("idUser", id_patient, "name", newName);
     }
 
     public String getName(int id) throws SQLException {
@@ -47,14 +53,12 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
     }
 
     @Override
-    public void editProfileSpecialist(int id_specialist, String newName) {
-        setById("id_user", id_specialist, "name", newName);
-    }
-
-    @Override
-    public void returnProfilSpecialist(int id_specialist) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'returnProfilSpecialist'");
+    public void editProfileSpecialist(Specialist specialiste) {
+        int id = specialiste.getIdSpecialist();
+        editProfileUser(specialiste.getUser().getUserId(), specialiste.getNameUser());
+        setById("idSpecialiste", id, "description", specialiste.getDescription());
+        setById("idSpecialiste", id, "tarif", specialiste.getTarif());
+        setById("idSpecialiste", id, "moyenneNote", specialiste.getMoyenne_note());
     }
 
 
@@ -84,4 +88,5 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
         }
     }
     */
+
 }

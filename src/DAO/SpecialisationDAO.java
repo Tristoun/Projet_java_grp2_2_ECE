@@ -9,7 +9,7 @@ public interface SpecialisationDAO {
 
     public void supprimerSpecialisation(Specialisation specialisation);
 
-    public void modifierSpecialisation(Specialisation specialisation, String column, Object value);
+    public void modifierSpecialisation(Specialisation specialisation);
 
     public ResultSet returnSpecialisation(int specialisationId);
 }

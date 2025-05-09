@@ -25,8 +25,8 @@ public class SpecialisationDAOImpl extends GeneralDaoImpl implements Specialisat
         delete("id_specialisation", specialisation.getIdSpecialisation());
     }
 
-    public void modifierSpecialisation(Specialisation specialisation, String column, Object value) {
-        setById("id_specialisation",specialisation.getIdSpecialisation(),column, value);
+    public void modifierSpecialisation(Specialisation specialisation) {
+        setById("idSpecialisation",specialisation.getIdSpecialisation(), "nom", specialisation.getSpecialisationNom());
     }
 
     public ResultSet returnSpecialisation(int specialisationId) {

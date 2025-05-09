@@ -18,8 +18,11 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
         delete("idRdv", rdv.getId_rdv());
     }
 
-    public void modifierRDV(RDV rdv, String column, Object value) {
-        setById("idRdv",rdv.getId_rdv(),column, rdv);
+    public void modifierRDV(RDV rdv) {
+        int id = rdv.getId_rdv();
+        setById("idRdv", id, "heure", rdv.getDate_rdv());
+        setById("idRdv", id, "note", rdv.getRating());
+        setById("idRdv", id, "description", rdv.getComment());
     }
 
     public void ajouterRDV(RDV rdv) {
@@ -38,3 +41,5 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
     }
 
 }
+
+

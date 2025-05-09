@@ -22,6 +22,10 @@ public class Specialist {
         return user.getUsername();
     }
 
+    public User getUser() {
+        return this.user;
+    }
+
     public int getIdSpecialist() {
         return specialistId;
     }
@@ -45,6 +49,10 @@ public class Specialist {
     }
     public void setMoyenne_note(double moyenne_note) {
         this.moyenne_note = moyenne_note;
+    }
+
+    public void setUsername(String username) {
+        this.user.setUsername(username);
     }
 
 }

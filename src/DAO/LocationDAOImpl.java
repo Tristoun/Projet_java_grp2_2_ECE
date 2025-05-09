@@ -26,12 +26,14 @@ public class LocationDAOImpl extends GeneralDaoImpl implements LocationDAO{
         delete("id_lieu", location.getLocationId());
     }
 
-    public void modifierLocation(Location location, String column, Object value) {
-        setById("id_lieu",location.getLocationId(),column, value);
+    public void modifierLocation(Location location) {
+        int id = location.getLocationId();
+        setById("idLieu",id,"adresse", location.getAdress());
+        setById("idLieu",id,"ville", location.getCity());
+        setById("idLieu",id,"code_postal", location.getPostalCode());
     }
 
     public ResultSet returnLocation(int locationId) {
         return getSpecific("id_lieu", locationId);
     }
-
 }

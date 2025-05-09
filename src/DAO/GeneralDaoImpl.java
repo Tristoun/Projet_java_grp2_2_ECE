@@ -133,7 +133,10 @@ public class GeneralDaoImpl {
             PreparedStatement statement = connexion.prepareStatement(query);
             statement.setObject(1, value);
             statement.setInt(2, idValue);
-            statement.executeUpdate();
+            int res = statement.executeUpdate();
+            if(res != 1) {
+                System.out.println("Error while updating");
+            }
         } catch(SQLException e) {
             e.getStackTrace();
         }
