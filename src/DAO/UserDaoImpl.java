@@ -113,8 +113,10 @@ public class UserDaoImpl extends GeneralDaoImpl{
         getAll();
     }
 
-    public void editProfileUser(int id_patient, String newName){
-        setById("idUser", id_patient, "name", newName);
+    public void editProfileUser(User user){
+        setById("idUser", user.getUserId(), "name", user.getUsername());
+        setById("idUser", user.getUserId(), "password", user.getPassword());
+        setById("idUser", user.getUserId(), "admin", user.getStatus());
     }
 
     public String getName(int idUser) throws SQLException {

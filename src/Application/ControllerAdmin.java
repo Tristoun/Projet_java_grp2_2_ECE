@@ -22,16 +22,27 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.HBox;
+import javafx.util.converter.IntegerStringConverter;
+import javafx.scene.control.Button;
 
 public class ControllerAdmin extends Controller{
+
+    public void updateUser(User user) {
+        UserDaoImpl userDao = new UserDaoImpl();
+        System.out.println("I'm updating user : " + user.getUserId());
+        userDao.editProfileUser(user);
+    }
 
     public void modifUser(ActionEvent event) {
         UserDaoImpl userDaoImpl = new UserDaoImpl();
         TableView<User> tableData = new TableView<>();
-        
+        tableData.setEditable(true); // Enable editing on the TableView
         try {
             switchScene("../SceneDesign/admin.fxml", event);
     
@@ -41,6 +52,7 @@ public class ControllerAdmin extends Controller{
             TableColumn<User, String> nameCol = new TableColumn<>("Username");
             TableColumn<User, String> passCol = new TableColumn<>("Password");
             TableColumn<User, Integer> adminCol = new TableColumn<>("Admin");
+            TableColumn<User, Void> actionCol = new TableColumn<>("Action"); // Column for buttons
     
             ObservableList<User> data = FXCollections.observableArrayList(); 
             
@@ -52,15 +64,71 @@ public class ControllerAdmin extends Controller{
                 User currentUser = new User(id, name, pass, admin);
                 data.add(currentUser);
             }
-    
+
             idCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getUserId()).asObject());
+
             nameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUsername()));
+            nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            nameCol.setOnEditCommit(e -> {
+                User user = e.getRowValue();
+                user.setUsername(e.getNewValue());
+            });
+    
             passCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPassword()));
+            passCol.setCellFactory(TextFieldTableCell.forTableColumn());
+            passCol.setOnEditCommit(e -> {
+                User user = e.getRowValue();
+                user.setPassword(e.getNewValue()); 
+            });
+
+            // Make the Admin column editable with a TextField (Integer)
             adminCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getStatus()).asObject());
+            adminCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+            adminCol.setOnEditCommit(e -> {
+                User user = e.getRowValue();
+                user.setStatus(e.getNewValue());
+            });
+            
+            actionCol.setCellFactory(col -> {
+                return new TableCell<User, Void>() {
+                    private final Button updateBtn = new Button("Update");
+                    private final Button deleteBtn = new Button("Delete");
+                    private final HBox hbox = new HBox(10, updateBtn, deleteBtn);
+                    
+                    {
+                        hbox.setAlignment(Pos.CENTER);
+                        
+                        updateBtn.setOnAction(e -> {
+                            if (getTableRow() != null && getTableRow().getItem() != null) {
+                                User userCurrent = getTableRow().getItem();
+                                updateUser(userCurrent);
+                            }
+                        });
+                        
+                        deleteBtn.setOnAction(e -> {
+                            if (getTableRow() != null && getTableRow().getItem() != null) {
+                                User userCurrent = getTableRow().getItem();
+                                
+                                //deleteUser(userCurrent);
+                            }
+                        });
+                    }
+                    
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(hbox);
+                        }
+                    }
+                };
+            });
     
-            tableData.getColumns().addAll(idCol, nameCol, passCol, adminCol);
+            tableData.getColumns().addAll(idCol, nameCol, passCol, adminCol, actionCol);
             tableData.setItems(data);
-    
+            
             DrawApp.drawTableView(getRoot(), tableData, 28, 112, 750, 480);
     
         } catch (IOException e) {
@@ -113,7 +181,7 @@ public class ControllerAdmin extends Controller{
     
             tableData.getColumns().addAll(idCol, nameCol, descCol, tarifCol, moyennecol);
             tableData.setItems(data);
-    
+
             DrawApp.drawTableView(getRoot(), tableData, 28, 112, 750, 480);
     
         } catch (IOException e) {
@@ -273,7 +341,7 @@ public class ControllerAdmin extends Controller{
     
             tableData.getColumns().addAll(idCol, adresseCol, villeCol, codePostalCol);
             tableData.setItems(data);
-    
+
             DrawApp.drawTableView(getRoot(), tableData, 28, 112, 750, 480);
     
         } catch (IOException e) {
@@ -286,7 +354,5 @@ public class ControllerAdmin extends Controller{
     public void logOut() {
         logOut();
     }
-
-
 
 }

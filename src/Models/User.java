@@ -34,6 +34,10 @@ public class User{
         this.password = password;
     }
 
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
 
 
 }
