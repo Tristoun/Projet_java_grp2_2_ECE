@@ -9,7 +9,7 @@ public interface LocationDAO {
 
     public void supprimerLocation(Location location);
 
-    public void modifierLocation(Location location, String column, Object value);
+    public void modifierLocation(Location location);
 
     public ResultSet returnLocation(int locationId);
 }

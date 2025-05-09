@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Models.Specialist;
+
 
 
 
@@ -29,7 +31,8 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
     }
 
     public void editProfileUser(int id_patient, String newName){
-        setById("idUser", id_patient, "name", newName);
+        UserDaoImpl userDaoImpl = new UserDaoImpl();
+        userDaoImpl.setById("idUser", id_patient, "name", newName);
     }
 
     public String getName(int id) throws SQLException {
@@ -50,9 +53,12 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
     }
 
     @Override
-    public void editProfileSpecialist(int id_specialist, String newName) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'editProfileSpecialist'");
+    public void editProfileSpecialist(Specialist specialiste) {
+        int id = specialiste.getIdSpecialist();
+        editProfileUser(specialiste.getUser().getUserId(), specialiste.getNameUser());
+        setById("idSpecialiste", id, "description", specialiste.getDescription());
+        setById("idSpecialiste", id, "tarif", specialiste.getTarif());
+        setById("idSpecialiste", id, "moyenneNote", specialiste.getMoyenne_note());
     }
 
 
