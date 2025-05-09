@@ -101,6 +101,7 @@ public class Controller {
             switchScene("../SceneDesign/profil.fxml", event);
             Controller profilController = loader.getController();
             DrawApp.drawProfil(root, userDaoImpl, profilController.getIdUser());
+            DrawApp.drawImage(root, "../image/client.png", 60, 136, 138, 133);
         } catch (IOException e) {
             e.printStackTrace();
         }

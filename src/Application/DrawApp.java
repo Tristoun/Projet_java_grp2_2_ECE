@@ -21,6 +21,8 @@ import DAO.RDVDaoImpl;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.collections.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -106,10 +108,22 @@ public class DrawApp {
         return tableView;
     }
 
+    public static ImageView drawImage(AnchorPane root, String path, double x, double y, int wi, int hei) {
+        Image img = new Image(DrawApp.class.getResource(path).toExternalForm());
+        ImageView imageView = new ImageView(img);
+        imageView.setLayoutX(x);
+        imageView.setLayoutY(y);
+        imageView.setFitWidth(wi);
+        imageView.setFitHeight(hei);
+
+        root.getChildren().add(imageView);
+        return imageView;
+    }
+
 
     public static Button drawSpecialistSearch(AnchorPane root, String nom, String specialite, double note, double tarif, double x, double y) { //Must be improve by adding image 
         drawRectangle(root, x, y, 759.0, 135.0);
-        drawCircle(root, 53.0, x+74.0, y+67.0);
+        drawImage(root, "../image/doctor.jpg", x+20, y+12, 106, 106);
         drawLabel(root, x+145.0, y+38.0, nom, 23, Color.BLACK);
         drawLabel(root, x+145.0, y+75.0, specialite, 23, Color.BLACK);
         String noteString = Double.toString(note)+"/5";
@@ -123,7 +137,7 @@ public class DrawApp {
 
     public static void drawHistoric(AnchorPane root, String nameUser, String nameSpe, Date heure, double note, String description, double x, double y) {
         drawRectangle(root, x, y, 759.0, 135.0);
-        drawCircle(root, 53.0, x+74.0, y+67.0);
+        drawImage(root, "../image/doctor.jpg", x+20, y+12, 106, 106);
         drawLabel(root, x+145.0, y+38.0, nameUser, 23, Color.BLACK);
         drawLabel(root, x+145.0, y+75.0, nameSpe, 23, Color.BLACK);
         String noteString = Double.toString(note)+"/5";
@@ -152,7 +166,7 @@ public class DrawApp {
             System.out.println(idUser);
             if(res !=null) {
                 if(res.next()) {
-                    drawLabel(root, 350.0, 142.0, res.getString("name"), 25,Color.BLACK);
+                    drawLabel(root, 350.0, 188.0, res.getString("name"), 25,Color.BLACK);
                 }
             }
             else {
