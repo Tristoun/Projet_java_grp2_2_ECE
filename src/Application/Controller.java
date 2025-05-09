@@ -494,15 +494,39 @@ public class Controller {
 
         table.getColumns().add(slotColonne);
         table.setItems(creneauxDisposObs);
+        
+        int idPatient = getIdUser();
 
-        //table.setOnMouseClicked() machin machine if patientisavailable
-        /* 
+        table.setOnMouseClicked(event1 -> { // faire un bouton confirmer nn ?
+            LocalDateTime selectedSlot = table.getSelectionModel().getSelectedItem();
+            if (selectedSlot != null) {
+                // vérif patient dispo
+                if (patientIsAvailable(idPatient, selectedSlot, rdvDaoImpl)) {
+                    // Inscrit le patient au rdv
+
+                    // !!!! A DECOMMENTER //
+
+                    /* 
+
+                    RDV newRdv = new RDV(0, idPatient, IdSpecialiste, selectedSlot, 0, "RDV réservé par " + idPatient);
+                    rdvDaoImpl.ajouterRDV(newRdv);
+                    
+                    */ 
+
+                    System.out.println("RDV réservé pour : " + idPatient + " à " + selectedSlot);
+
+                    // met à jour table pour montrer
+                } else {
+                    System.out.println("Le patient a déjà un RDV réservé pour cette heure-là.");
+                }
+            }});
+
+        
         try {
             switchScene("../SceneDesign/priserdv.fxml", event);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        */
 
         DrawApp.drawTableView(root, table, 50, 365, 700, 390);
     }
