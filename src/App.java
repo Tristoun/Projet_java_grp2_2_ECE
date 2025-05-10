@@ -22,6 +22,6 @@ public class App extends Application {
         //scene.getStylesheets().add(css);
 
         stage.setScene(scene);
-        stage.show(); // Show the stage
+        stage.show();
     }
 }

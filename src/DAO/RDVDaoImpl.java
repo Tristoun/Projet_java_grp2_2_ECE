@@ -1,7 +1,12 @@
 package DAO;
 import Models.RDV;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
@@ -14,6 +19,21 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
         return getSpecific("idUser", idUser);
     }
 
+    public ResultSet getNextRdv(int idUser) {
+        String query = "SELECT * FROM rdv WHERE heure > NOW() and idUser = ? ORDER BY heure ASC LIMIT 1";
+        ResultSet res = null;
+        try {
+            Connection conn = DaoFactory.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, idUser);
+            res = stmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    
     public void supprimerRDV(RDV rdv) {
         delete("idRdv", rdv.getId_rdv());
     }

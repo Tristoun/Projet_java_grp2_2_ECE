@@ -51,7 +51,7 @@
             </LinearGradient>
          </fill></Rectangle>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="133.0" layoutX="60.0" layoutY="136.0" stroke="BLACK" strokeType="INSIDE" width="138.0" />
-      <Label layoutX="229.0" layoutY="136.0" prefHeight="42.0" prefWidth="127.0" text="Prénom : ">
+      <Label layoutX="233.0" layoutY="182.0" prefHeight="42.0" prefWidth="127.0" text="Prénom : ">
          <font>
             <Font size="25.0" />
          </font>
@@ -74,17 +74,7 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <Label layoutX="229.0" layoutY="182.0" prefHeight="42.0" prefWidth="252.0" text="Date de naissance ">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <Label layoutX="229.0" layoutY="227.0" prefHeight="42.0" prefWidth="252.0" text="N° de téléphone">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <Label layoutX="50.0" layoutY="400.0" prefHeight="42.0" prefWidth="252.0" text="Rendez-vous à venir :">
+      <Label layoutX="50.0" layoutY="400.0" prefHeight="42.0" prefWidth="281.0" text="Rendez-vous à venir :">
          <font>
             <Font size="25.0" />
          </font>
@@ -128,11 +118,11 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <Label layoutX="233.0" layoutY="498.0" prefHeight="42.0" prefWidth="339.0" text="Aucun rendez-vous de prévu." textFill="WHITE">
+      <Label layoutX="210.0" layoutY="498.0" prefHeight="42.0" prefWidth="385.0" text="Aucun rendez-vous de prévu." textFill="WHITE">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Button layoutX="37.0" layoutY="285.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="184.0" text="Modifier les informations" />
+      <Button layoutX="37.0" layoutY="285.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="213.0" text="Modifier les informations" />
    </children>
 </AnchorPane>

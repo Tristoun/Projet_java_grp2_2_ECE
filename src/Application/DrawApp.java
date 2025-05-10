@@ -21,6 +21,8 @@ import DAO.RDVDaoImpl;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.collections.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -106,10 +108,22 @@ public class DrawApp {
         return tableView;
     }
 
+    public static ImageView drawImage(AnchorPane root, String path, double x, double y, int wi, int hei) {
+        Image img = new Image(DrawApp.class.getResource(path).toExternalForm());
+        ImageView imageView = new ImageView(img);
+        imageView.setLayoutX(x);
+        imageView.setLayoutY(y);
+        imageView.setFitWidth(wi);
+        imageView.setFitHeight(hei);
+
+        root.getChildren().add(imageView);
+        return imageView;
+    }
+
 
     public static Button drawSpecialistSearch(AnchorPane root, String nom, String specialite, double note, double tarif, double x, double y) { //Must be improve by adding image 
         drawRectangle(root, x, y, 759.0, 135.0);
-        drawCircle(root, 53.0, x+74.0, y+67.0);
+        drawImage(root, "../image/doctor.jpg", x+20, y+12, 106, 106);
         drawLabel(root, x+145.0, y+38.0, nom, 23, Color.BLACK);
         drawLabel(root, x+145.0, y+75.0, specialite, 23, Color.BLACK);
         String noteString = Double.toString(note)+"/5";
@@ -121,19 +135,24 @@ public class DrawApp {
 
     }
 
-    public static void drawHistoric(AnchorPane root, String nameUser, String nameSpe, Date heure, double note, String description, double x, double y) {
-        drawRectangle(root, x, y, 759.0, 135.0);
-        drawCircle(root, 53.0, x+74.0, y+67.0);
-        drawLabel(root, x+145.0, y+38.0, nameUser, 23, Color.BLACK);
-        drawLabel(root, x+145.0, y+75.0, nameSpe, 23, Color.BLACK);
-        String noteString = Double.toString(note)+"/5";
-        drawLabel(root, x+380.0, y+40.0, noteString, 23, Color.BLACK); 
+    public static void drawHistoric(AnchorPane root, String nameUser, String nameSpe, Date heure, double note, String description, double x, double y, int wi, int hei, String addr) {
+        drawRectangle(root, x, y, wi, hei);
+        drawImage(root, "../image/doctor.jpg", x+20, y+12, 106, 106);
+        drawLabel(root, x+145.0, y+38.0, "Client : " + nameUser, 23, Color.BLACK);
+        drawLabel(root, x+145.0, y+75.0, "Docteur : " + nameSpe, 23, Color.BLACK);
+        if(note != -1) {
+            String noteString = Double.toString(note)+"/5";
+            drawLabel(root, x+450.0, y+40.0, noteString, 23, Color.BLACK); 
+        }
+        else {
+            drawLabel(root, x+320.0, y+40.0, addr, 16, Color.BLACK);
+        }
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = formatter.format(heure);
-        drawLabel(root, x+380, y+80.0, formattedDate, 23, Color.BLACK);
+        drawLabel(root, x+450, y+80.0, formattedDate, 23, Color.BLACK);
     }
 
-    public static void drawTakeRdv(AnchorPane root, String name, ArrayList<String> lstSpecialisation) {
+    public static void drawTakeRdv(AnchorPane root, String name, ArrayList<String> lstSpecialisation, String addr) {
         drawLabel(root, 455, 146, name, 25, Color.WHITE);
         double x = 350;
         double y = 182;
@@ -141,6 +160,8 @@ public class DrawApp {
             drawLabel(root, x, y, talent, 16, Color.WHITE);
             y += 20;
         }
+        drawLabel(root, x-120, y, addr, 23, Color.WHITE);
+        drawImage(root, "../image/doctor.jpg", 50, 146, 160, 160);
     }
 
 
@@ -152,7 +173,7 @@ public class DrawApp {
             System.out.println(idUser);
             if(res !=null) {
                 if(res.next()) {
-                    drawLabel(root, 350.0, 142.0, res.getString("name"), 25,Color.BLACK);
+                    drawLabel(root, 350.0, 188.0, res.getString("name"), 25,Color.BLACK);
                 }
             }
             else {
@@ -161,10 +182,5 @@ public class DrawApp {
         }catch(SQLException e) {
             e.getStackTrace();
         }
-    }
-
-
-    public static void drawRDV(AnchorPane root ) {
-        
     }
 }

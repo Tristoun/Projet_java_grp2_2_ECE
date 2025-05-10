@@ -1,5 +1,6 @@
 package Application;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -25,12 +27,15 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle.Control;
 import javax.swing.Action;
 import DAO.DaoFactory;
+import DAO.LocationDAOImpl;
+import DAO.LocationDocDAOImpl;
 import DAO.RDVDaoImpl;
 import DAO.SpecialisationDAOImpl;
 import DAO.SpecialisationDocDAOImpl;
@@ -98,6 +103,12 @@ public class Controller {
             switchScene("../SceneDesign/profil.fxml", event);
             Controller profilController = loader.getController();
             DrawApp.drawProfil(root, userDaoImpl, profilController.getIdUser());
+            DrawApp.drawImage(root, "../image/client.png", 60, 136, 138, 133);
+            try {
+                getNextRdv();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,6 +131,20 @@ public class Controller {
         }
         return choiceTalent;
 
+    }
+
+    public String getAddrDoc(LocationDocDAOImpl locDocDao, LocationDAOImpl locDao, int idSpe) throws SQLException {
+        String addr = "";
+        ResultSet resLocDoc = locDocDao.returnLocationDoc(idSpe);
+        if(resLocDoc.next()) {
+            int idAddr = resLocDoc.getInt("idLieu");
+            System.out.println(idAddr);
+            ResultSet resLoc = locDao.getSpecific("idLieu", idAddr);
+            if(resLoc.next()) {
+                addr = resLoc.getString("adresse") + " " + resLoc.getString("ville") + " " + resLoc.getString("code_postal");
+            }
+        }
+        return addr;
     }
 
     public ArrayList<Integer> getListSpecialistByTalent(String valueTalent, SpecialisationDAOImpl specialisationDao, SpecialisationDocDAOImpl speDocDao) {
@@ -304,16 +329,23 @@ public class Controller {
 
     public void switchTakeRdv(ActionEvent event, int idSpe) {
         SpecialistDaoImpl speDao = new SpecialistDaoImpl();
+        LocationDAOImpl locDao = new LocationDAOImpl();
+        LocationDocDAOImpl locDocDao = new LocationDocDAOImpl();
         try {
             switchScene("../SceneDesign/priserdv.fxml", event);
             ArrayList<String> lstSpecialisation = getTalentSpecialist(idSpe);
             String name = speDao.getName(idSpe);
-            DrawApp.drawTakeRdv(root, name, lstSpecialisation);
+            String addr = "";
+            addr = getAddrDoc(locDocDao, locDao, idSpe);
+            DrawApp.drawTakeRdv(root, name, lstSpecialisation, addr);
+        
         }catch(IOException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        tableRDV(event, idSpe);
+        // fonction antoine appellée ici
     }
 
     public void getHistoric(ActionEvent event) throws SQLException {
@@ -334,8 +366,40 @@ public class Controller {
             Timestamp timestamp = res.getTimestamp("heure");
             Date date = new Date(timestamp.getTime());
 
-            DrawApp.drawHistoric(root, nameUser, nameSpe, date, note, description, x, y);
+            DrawApp.drawHistoric(root, nameUser, nameSpe, date, note, description, x, y, 759, 135, "");
             y += 158.0;
+        }
+    }
+
+    public void getNextRdv() throws SQLException {
+        RDVDaoImpl rdvdao = new RDVDaoImpl();
+        SpecialistDaoImpl specialistDao = new SpecialistDaoImpl();
+        UserDaoImpl userdao = new UserDaoImpl();
+        LocationDAOImpl locDao = new LocationDAOImpl();
+        LocationDocDAOImpl locDocDao = new LocationDocDAOImpl();
+        
+        ResultSet res =  rdvdao.getNextRdv(idUser);
+        String nameUser = userdao.getName(idUser);
+        double x = 41.0;
+        double y = 445.0;
+        if(res != null) {
+            if (res.next()) {   
+
+                int idSpe = res.getInt("idSpecialiste");
+                String nameSpe = specialistDao.getName(idSpe);
+                String description = res.getString("description");
+                Timestamp timestamp = res.getTimestamp("heure");
+                Date date = new Date(timestamp.getTime());
+                String addr = "";
+                
+                try {
+                    addr = getAddrDoc(locDocDao, locDao, idSpe);
+                }
+                catch(SQLException e) {
+                    e.getStackTrace();
+                }
+                DrawApp.drawHistoric(root, nameUser, nameSpe, date, -1, description, x, y, 723, 148, addr);
+            }
         }
     }
 
@@ -462,5 +526,76 @@ public class Controller {
         } else {
             return "t'as déjà un rdv à cette heure là mon pote";
         }
+    }
+
+    public void tableRDV(ActionEvent event, int IdSpecialiste) {
+        RDVDaoImpl rdvDaoImpl = new RDVDaoImpl();
+        // UserDaoImpl userDao = new UserDaoImpl();                 Je pense pas en avoir besoin sauf peut-être pour modif données bdd après ?
+        TableView<LocalDateTime> table = new TableView<>(); 
+        TableColumn<LocalDateTime, String> slotColonne = new TableColumn<>("Créneaux disponibles");
+        
+        slotColonne.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toString()));
+        
+        ObservableList<LocalDateTime> creneauxDisposObs = FXCollections.observableArrayList(); // liste des creneaux disponibles OBSERVABLE
+
+        List<RDV> listrdvspe = getAllRDV(IdSpecialiste); // liste des rdvs du specialiste
+        List<LocalDateTime> allPossibleSlots = genereSlots(LocalDate.now()); // peut-être pas localdate.now ??
+
+        // enlève créneaux déjà réservés
+        List<LocalDateTime> dispos = new ArrayList<>(allPossibleSlots);
+
+        for (RDV rdv : listrdvspe){
+            LocalDateTime dejareserve = rdv.getDate_rdv(); // getDate retourne bien une heure et pas un jour
+            dispos.removeIf(slot -> slot.equals(dejareserve));
+        }
+        
+        creneauxDisposObs.setAll(dispos);
+
+        table.getColumns().add(slotColonne);
+        table.setItems(creneauxDisposObs);
+        
+        int idPatient = getIdUser();
+
+        table.setOnMouseClicked(event1 -> { // faire un bouton confirmer nn ?
+            LocalDateTime selectedSlot = table.getSelectionModel().getSelectedItem();
+            if (selectedSlot != null) {
+                // vérif patient dispo
+                if (patientIsAvailable(idPatient, selectedSlot, rdvDaoImpl)) {
+                    // Inscrit le patient au rdv
+
+                    // !!!! A DECOMMENTER //
+
+                    /* 
+
+                    RDV newRdv = new RDV(0, idPatient, IdSpecialiste, selectedSlot, 0, "RDV réservé par " + idPatient);
+                    rdvDaoImpl.ajouterRDV(newRdv);
+                    
+                    */ 
+
+                    System.out.println("RDV réservé pour : " + idPatient + " à " + selectedSlot);
+
+                    // met à jour table pour montrer
+                } else {
+                    System.out.println("Le patient a déjà un RDV réservé pour cette heure-là.");
+                }
+            }});
+
+        
+        try {
+            switchScene("../SceneDesign/priserdv.fxml", event);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        DrawApp.drawTableView(root, table, 50, 365, 700, 390);
+    }
+
+    public List<LocalDateTime> genereSlots(LocalDate date) { // j'ai pas trouve comment faire d'autre qu'en generant une liste de creneaux possibles
+        List<LocalDateTime> slots = new ArrayList<>();
+        LocalDateTime startOfDay = LocalDateTime.of(date, LocalTime.of(9, 0)); // heure de début
+        for (int i = 0; i < 14; i++) { // nb créneaux
+            slots.add(startOfDay.plusMinutes(i*30)); // pour créneau de une heure mettre plusHours(i)
+        }
+        return slots;
     }
 }
