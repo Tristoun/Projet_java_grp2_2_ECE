@@ -91,10 +91,27 @@ public class Controller {
         newController.choiceTalent = this.choiceTalent; //Could be update to update only on search page
         newController.datePicker = this.datePicker;
         
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        if (event.getSource() instanceof Node) {
+            Node sourceNode = (Node) event.getSource();
+            
+            Stage stage = (Stage) sourceNode.getScene().getWindow();
+            
+            if (stage != null) {
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } else {
+                System.out.println("Stage is null!");
+            }
+        } else {
+            System.out.println("Event source is not a Node!");
+        }
+
+        // code d'avant
+        /*Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.show();
+        stage.show();*/
     }
     
     public void switchProfil(ActionEvent event) {
@@ -561,16 +578,10 @@ public class Controller {
             if (selectedSlot != null) {
                 // vérif patient dispo
                 if (patientIsAvailable(idPatient, selectedSlot, rdvDaoImpl)) {
-                    // Inscrit le patient au rdv
-
-                    // !!!! A DECOMMENTER //
-
-                    /* 
+                    
 
                     RDV newRdv = new RDV(0, idPatient, IdSpecialiste, selectedSlot, 0, "RDV réservé par " + idPatient);
                     rdvDaoImpl.ajouterRDV(newRdv);
-                    
-                    */ 
 
                     System.out.println("RDV réservé pour : " + idPatient + " à " + selectedSlot);
 
@@ -579,13 +590,6 @@ public class Controller {
                     System.out.println("Le patient a déjà un RDV réservé pour cette heure-là.");
                 }
             }});
-
-        
-        try {
-            switchScene("../SceneDesign/priserdv.fxml", event);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         DrawApp.drawTableView(root, table, 50, 365, 700, 390);
     }
