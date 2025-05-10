@@ -90,28 +90,10 @@ public class Controller {
         newController.setIdUser(this.idUser);
         newController.choiceTalent = this.choiceTalent; //Could be update to update only on search page
         newController.datePicker = this.datePicker;
-        
-        if (event.getSource() instanceof Node) {
-            Node sourceNode = (Node) event.getSource();
-            
-            Stage stage = (Stage) sourceNode.getScene().getWindow();
-            
-            if (stage != null) {
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            } else {
-                System.out.println("Stage is null!");
-            }
-        } else {
-            System.out.println("Event source is not a Node!");
-        }
-
-        // code d'avant
-        /*Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.show();*/
+        stage.show();
     }
     
     public void switchProfil(ActionEvent event) {
