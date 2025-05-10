@@ -25,13 +25,20 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle.Control;
+import java.util.Set;
+
 import javax.swing.Action;
 import DAO.DaoFactory;
 import DAO.LocationDAOImpl;
@@ -46,6 +53,10 @@ import Models.User;
 import Application.DrawApp;
 import DAO.RDVDao;
 import DAO.RDVDaoImpl;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.util.Callback;
 
 public class Controller {
     @FXML
@@ -527,51 +538,122 @@ public class Controller {
         }
     }
 
+    public String getNomJourFrancais(DayOfWeek dayOfWeek) {
+        switch (dayOfWeek) {
+            case MONDAY: return "LUNDI";
+            case TUESDAY: return "MARDI";
+            case WEDNESDAY: return "MERCREDI";
+            case THURSDAY: return "JEUDI";
+            case FRIDAY: return "VENDREDI";
+            case SATURDAY: return "SAMEDI";
+            default: return "";
+        }
+    }
+    
     public void tableRDV(ActionEvent event, int IdSpecialiste) {
         RDVDaoImpl rdvDaoImpl = new RDVDaoImpl();
-        // UserDaoImpl userDao = new UserDaoImpl();                 Je pense pas en avoir besoin sauf peut-être pour modif données bdd après ?
-        TableView<LocalDateTime> table = new TableView<>(); 
-        TableColumn<LocalDateTime, String> slotColonne = new TableColumn<>("Créneaux disponibles");
-        
-        slotColonne.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().toString()));
-        
-        ObservableList<LocalDateTime> creneauxDisposObs = FXCollections.observableArrayList(); // liste des creneaux disponibles OBSERVABLE
+        TableView<Map<String, LocalDateTime>> table = new TableView<>();
 
-        List<RDV> listrdvspe = getAllRDV(IdSpecialiste); // liste des rdvs du specialiste
-        List<LocalDateTime> allPossibleSlots = genereSlots(LocalDate.now()); // peut-être pas localdate.now ??
-
-        // enlève créneaux déjà réservés
-        List<LocalDateTime> dispos = new ArrayList<>(allPossibleSlots);
-
-        for (RDV rdv : listrdvspe){
-            LocalDateTime dejareserve = rdv.getDate_rdv(); // getDate retourne bien une heure et pas un jour
-            dispos.removeIf(slot -> slot.equals(dejareserve));
+        String[] joursSemaine = {"LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI"};
+        Map<String, List<LocalDateTime>> dispoParJour = new HashMap<>();
+        for (String jour : joursSemaine) {
+            dispoParJour.put(jour, new ArrayList<>());
         }
+
+        //on enleve les creneaux deja reserves
+        Set<LocalDateTime> creneauxReserves = new HashSet<>();
+        List<RDV> rdvs = getAllRDV(IdSpecialiste);  
+        for (RDV rdv : rdvs) {
+            creneauxReserves.add(rdv.getDate_rdv());
+        }
+
+        // Vérifier les créneaux réservés
+        System.out.println("Créneaux réservés : " + creneauxReserves);
+
+
+        for (String jour : joursSemaine) {
+            TableColumn<Map<String, LocalDateTime>, String> dayColumn = new TableColumn<>(jour);
+            dayColumn.setCellValueFactory(cellData -> {
+                LocalDateTime slot = cellData.getValue().get(jour);
+                return new SimpleStringProperty(slot != null ? slot.toLocalTime().toString() : "");
+            });
+            // cette partie rend les cellules déjà reservées grisées et incliquables 
+
+            dayColumn.setCellFactory(col -> {
+                TableCell<Map<String, LocalDateTime>, String> cell = new TableCell<>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!empty) {
+                            LocalDateTime slot = (LocalDateTime) getTableRow().getItem().get(jour);
+                            if (slot != null && creneauxReserves.contains(slot)) {
+                                setStyle("-fx-background-color: lightgray; -fx-text-fill: red; ");
+                                setDisable(true); // Rendre la cellule non cliquable
+                                setText("Réservé");
+                            } else { //pas sur que necessaire mais dans le doute 
+                                setStyle(""); 
+                                setDisable(false); 
+                                setText(item);
+                            }
+                        } else {
+                            setText(null);
+                        }
+                    }
+                };
+                return cell;
+            });
+
+            //formattage pour que soit propre dans tableau
+            dayColumn.setResizable(false);
+            dayColumn.setPrefWidth(116);
+            table.getColumns().add(dayColumn);
+        }
+
+        ObservableList<Map<String, LocalDateTime>> creneauxDisposObs = FXCollections.observableArrayList();
         
-        creneauxDisposObs.setAll(dispos);
+        // ajoute créneaux dans map
+        List<LocalDateTime> allPossibleSlots = genereSlots(LocalDate.now());
+        for (LocalDateTime slot : allPossibleSlots) {
+            String jour = getNomJourFrancais(slot.getDayOfWeek());
+            List<LocalDateTime> jourDispo = dispoParJour.get(jour);
+            if (jourDispo != null && !jourDispo.contains(slot)) {
+                jourDispo.add(slot);
+            }
+        }
 
-        table.getColumns().add(slotColonne);
-        table.setItems(creneauxDisposObs);
-        
-        int idPatient = getIdUser();
-
-        table.setOnMouseClicked(event1 -> { // faire un bouton confirmer nn ?
-            LocalDateTime selectedSlot = table.getSelectionModel().getSelectedItem();
-            if (selectedSlot != null) {
-                // vérif patient dispo
-                if (patientIsAvailable(idPatient, selectedSlot, rdvDaoImpl)) {
-                    
-
-                    RDV newRdv = new RDV(0, idPatient, IdSpecialiste, selectedSlot, 0, "RDV réservé par " + idPatient);
-                    rdvDaoImpl.ajouterRDV(newRdv);
-
-                    System.out.println("RDV réservé pour : " + idPatient + " à " + selectedSlot);
-
-                    // met à jour table pour montrer
+        int nombreCreneauxParJour = 14; // peut-être redondant avec genere slots j'ai pas la force d'y reflechir là mais ça marche comme ça 
+        for (int i = 0; i < nombreCreneauxParJour; i++) {
+            Map<String, LocalDateTime> row = new HashMap<>();
+            for (String jour : joursSemaine) {
+                List<LocalDateTime> creneaux = dispoParJour.get(jour);
+                if (creneaux != null && i < creneaux.size()) {
+                    row.put(jour, creneaux.get(i));
                 } else {
-                    System.out.println("Le patient a déjà un RDV réservé pour cette heure-là.");
+                    row.put(jour, null);
                 }
-            }});
+            }
+            creneauxDisposObs.add(row);
+        }
+    
+        table.setItems(creneauxDisposObs);
+    
+        table.setOnMouseClicked(event1 -> {
+            Map<String, LocalDateTime> selectedRow = table.getSelectionModel().getSelectedItem();
+            if (selectedRow != null) {
+                for (LocalDateTime selectedSlot : selectedRow.values()) {
+                    if (selectedSlot != null) {
+                        if (patientIsAvailable(getIdUser(), selectedSlot, rdvDaoImpl)) {
+                            RDV newRdv = new RDV(0, getIdUser(), IdSpecialiste, selectedSlot, 0, "RDV réservé par " + getIdUser());
+                            rdvDaoImpl.ajouterRDV(newRdv);
+                            System.out.println("RDV réservé pour : " + getIdUser() + " à " + selectedSlot);
+                        } else {
+                            System.out.println("t'as déjà réservé à cette heure là mon reuf");
+                        }
+                        break;
+                    }
+                }
+            }
+        });
 
         DrawApp.drawTableView(root, table, 50, 365, 700, 390);
     }
