@@ -21,14 +21,14 @@ public class LocationDocDAOImpl extends GeneralDaoImpl implements LocationDocDAO
     }
 
     public void modifierLieuLocationDoc(LocationDoc locationdoc, int idLocation) {
-        setById("id_specialiste",locationdoc.getIdSpecialist(),"id_lieu",idLocation);
+        setById("idSpecialiste",locationdoc.getIdSpecialist(),"id_lieu",idLocation);
     }
 
     public void modifierSpecialistLocationDoc(LocationDoc locationdoc, int idSpecialist) {
-        setById("id_lieu",locationdoc.getIdLocation(),"id_specialiste",idSpecialist);
+        setById("idLieu",locationdoc.getIdLocation(),"id_specialiste",idSpecialist);
     }
 
-    public ResultSet returnLocationDoc(int locationDocId) {
-        return getSpecific("id_lieu", locationDocId); //?? est ce que le this va marcher aussi si c le meme nom "id_lieu" ? Je pense que oui mais go check
+    public ResultSet returnLocationDoc(int idSpe) {
+        return getSpecific("idSpecialiste", idSpe); 
     }
 }

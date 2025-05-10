@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.ResourceBundle.Control;
 import javax.swing.Action;
 import DAO.DaoFactory;
+import DAO.LocationDAOImpl;
+import DAO.LocationDocDAOImpl;
 import DAO.RDVDaoImpl;
 import DAO.SpecialisationDAOImpl;
 import DAO.SpecialisationDocDAOImpl;
@@ -102,6 +104,11 @@ public class Controller {
             Controller profilController = loader.getController();
             DrawApp.drawProfil(root, userDaoImpl, profilController.getIdUser());
             DrawApp.drawImage(root, "../image/client.png", 60, 136, 138, 133);
+            try {
+                getNextRdv();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -124,6 +131,20 @@ public class Controller {
         }
         return choiceTalent;
 
+    }
+
+    public String getAddrDoc(LocationDocDAOImpl locDocDao, LocationDAOImpl locDao, int idSpe) throws SQLException {
+        String addr = "";
+        ResultSet resLocDoc = locDocDao.returnLocationDoc(idSpe);
+        if(resLocDoc.next()) {
+            int idAddr = resLocDoc.getInt("idLieu");
+            System.out.println(idAddr);
+            ResultSet resLoc = locDao.getSpecific("idLieu", idAddr);
+            if(resLoc.next()) {
+                addr = resLoc.getString("adresse") + " " + resLoc.getString("ville") + " " + resLoc.getString("code_postal");
+            }
+        }
+        return addr;
     }
 
     public ArrayList<Integer> getListSpecialistByTalent(String valueTalent, SpecialisationDAOImpl specialisationDao, SpecialisationDocDAOImpl speDocDao) {
@@ -308,11 +329,16 @@ public class Controller {
 
     public void switchTakeRdv(ActionEvent event, int idSpe) {
         SpecialistDaoImpl speDao = new SpecialistDaoImpl();
+        LocationDAOImpl locDao = new LocationDAOImpl();
+        LocationDocDAOImpl locDocDao = new LocationDocDAOImpl();
         try {
             switchScene("../SceneDesign/priserdv.fxml", event);
             ArrayList<String> lstSpecialisation = getTalentSpecialist(idSpe);
             String name = speDao.getName(idSpe);
-            DrawApp.drawTakeRdv(root, name, lstSpecialisation);
+            String addr = "";
+            addr = getAddrDoc(locDocDao, locDao, idSpe);
+            DrawApp.drawTakeRdv(root, name, lstSpecialisation, addr);
+        
         }catch(IOException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -340,8 +366,40 @@ public class Controller {
             Timestamp timestamp = res.getTimestamp("heure");
             Date date = new Date(timestamp.getTime());
 
-            DrawApp.drawHistoric(root, nameUser, nameSpe, date, note, description, x, y);
+            DrawApp.drawHistoric(root, nameUser, nameSpe, date, note, description, x, y, 759, 135, "");
             y += 158.0;
+        }
+    }
+
+    public void getNextRdv() throws SQLException {
+        RDVDaoImpl rdvdao = new RDVDaoImpl();
+        SpecialistDaoImpl specialistDao = new SpecialistDaoImpl();
+        UserDaoImpl userdao = new UserDaoImpl();
+        LocationDAOImpl locDao = new LocationDAOImpl();
+        LocationDocDAOImpl locDocDao = new LocationDocDAOImpl();
+        
+        ResultSet res =  rdvdao.getNextRdv(idUser);
+        String nameUser = userdao.getName(idUser);
+        double x = 41.0;
+        double y = 445.0;
+        if(res != null) {
+            if (res.next()) {   
+
+                int idSpe = res.getInt("idSpecialiste");
+                String nameSpe = specialistDao.getName(idSpe);
+                String description = res.getString("description");
+                Timestamp timestamp = res.getTimestamp("heure");
+                Date date = new Date(timestamp.getTime());
+                String addr = "";
+                
+                try {
+                    addr = getAddrDoc(locDocDao, locDao, idSpe);
+                }
+                catch(SQLException e) {
+                    e.getStackTrace();
+                }
+                DrawApp.drawHistoric(root, nameUser, nameSpe, date, -1, description, x, y, 723, 148, addr);
+            }
         }
     }
 

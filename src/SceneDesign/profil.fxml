@@ -74,7 +74,7 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <Label layoutX="50.0" layoutY="400.0" prefHeight="42.0" prefWidth="252.0" text="Rendez-vous à venir :">
+      <Label layoutX="50.0" layoutY="400.0" prefHeight="42.0" prefWidth="281.0" text="Rendez-vous à venir :">
          <font>
             <Font size="25.0" />
          </font>
@@ -118,11 +118,11 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <Label layoutX="233.0" layoutY="498.0" prefHeight="42.0" prefWidth="339.0" text="Aucun rendez-vous de prévu." textFill="WHITE">
+      <Label layoutX="210.0" layoutY="498.0" prefHeight="42.0" prefWidth="385.0" text="Aucun rendez-vous de prévu." textFill="WHITE">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Button layoutX="37.0" layoutY="285.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="184.0" text="Modifier les informations" />
+      <Button layoutX="37.0" layoutY="285.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="213.0" text="Modifier les informations" />
    </children>
 </AnchorPane>
