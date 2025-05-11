@@ -82,6 +82,8 @@ public class Controller {
     private String password;
     private int idUser;
 
+    int indexSearch = 0;
+
     
     public void setIdUser(int idUser) {
         this.idUser = idUser;
@@ -95,6 +97,28 @@ public class Controller {
         return this.root;
     }
 
+    public void updateSearchRight(ActionEvent event) {
+        this.indexSearch += 3;
+        try {
+            UpdateSearch(event);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateSearchLeft(ActionEvent event) {
+        this.indexSearch -=3;
+        if(this.indexSearch < 0) {
+            this.indexSearch = 0;
+        }
+        try {
+            UpdateSearch(event);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+    }
+
     public void switchScene(String path, ActionEvent event) throws IOException {
         this.loader = new FXMLLoader(getClass().getResource(path));
         this.root = loader.load();
@@ -103,6 +127,7 @@ public class Controller {
         newController.setIdUser(this.idUser);
         newController.choiceTalent = this.choiceTalent; //Could be update to update only on search page
         newController.datePicker = this.datePicker;
+        System.out.println("SEARCH : " + indexSearch);
         Scene currentScene = ((Node) event.getSource()).getScene();
         Stage stage = (Stage) currentScene.getWindow();
         Scene scene = new Scene(root);
@@ -255,8 +280,10 @@ public class Controller {
         try {
             double x = 21.0;
             double y = 295.0; //+158 each block
+            ArrayList<Map<String, Object>> lstContent = new ArrayList();
             if(res != null) {
                 while (res.next()) {
+                    Map<String, Object> content = new HashMap<>();
                     String name = "";
                     int idUser = res.getInt("idUser");
                     System.out.println(idUser);
@@ -266,7 +293,7 @@ public class Controller {
                     int idSpe = -1;
                     List<RDV> rdvlist;
                     boolean available = true;
-                    Button button = null;
+
                     if(state != 1) {
                         idSpe  = res.getInt("idSpecialiste");
                     }
@@ -285,8 +312,14 @@ public class Controller {
                                     description = resSpe.getString("description");
                                     note = resSpe.getDouble("moyenneNote");
                                     tarif = resSpe.getDouble("tarif");
-                                    button = DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
-                                    y += 158.0;
+
+                                    content.put("idSpe", idSpe);
+                                    content.put("name", name);
+                                    content.put("description", description);
+                                    content.put("note", note);
+                                    content.put("tarif", tarif);
+                                    lstContent.add(content);
+
                                 }
                             }
                         }
@@ -302,21 +335,51 @@ public class Controller {
                                 description = res.getString("description");
                                 note = res.getDouble("moyenneNote");
                                 tarif = res.getDouble("tarif"); 
-                                
-                                button = DrawApp.drawSpecialistSearch(root, name, description, note, tarif, x, y);
-                                y += 158.0;   
+
+                                content.put("idSpe", idSpe);
+                                content.put("name", name);
+                                content.put("description", description);
+                                content.put("note", note);
+                                content.put("tarif", tarif);
+                                lstContent.add(content);
                             }   
                         }
                     }
-                    if(button != null) {
-                        int finalIdSpe = idSpe; //Create new to assign for each button
-                        button.setOnAction(e -> {
-                            switchTakeRdv(e, finalIdSpe);
-                        });
-                    }
+                    System.out.println(lstContent);
                 }
 
+                int index = 0;
+                int itemsDrawn = 0;
+                Button button = null;
+                int total = lstContent.size();
+                if (this.indexSearch >= total) {
+                    this.indexSearch = (total % 3 == 0) ? total - 3 : total - (total % 3);
+                }
+                System.out.println("NEW SEARCH : " + indexSearch);
+                for (Map<String, Object> rdvList : lstContent) {
+                    if (index >= this.indexSearch && itemsDrawn < 3) {
+                        button = DrawApp.drawSpecialistSearch(
+                            root,
+                            rdvList.get("name").toString(),
+                            rdvList.get("description").toString(),
+                            (double) rdvList.get("note"),
+                            (double) rdvList.get("tarif"),
+                            x, y
+                        );
+                        y += 158.0;
+
+                        if (button != null) {
+                            int finalIdSpe = (int) rdvList.get("idSpe");
+                            button.setOnAction(e -> switchTakeRdv(e, finalIdSpe));
+                        }
+
+                        itemsDrawn++;
+                    }
+                    index++;
+                }
             }
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
