@@ -19,7 +19,7 @@ public class App extends Application {
             throw new IllegalStateException("Stage is null in start method.");
         }
 
-        DaoFactory.init("info_doctolib", "root", "e");
+        DaoFactory.init("info_doctolib", "root", "patapouf");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/SceneDesign/login.fxml"));
         AnchorPane root = loader.load();
         Scene scene = new Scene(root); // Set scene size and background color

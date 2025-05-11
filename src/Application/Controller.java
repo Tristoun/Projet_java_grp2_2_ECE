@@ -15,7 +15,9 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -101,7 +103,8 @@ public class Controller {
         newController.setIdUser(this.idUser);
         newController.choiceTalent = this.choiceTalent; //Could be update to update only on search page
         newController.datePicker = this.datePicker;
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene currentScene = ((Node) event.getSource()).getScene();
+        Stage stage = (Stage) currentScene.getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -553,7 +556,8 @@ public class Controller {
     public void tableRDV(ActionEvent event, int IdSpecialiste) {
         RDVDaoImpl rdvDaoImpl = new RDVDaoImpl();
         TableView<Map<String, LocalDateTime>> table = new TableView<>();
-
+        table.getSelectionModel().setCellSelectionEnabled(true);
+        table.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         String[] joursSemaine = {"LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI"};
         Map<String, List<LocalDateTime>> dispoParJour = new HashMap<>();
         for (String jour : joursSemaine) {
@@ -612,12 +616,13 @@ public class Controller {
         ObservableList<Map<String, LocalDateTime>> creneauxDisposObs = FXCollections.observableArrayList();
         
         // ajoute créneaux dans map
-        List<LocalDateTime> allPossibleSlots = genereSlots(LocalDate.now());
-        for (LocalDateTime slot : allPossibleSlots) {
-            String jour = getNomJourFrancais(slot.getDayOfWeek());
-            List<LocalDateTime> jourDispo = dispoParJour.get(jour);
-            if (jourDispo != null && !jourDispo.contains(slot)) {
-                jourDispo.add(slot);
+        for (int d = 0; d < 7; d++) {
+            LocalDate date = LocalDate.now().plusDays(d); // from tomorrow to +6 days
+            for (LocalDateTime slot : genereSlots(date)) {
+                String jour = getNomJourFrancais(slot.getDayOfWeek());
+                if (dispoParJour.containsKey(jour)) {
+                    dispoParJour.get(jour).add(slot);
+                }
             }
         }
 
@@ -634,23 +639,23 @@ public class Controller {
             }
             creneauxDisposObs.add(row);
         }
+        System.out.println(creneauxDisposObs);
     
         table.setItems(creneauxDisposObs);
     
         table.setOnMouseClicked(event1 -> {
-            Map<String, LocalDateTime> selectedRow = table.getSelectionModel().getSelectedItem();
-            if (selectedRow != null) {
-                for (LocalDateTime selectedSlot : selectedRow.values()) {
-                    if (selectedSlot != null) {
-                        if (patientIsAvailable(getIdUser(), selectedSlot, rdvDaoImpl)) {
-                            RDV newRdv = new RDV(0, getIdUser(), IdSpecialiste, selectedSlot, 0, "RDV réservé par " + getIdUser());
-                            rdvDaoImpl.ajouterRDV(newRdv);
-                            System.out.println("RDV réservé pour : " + getIdUser() + " à " + selectedSlot);
-                        } else {
-                            System.out.println("t'as déjà réservé à cette heure là mon reuf");
-                        }
-                        break;
-                    }
+            TablePosition<Map<String, LocalDateTime>, ?> pos = table.getSelectionModel().getSelectedCells().get(0);
+            String selectedDay = pos.getTableColumn().getText(); // e.g., "LUNDI 13/05"
+            Map<String, LocalDateTime> selectedRow = table.getItems().get(pos.getRow());
+            LocalDateTime selectedSlot = selectedRow.get(selectedDay);
+
+            if (selectedSlot != null) {
+                if (patientIsAvailable(getIdUser(), selectedSlot, rdvDaoImpl)) {
+                    RDV newRdv = new RDV(0, getIdUser(), IdSpecialiste, selectedSlot, 0, "RDV réservé par " + getIdUser()); //FIX TO AUTOINCREMENT
+                    rdvDaoImpl.ajouterRDV(newRdv);
+                    System.out.println("RDV réservé pour : " + getIdUser() + " à " + selectedSlot);
+                } else {
+                    System.out.println("t'as déjà réservé à cette heure là mon reuf");
                 }
             }
         });
