@@ -4,6 +4,10 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 
 import DAO.SpecialistDaoImpl;
 import DAO.UserDaoImpl;
@@ -11,6 +15,8 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -54,15 +60,25 @@ public class DrawApp {
         return label;
     }
 
+    
+
     public static Rectangle drawRectangle(AnchorPane root, double x, double y, double width, double height) {
         Rectangle rect = new Rectangle();
+
+        LinearGradient gradient = new LinearGradient(
+        0, 0, 1, 1, true, CycleMethod.NO_CYCLE,  
+        new Stop[] {
+            new Stop(0, Color.rgb(50, 184, 218)),
+            new Stop(1, Color.rgb(87, 255, 178))    
+        });
+
         rect.setLayoutX(x);
         rect.setLayoutY(y);
         rect.setWidth(width);
         rect.setHeight(height);
-        rect.setFill(Color.WHITE);
-        rect.setStroke(Color.BLACK);
-
+        rect.setFill(gradient);
+        rect.setArcWidth(30);
+        rect.setArcHeight(30);
         root.getChildren().add(rect);
         return rect;
     }
@@ -124,12 +140,12 @@ public class DrawApp {
     public static Button drawSpecialistSearch(AnchorPane root, String nom, String specialite, double note, double tarif, double x, double y) { //Must be improve by adding image 
         drawRectangle(root, x, y, 759.0, 135.0);
         drawImage(root, "../image/doctor.jpg", x+20, y+12, 106, 106);
-        drawLabel(root, x+145.0, y+38.0, nom, 23, Color.BLACK);
-        drawLabel(root, x+145.0, y+75.0, specialite, 23, Color.BLACK);
+        drawLabel(root, x+145.0, y+38.0, nom, 23, Color.WHITE);
+        drawLabel(root, x+145.0, y+75.0, specialite, 23, Color.WHITE);
         String noteString = Double.toString(note)+"/5";
-        drawLabel(root, x+380.0, y+40.0, noteString, 23, Color.BLACK); 
+        drawLabel(root, x+380.0, y+40.0, noteString, 23, Color.WHITE); 
         String tarifString = Double.toString(tarif)+"$";
-        drawLabel(root, x+380.0, y+65, tarifString, 23, Color.BLACK);
+        drawLabel(root, x+380.0, y+65, tarifString, 23, Color.WHITE);
         Button button = drawButton(root, x+613.0, y+38.0, "Prendre RDV", 16, 126.0, 56.0);
         return button;
 
@@ -138,18 +154,18 @@ public class DrawApp {
     public static void drawHistoric(AnchorPane root, String nameUser, String nameSpe, Date heure, double note, String description, double x, double y, int wi, int hei, String addr) {
         drawRectangle(root, x, y, wi, hei);
         drawImage(root, "../image/doctor.jpg", x+20, y+12, 106, 106);
-        drawLabel(root, x+145.0, y+38.0, "Client : " + nameUser, 23, Color.BLACK);
-        drawLabel(root, x+145.0, y+75.0, "Docteur : " + nameSpe, 23, Color.BLACK);
+        drawLabel(root, x+145.0, y+38.0, "Client : " + nameUser, 23, Color.WHITE);
+        drawLabel(root, x+145.0, y+75.0, "Docteur : " + nameSpe, 23, Color.WHITE);
         if(note != -1) {
             String noteString = Double.toString(note)+"/5";
-            drawLabel(root, x+450.0, y+40.0, noteString, 23, Color.BLACK); 
+            drawLabel(root, x+450.0, y+40.0, noteString, 23, Color.WHITE); 
         }
         else {
-            drawLabel(root, x+320.0, y+40.0, addr, 16, Color.BLACK);
+            drawLabel(root, x+320.0, y+40.0, addr, 16, Color.WHITE);
         }
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = formatter.format(heure);
-        drawLabel(root, x+450, y+80.0, formattedDate, 23, Color.BLACK);
+        drawLabel(root, x+450, y+80.0, formattedDate, 23, Color.WHITE);
     }
 
     public static void drawTakeRdv(AnchorPane root, String name, ArrayList<String> lstSpecialisation, String addr) {

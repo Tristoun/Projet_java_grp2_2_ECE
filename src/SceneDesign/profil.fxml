@@ -100,7 +100,7 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="148.0" layoutX="41.0" layoutY="445.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="723.0">
+      <Rectangle arcHeight="30.0" arcWidth="30.0" height="148.0" layoutX="41.0" layoutY="445.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="723.0">
          <fill>
             <LinearGradient endX="1.0" endY="1.0">
                <stops>
