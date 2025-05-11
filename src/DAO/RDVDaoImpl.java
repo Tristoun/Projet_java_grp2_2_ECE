@@ -51,8 +51,8 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
         rdv_ajoute.put("idUser", rdv.getId_patient());
         rdv_ajoute.put("idSpecialiste", rdv.getId_specialiste());
         rdv_ajoute.put("heure", rdv.getDate_rdv());
-        rdv_ajoute.put("rating", rdv.getRating());
-        rdv_ajoute.put("comment", rdv.getComment());
+        rdv_ajoute.put("note", rdv.getRating());
+        rdv_ajoute.put("description", rdv.getComment());
         insert(rdv_ajoute);
     }
 

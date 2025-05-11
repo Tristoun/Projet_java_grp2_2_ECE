@@ -14,13 +14,18 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        System.out.println("start() method is being called.");
+        if (stage == null) {
+            throw new IllegalStateException("Stage is null in start method.");
+        }
+
         DaoFactory.init("info_doctolib", "root", "patapouf");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/SceneDesign/login.fxml"));
         AnchorPane root = loader.load();
         Scene scene = new Scene(root); // Set scene size and background color
         //String css = this.getClass().getResource("application.css").toExternalForm();
         //scene.getStylesheets().add(css);
-
+        
         stage.setScene(scene);
         stage.show();
     }
