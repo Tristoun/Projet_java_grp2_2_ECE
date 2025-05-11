@@ -40,6 +40,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle.Control;
 import java.util.Set;
+import javafx.scene.shape.Rectangle;
 
 import javax.swing.Action;
 import DAO.DaoFactory;
@@ -581,8 +582,9 @@ public class Controller {
                 LocalDateTime slot = cellData.getValue().get(jour);
                 return new SimpleStringProperty(slot != null ? slot.toLocalTime().toString() : "");
             });
-            // cette partie rend les cellules déjà reservées grisées et incliquables 
 
+
+            // cette partie rend les cellules déjà reservées grisées et incliquables + les rends joliiies
             dayColumn.setCellFactory(col -> {
                 TableCell<Map<String, LocalDateTime>, String> cell = new TableCell<>() {
                     @Override
@@ -595,7 +597,7 @@ public class Controller {
                                 setDisable(true); // Rendre la cellule non cliquable
                                 setText("Réservé");
                             } else { //pas sur que necessaire mais dans le doute 
-                                setStyle(""); 
+                                setStyle("");
                                 setDisable(false); 
                                 setText(item);
                             }
@@ -626,7 +628,7 @@ public class Controller {
             }
         }
 
-        int nombreCreneauxParJour = 14; // peut-être redondant avec genere slots j'ai pas la force d'y reflechir là mais ça marche comme ça 
+        int nombreCreneauxParJour = 14; 
         for (int i = 0; i < nombreCreneauxParJour; i++) {
             Map<String, LocalDateTime> row = new HashMap<>();
             for (String jour : joursSemaine) {
