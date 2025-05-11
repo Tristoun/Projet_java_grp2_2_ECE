@@ -4,20 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
-
 import Models.User;
-import Vue.GeneralVue;
 
 
 public class UserDaoImpl extends GeneralDaoImpl{
@@ -133,16 +122,28 @@ public class UserDaoImpl extends GeneralDaoImpl{
     }
 
     public void supprimerUser(int id_patient){
-        delete("id_user", id_patient);
-    }
-   /* public void SetByID(int idUser, String name, String password){
-        Map<String, Object> updateData = new HashMap<>();
-        updateData.put("idUser", idUser);
-        updateData.put("name", name);
-        GeneralDaoImpl.setByID(updateData, 5);
-     }
+        LocationDocDAOImpl locdocdao = new LocationDocDAOImpl();
+        SpecialisationDocDAOImpl spedocDao = new SpecialisationDocDAOImpl();
+        RDVDaoImpl rdvDao = new RDVDaoImpl();
+        SpecialistDaoImpl speDao = new SpecialistDaoImpl();
 
-    */
+        ResultSet residSpe = speDao.getSpecific("idUser", id_patient);
+        try {
+            if(residSpe.next()) {
+                int idSpe = residSpe.getInt("idSpecialiste");
+                locdocdao.delete("idSpecialiste", idSpe);
+                spedocDao.delete("idSpecialiste", idSpe);
+                rdvDao.delete("idSpecialiste", idSpe);
+                speDao.delete("idSpecialiste", idSpe);
+            }
+            rdvDao.delete("idUser", id_patient);
+            delete("idUser", id_patient);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
    public int verifierSiAdmin(User patient){
        int role = patient.getStatus();
        if (role == 1){

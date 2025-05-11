@@ -33,4 +33,10 @@ public class SpecialisationDAOImpl extends GeneralDaoImpl implements Specialisat
         return getSpecific("id_specialisation", specialisationId);
     }
 
+    public void deleteSpecialisation(Specialisation specialisation) {
+        int id = specialisation.getIdSpecialisation();
+        SpecialisationDocDAOImpl specialisationDocDAO = new SpecialisationDocDAOImpl();
+        specialisationDocDAO.delete("idSpecialisation", id);
+        delete("idSpecialisation", id);
+    }
 }

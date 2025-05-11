@@ -110,12 +110,11 @@ public class GeneralDaoImpl {
      */
     public void delete(String columnName, int value) {
         try {
-            Connection connextion = DaoFactory.getConnection(); //relisez cette ligne et quand vous trouvez le probleme c win
-            String query = "DELETE FROM "+this.table+"WHERE "+columnName+"=?";
+            Connection connextion = DaoFactory.getConnection(); 
+            String query = "DELETE FROM "+this.table+" WHERE "+columnName+"=?";
             PreparedStatement statement = connextion.prepareStatement(query);
             statement.setInt(1, value);
             statement.executeUpdate();
-
         } catch(SQLException e) {
             e.getStackTrace();
         }

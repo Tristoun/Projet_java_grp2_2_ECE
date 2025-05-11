@@ -60,6 +60,11 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
         return getSpecific("id_rdv", rdvId);
     }
 
+    public void deleteRdv(RDV rdv)  {
+        int idRdv = rdv.getId_rdv();
+        delete("idRdv", idRdv);
+    }
+
 }
 
 

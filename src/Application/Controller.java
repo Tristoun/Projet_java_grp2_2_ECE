@@ -6,9 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -37,13 +35,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.ResourceBundle.Control;
 import java.util.Set;
-import javafx.scene.shape.Rectangle;
 
-import javax.swing.Action;
-import DAO.DaoFactory;
+
+
 import DAO.LocationDAOImpl;
 import DAO.LocationDocDAOImpl;
 import DAO.RDVDaoImpl;
@@ -53,13 +48,7 @@ import DAO.SpecialistDaoImpl;
 import DAO.UserDaoImpl;
 import Models.RDV;
 import Models.User;
-import Application.DrawApp;
-import DAO.RDVDao;
-import DAO.RDVDaoImpl;
 import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.util.Callback;
 
 public class Controller {
     @FXML
@@ -116,8 +105,7 @@ public class Controller {
             UpdateSearch(event);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        
+        }   
     }
 
     public void switchScene(String path, ActionEvent event) throws IOException {
@@ -356,7 +344,6 @@ public class Controller {
                 if (this.indexSearch >= total) {
                     this.indexSearch = (total % 3 == 0) ? total - 3 : total - (total % 3);
                 }
-                System.out.println("NEW SEARCH : " + indexSearch);
                 for (Map<String, Object> rdvList : lstContent) {
                     if (index >= this.indexSearch && itemsDrawn < 3) {
                         button = DrawApp.drawSpecialistSearch(
@@ -645,9 +632,8 @@ public class Controller {
                 LocalDateTime slot = cellData.getValue().get(jour);
                 return new SimpleStringProperty(slot != null ? slot.toLocalTime().toString() : "");
             });
+            // cette partie rend les cellules déjà reservées grisées et incliquables 
 
-
-            // cette partie rend les cellules déjà reservées grisées et incliquables + les rends joliiies
             dayColumn.setCellFactory(col -> {
                 TableCell<Map<String, LocalDateTime>, String> cell = new TableCell<>() {
                     @Override
@@ -660,7 +646,7 @@ public class Controller {
                                 setDisable(true); // Rendre la cellule non cliquable
                                 setText("Réservé");
                             } else { //pas sur que necessaire mais dans le doute 
-                                setStyle("");
+                                setStyle(""); 
                                 setDisable(false); 
                                 setText(item);
                             }
@@ -691,7 +677,7 @@ public class Controller {
             }
         }
 
-        int nombreCreneauxParJour = 14; 
+        int nombreCreneauxParJour = 14; // peut-être redondant avec genere slots j'ai pas la force d'y reflechir là mais ça marche comme ça 
         for (int i = 0; i < nombreCreneauxParJour; i++) {
             Map<String, LocalDateTime> row = new HashMap<>();
             for (String jour : joursSemaine) {

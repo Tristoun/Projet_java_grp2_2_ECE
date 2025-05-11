@@ -1,5 +1,6 @@
 package DAO;
 
+import Models.Location;
 import Models.LocationDoc;
 
 import java.sql.ResultSet;

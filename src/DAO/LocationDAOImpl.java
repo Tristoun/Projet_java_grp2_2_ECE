@@ -22,10 +22,6 @@ public class LocationDAOImpl extends GeneralDaoImpl implements LocationDAO{
         insert(lieu_ajoute);
     }
 
-    public void supprimerLocation(Location location) {
-        delete("id_lieu", location.getLocationId());
-    }
-
     public void modifierLocation(Location location) {
         int id = location.getLocationId();
         setById("idLieu",id,"adresse", location.getAdress());
@@ -35,5 +31,12 @@ public class LocationDAOImpl extends GeneralDaoImpl implements LocationDAO{
 
     public ResultSet returnLocation(int locationId) {
         return getSpecific("id_lieu", locationId);
+    }
+
+    public void deleteLocation(Location loc) {
+        int idLoc = loc.getLocationId();
+        LocationDocDAOImpl locationDocDAOImpl = new LocationDocDAOImpl();
+        locationDocDAOImpl.delete("idLieu", idLoc);
+        delete("idLieu", idLoc);
     }
 }

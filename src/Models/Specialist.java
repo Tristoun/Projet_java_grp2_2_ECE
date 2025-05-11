@@ -1,7 +1,13 @@
 package Models;
 
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
+
+import DAO.LocationDocDAOImpl;
+import DAO.RDVDaoImpl;
+import DAO.SpecialisationDocDAOImpl;
+import DAO.SpecialistDaoImpl;
 
 public class Specialist {
     private int specialistId;

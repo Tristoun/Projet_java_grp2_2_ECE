@@ -63,31 +63,18 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
         setById("idSpecialiste", id, "moyenneNote", specialiste.getMoyenne_note());
     }
 
+    public void deleteSpecialist(Specialist specialist) {
+        int idSpe = specialist.getIdSpecialist();
+        LocationDocDAOImpl locdocdao = new LocationDocDAOImpl();
+        SpecialisationDocDAOImpl spedocDao = new SpecialisationDocDAOImpl();
+        RDVDaoImpl rdvDao = new RDVDaoImpl();
+        SpecialistDaoImpl speDao = new SpecialistDaoImpl();
 
-    /*public void ModifierSpecialiste(Specialist personne, String description, String schedule, float tarif) {
-        try {
-            Connection connexion = daoFactory.getConnection();
-            PreparedStatement preparedStatement = connexion.prepareStatement(
-                    "UPDATE specialiste SET description = ?, schedule = ?, tarif = ? WHERE id_specialiste = ?"
-            );
-            int tempId = personne.getUserId();
-            preparedStatement.setString(1, description);
-            preparedStatement.setString(2, schedule);
-            preparedStatement.setFloat(3, tarif);
-            preparedStatement.setInt(4, tempId);
-
-            int rowsUpdated = preparedStatement.executeUpdate();
-            if (rowsUpdated > 0) {
-                System.out.println("Spécialiste mis à jour !");
-            } else {
-                System.out.println("ID non trouvé");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Erreur - durant la MAJ d'un spécialiste");
-        }
+        locdocdao.delete("idSpecialiste", idSpe);
+        spedocDao.delete("idSpecialiste", idSpe);
+        rdvDao.delete("idSpecialiste", idSpe);
+        speDao.delete("idSpecialiste", idSpe);
     }
-    */
 
 }
 

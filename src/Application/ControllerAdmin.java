@@ -62,6 +62,32 @@ public class ControllerAdmin extends Controller{
         rdvDaoImpl.modifierRDV(rdv);
     }
 
+    public void deleteUser(User user) {
+        UserDaoImpl userDaoImpl = new UserDaoImpl();
+        userDaoImpl.supprimerUser(user.getUserId());
+    }
+
+    public void deleteSpecialist(Specialist specialist) {
+        SpecialistDaoImpl speDao = new SpecialistDaoImpl();
+        speDao.deleteSpecialist(specialist);
+    }
+
+    public void deleteSpecialisation(Specialisation specialisation) {
+        SpecialisationDAOImpl specialisationDAOImpl = new SpecialisationDAOImpl();
+        specialisationDAOImpl.deleteSpecialisation(specialisation);
+    }
+
+    public void deleteLocation(Location location) {
+        LocationDAOImpl locationDAOImpl = new LocationDAOImpl();
+        locationDAOImpl.deleteLocation(location);
+    }
+
+    public void deleteRdv(RDV rdv) {
+        RDVDaoImpl rdvDaoImpl = new RDVDaoImpl();
+        rdvDaoImpl.deleteRdv(rdv);
+    }
+
+
     public void modifUser(ActionEvent event) {
         UserDaoImpl userDaoImpl = new UserDaoImpl();
         TableView<User> tableData = new TableView<>();
@@ -131,7 +157,7 @@ public class ControllerAdmin extends Controller{
                         deleteBtn.setOnAction(e -> {
                             if (getTableRow() != null && getTableRow().getItem() != null) {
                                 User userCurrent = getTableRow().getItem();
-                                //deleteUser(userCurrent);
+                                deleteUser(userCurrent);
                             }
                         });
                     }
@@ -246,7 +272,7 @@ public class ControllerAdmin extends Controller{
                         deleteBtn.setOnAction(e -> {
                             if (getTableRow() != null && getTableRow().getItem() != null) {
                                 Specialist current = getTableRow().getItem();
-                                // deleteSpecialist(current);
+                                deleteSpecialist(current);
                             }
                         });
                     }
@@ -320,7 +346,7 @@ public class ControllerAdmin extends Controller{
     
                     deleteBtn.setOnAction(e -> {
                         Specialisation current = getTableView().getItems().get(getIndex());
-                        //deleteSpecialisation(current); // Implement this
+                        deleteSpecialisation(current);
                     });
     
                     hbox.setAlignment(Pos.CENTER);
@@ -458,7 +484,7 @@ public class ControllerAdmin extends Controller{
                     deleteBtn.setOnAction(e -> {
                         if (getTableRow() != null && getTableRow().getItem() != null) {
                             RDV current = getTableRow().getItem();
-                            // deleteRDV(current);
+                            deleteRdv(current);
                         }
                     });
                 }
@@ -551,7 +577,7 @@ public class ControllerAdmin extends Controller{
                         deleteBtn.setOnAction(e -> {
                             if (getTableRow() != null && getTableRow().getItem() != null) {
                                 Location current = getTableRow().getItem();
-                                // deleteLocation(current);
+                                deleteLocation(current);
                             }
                         });
                     }
