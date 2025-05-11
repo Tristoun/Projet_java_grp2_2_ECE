@@ -65,6 +65,10 @@ public class RDVDaoImpl extends GeneralDaoImpl implements RDVDao{
         delete("idRdv", idRdv);
     }
 
+    public void addRdvAdmin(Map<String, Object> dict) {
+        insert(dict);
+    }
+
 }
 
 

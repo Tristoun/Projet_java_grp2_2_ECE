@@ -39,4 +39,8 @@ public class LocationDAOImpl extends GeneralDaoImpl implements LocationDAO{
         locationDocDAOImpl.delete("idLieu", idLoc);
         delete("idLieu", idLoc);
     }
+
+    public void addLocationAdmin(Map<String, Object> dict) {
+        insert(dict);
+    } 
 }

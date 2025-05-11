@@ -7,7 +7,9 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import DAO.LocationDAOImpl;
@@ -42,6 +44,7 @@ import javafx.util.converter.IntegerStringConverter;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 
 public class ControllerAdmin extends Controller{
 
@@ -344,9 +347,20 @@ public class ControllerAdmin extends Controller{
 
             DrawApp.drawTableView(getRoot(), tableData, 28, 112, 750, 480);
 
+            UserDaoImpl userDaoImpl = new UserDaoImpl();
+            ResultSet userRes = userDaoImpl.getAll();
+            ArrayList<String> lstUser = new ArrayList<>();
+            while (userRes.next()) {
+                int id = userRes.getInt("idUser");
+                String idString = Integer.toString(id);
+                lstUser.add(idString + "-" + userRes.getString("name"));
+            }
+
             ComboBox<String> newUserName = new ComboBox<>();
             newUserName.setPromptText("Select Username");
-            newUserName.getItems().addAll("User1", "User2", "User3", "Admin", "Guest");
+            for(String name : lstUser) {
+                newUserName.getItems().add(name);
+            }
             newUserName.setPrefWidth(100);
 
             TextField newSpeDesc = new TextField();
@@ -373,27 +387,29 @@ public class ControllerAdmin extends Controller{
             AnchorPane.setTopAnchor(addUserForm, 620.0);  // Adjust based on layout
 
             getRoot().getChildren().add(addUserForm);
-            // Add the form pane to root using drawTableView since that's the available method        
-            // Handle submit button action
             submitBtn.setOnAction(e -> {
                 Map<String, Object> dict = new HashMap<>();
                 String username = newUserName.getValue();
-                String description = newSpeDesc.getText();
-                double tarif = Double.parseDouble(newSpeTarif.getText());
-                double note = Double.parseDouble(newSpeNote.getText());                
-                
-                /*dict.put("name", username);
-                dict.put("password", password);
-                dict.put("admin", adminStatus);
+                if(username != null) {
+                    String numberPart = username.split("-")[0];  // "1"
+                    
+                    int id = Integer.parseInt(numberPart);
+                    String description = newSpeDesc.getText();
+                    double tarif = Double.parseDouble(newSpeTarif.getText());
+                    double note = Double.parseDouble(newSpeNote.getText());                
+                    
+                    dict.put("idUser", id);
+                    dict.put("description", description);
+                    dict.put("tarif", tarif);
+                    dict.put("moyenneNote", note);
 
-                //userDaoImpl.addUser(dict);*/
-
-                newSpeDesc.clear();
-                newSpeTarif.clear();
-                newSpeNote.clear();
+                    speDao.addSpecialist(dict);
+                    newSpeDesc.clear();
+                    newSpeTarif.clear();
+                    newSpeNote.clear();
+                }
             });
-
-            } catch (IOException | SQLException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
     }
@@ -462,10 +478,36 @@ public class ControllerAdmin extends Controller{
             tableData.setItems(data);
     
             DrawApp.drawTableView(getRoot(), tableData, 28, 112, 750, 480);
-    
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+            
+            TextField newSpeNom = new TextField();
+            newSpeNom.setPromptText("Nom");
+            newSpeNom.setPrefWidth(100);
+
+            Button submitBtn = new Button("Submit");
+            submitBtn.setPrefWidth(100);
+
+            HBox addUserForm = new HBox(10, newSpeNom, submitBtn);
+            addUserForm.setAlignment(Pos.CENTER);
+            addUserForm.setPadding(new Insets(10));
+
+            // Position on AnchorPane
+            AnchorPane.setLeftAnchor(addUserForm, 50.0);
+            AnchorPane.setTopAnchor(addUserForm, 620.0);
+
+            getRoot().getChildren().add(addUserForm);
+
+            submitBtn.setOnAction(e -> {
+                Map<String, Object> dict = new HashMap<>();
+                String nom = newSpeNom.getText();
+
+                if (nom != null && !nom.isEmpty()) {
+                    dict.put("nom", nom);
+
+                    specialisationDaoImpl.ajouterSpecialisation(dict); 
+                    newSpeNom.clear();
+                }
+            });
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -599,7 +641,92 @@ public class ControllerAdmin extends Controller{
             tableData.setItems(data);
     
             DrawApp.drawTableView(getRoot(), tableData, 28, 112, 750, 480);
-    
+            
+            SpecialistDaoImpl specialistDao = new SpecialistDaoImpl();
+            ResultSet specialistRes = specialistDao.getAll();
+
+            ArrayList<String> lstSpecialists = new ArrayList<>();
+            while (specialistRes.next()) {
+                int id = specialistRes.getInt("idSpecialiste");
+                String name = speDao.getName(id);
+                lstSpecialists.add(id + "-" + name);
+            }
+
+            ComboBox<String> specialistComboBox = new ComboBox<>();
+            specialistComboBox.setPromptText("Select Specialist");
+            specialistComboBox.getItems().addAll(lstSpecialists);
+            specialistComboBox.setPrefWidth(150);
+
+            UserDaoImpl userDaoImpl = new UserDaoImpl();
+            ResultSet userRes = userDaoImpl.getAll();
+
+            ArrayList<String> lstUsers = new ArrayList<>();
+            while (userRes.next()) {
+                int id = userRes.getInt("idUser");
+                lstUsers.add(id + "-" + userRes.getString("name"));
+            }
+
+            ComboBox<String> userComboBox = new ComboBox<>();
+            userComboBox.setPromptText("Select User");
+            userComboBox.getItems().addAll(lstUsers);
+            userComboBox.setPrefWidth(100);
+
+            DatePicker heurePicker = new DatePicker();
+            heurePicker.setPromptText("Date");
+            heurePicker.setPrefWidth(100);
+
+            TextField noteField = new TextField();
+            noteField.setPromptText("Note");
+            noteField.setPrefWidth(100);
+
+            TextField descField = new TextField();
+            descField.setPromptText("Description");
+            descField.setPrefWidth(100);
+
+            Button submitBtn = new Button("Submit");
+            submitBtn.setPrefWidth(100);
+
+            HBox form = new HBox(10, userComboBox, specialistComboBox, heurePicker, noteField, descField, submitBtn);
+            form.setAlignment(Pos.CENTER);
+            form.setPadding(new Insets(10));
+
+            AnchorPane.setLeftAnchor(form, 50.0);
+            AnchorPane.setTopAnchor(form, 620.0);
+            getRoot().getChildren().add(form);
+
+            submitBtn.setOnAction(e -> {
+                Map<String, Object> dict = new HashMap<>();
+                String userSelected = userComboBox.getValue();
+                String specialistSelected = specialistComboBox.getValue();
+
+                if (userSelected != null && specialistSelected != null && heurePicker.getValue() != null) {
+                    try {
+                        int idUser = Integer.parseInt(userSelected.split("-")[0]);
+                        int idSpecialist = Integer.parseInt(specialistSelected.split("-")[0]);
+                        String heure = heurePicker.getValue().toString();
+                        double note = Double.parseDouble(noteField.getText());
+                        String description = descField.getText();
+
+                        dict.put("idUser", idUser);
+                        dict.put("idSpecialiste", idSpecialist);
+                        dict.put("heure", heure);
+                        dict.put("note", note);
+                        dict.put("description", description);
+
+                        rdvDaoImpl.addRdvAdmin(dict);
+
+                        userComboBox.setValue(null);
+                        specialistComboBox.setValue(null);
+                        heurePicker.setValue(null);
+                        noteField.clear();
+                        descField.clear();
+
+                    } catch (NumberFormatException ex) {
+                        ex.printStackTrace(); 
+                    }
+                }
+            });
+
         } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
@@ -697,6 +824,49 @@ public class ControllerAdmin extends Controller{
             tableData.setItems(data);
 
             DrawApp.drawTableView(getRoot(), tableData, 28, 112, 750, 480);
+
+            TextField adresseField = new TextField();
+            adresseField.setPromptText("Adresse");
+            adresseField.setPrefWidth(150);
+
+            TextField villeField = new TextField();
+            villeField.setPromptText("Ville");
+            villeField.setPrefWidth(150);
+
+            TextField codePostalField = new TextField();
+            codePostalField.setPromptText("Code Postal");
+            codePostalField.setPrefWidth(100);
+
+            Button submitBtn = new Button("Submit");
+            submitBtn.setPrefWidth(100);
+
+            HBox form = new HBox(10, adresseField, villeField, codePostalField, submitBtn);
+            form.setAlignment(Pos.CENTER);
+            form.setPadding(new Insets(10));
+
+            AnchorPane.setLeftAnchor(form, 50.0);
+            AnchorPane.setTopAnchor(form, 620.0);
+            getRoot().getChildren().add(form);
+
+            submitBtn.setOnAction(e -> {
+                Map<String, Object> dict = new HashMap<>();
+                String adresse = adresseField.getText();
+                String ville = villeField.getText();
+                String codePostal = codePostalField.getText();
+
+                if (!adresse.isEmpty() && !ville.isEmpty() && !codePostal.isEmpty()) {
+                    dict.put("adresse", adresse);
+                    dict.put("ville", ville);
+                    dict.put("code_postal", codePostal);
+
+                    locationDaoImpl.addLocationAdmin(dict);
+
+                    // Clear fields
+                    adresseField.clear();
+                    villeField.clear();
+                    codePostalField.clear();
+                }
+            });
 
         } catch (IOException | SQLException e) {
             e.printStackTrace();

@@ -76,5 +76,9 @@ public class SpecialistDaoImpl extends GeneralDaoImpl implements SpecialistDao {
         speDao.delete("idSpecialiste", idSpe);
     }
 
+    public void addSpecialist(Map<String, Object> dict) {
+        insert(dict);
+    }
+
 }
 

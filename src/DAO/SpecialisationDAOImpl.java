@@ -13,12 +13,8 @@ public class SpecialisationDAOImpl extends GeneralDaoImpl implements Specialisat
         super("specialisation"); //?? pas sur
     }
 
-    public void ajouterSpecialisation(Specialisation specialisation){
-        Map<String, Object> specialisation_ajoute = new HashMap<>();
-        specialisation_ajoute.put("id_specialisation", specialisation.getIdSpecialisation());
-        specialisation_ajoute.put("nom", specialisation.getSpecialisationNom());
-        
-        insert(specialisation_ajoute);
+    public void ajouterSpecialisation(Map<String, Object> dict){
+        insert(dict);
     }
 
     public void supprimerSpecialisation(Specialisation specialisation) {
