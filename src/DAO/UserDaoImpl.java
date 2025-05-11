@@ -152,4 +152,8 @@ public class UserDaoImpl extends GeneralDaoImpl{
        return 0;
    }
 
+    public void addUser(Map<String, Object> userDict) {
+        insert(userDict);
+    }
+
 }

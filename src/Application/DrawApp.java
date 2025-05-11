@@ -20,6 +20,8 @@ import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.layout.Pane;
+
 
 // pour affichage viewtable dynamique priserdv
 import Models.RDV;
@@ -136,6 +138,22 @@ public class DrawApp {
         return imageView;
     }
 
+    public static TextField drawTextField(AnchorPane root, double x, double y, int wi, int hei) {
+        TextField input = new TextField();
+        input.setLayoutX(x);
+        input.setLayoutY(y);
+        input.setPrefWidth(wi);
+        input.setPrefHeight(hei);
+
+        root.getChildren().add(input);
+        return input;
+    }
+
+    public static void drawForm(AnchorPane root, AnchorPane form) {
+        root.getChildren().add(form);
+    }
+
+
 
     public static Button drawSpecialistSearch(AnchorPane root, String nom, String specialite, double note, double tarif, double x, double y) { //Must be improve by adding image 
         drawRectangle(root, x, y, 759.0, 135.0);
@@ -179,7 +197,6 @@ public class DrawApp {
         drawLabel(root, x-120, y, addr, 23, Color.WHITE);
         drawImage(root, "../image/doctor.jpg", 50, 146, 160, 160);
     }
-
 
 
     public static void drawProfil(AnchorPane root, UserDaoImpl userDaoImpl, int idUser) {

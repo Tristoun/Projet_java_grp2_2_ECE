@@ -7,6 +7,8 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
+import java.util.Map;
 
 import DAO.LocationDAOImpl;
 import DAO.RDVDaoImpl;
@@ -24,15 +26,22 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 
 public class ControllerAdmin extends Controller{
 
@@ -94,7 +103,6 @@ public class ControllerAdmin extends Controller{
         tableData.setEditable(true); // Enable editing on the TableView
         try {
             switchScene("../SceneDesign/admin.fxml", event);
-    
             ResultSet res = userDaoImpl.getAll();
     
             TableColumn<User, Integer> idCol = new TableColumn<>("ID");
@@ -184,6 +192,48 @@ public class ControllerAdmin extends Controller{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        TextField newUserName = new TextField();
+        newUserName.setPromptText("Username");
+        newUserName.setPrefWidth(180);
+
+        TextField newUserPass = new TextField();
+        newUserPass.setPromptText("Password");
+        newUserPass.setPrefWidth(180);
+
+        TextField newUserAdmin = new TextField();
+        newUserAdmin.setPromptText("Admin (0 or 1)");
+        newUserAdmin.setPrefWidth(180);
+
+        Button submitBtn = new Button("Submit");
+        submitBtn.setPrefWidth(100);
+
+        HBox addUserForm = new HBox(10, newUserName, newUserPass, newUserAdmin, submitBtn);
+        addUserForm.setAlignment(Pos.CENTER);
+        addUserForm.setPadding(new Insets(10));
+
+        // Directly add to root (AnchorPane or your main container)
+        AnchorPane.setLeftAnchor(addUserForm, 50.0);
+        AnchorPane.setTopAnchor(addUserForm, 620.0);  // Adjust based on layout
+
+        getRoot().getChildren().add(addUserForm);
+        // Add the form pane to root using drawTableView since that's the available method        
+        // Handle submit button action
+        submitBtn.setOnAction(e -> {
+            Map<String, Object> dict = new HashMap<>();
+            String username = newUserName.getText();
+            String password = newUserPass.getText();
+            int adminStatus = Integer.parseInt(newUserAdmin.getText());
+            System.out.println(username + password + adminStatus);
+            dict.put("name", username);
+            dict.put("password", password);
+            dict.put("admin", adminStatus);
+
+            userDaoImpl.addUser(dict);
+
+            newUserName.clear();
+            newUserPass.clear();
+            newUserAdmin.clear();
+        });
     }
     
 
@@ -294,9 +344,58 @@ public class ControllerAdmin extends Controller{
 
             DrawApp.drawTableView(getRoot(), tableData, 28, 112, 750, 480);
 
-        } catch (IOException | SQLException e) {
-            e.printStackTrace();
-        }
+            ComboBox<String> newUserName = new ComboBox<>();
+            newUserName.setPromptText("Select Username");
+            newUserName.getItems().addAll("User1", "User2", "User3", "Admin", "Guest");
+            newUserName.setPrefWidth(100);
+
+            TextField newSpeDesc = new TextField();
+            newSpeDesc.setPromptText("Description");
+            newSpeDesc.setPrefWidth(100);
+
+            TextField newSpeTarif = new TextField();
+            newSpeTarif.setPromptText("Tarif");
+            newSpeTarif.setPrefWidth(100);
+            
+            TextField newSpeNote = new TextField();
+            newSpeNote.setPromptText("Note");
+            newSpeNote.setPrefWidth(100);
+
+            Button submitBtn = new Button("Submit");
+            submitBtn.setPrefWidth(100);
+
+            HBox addUserForm = new HBox(10, newUserName, newSpeDesc, newSpeTarif,newSpeNote, submitBtn);
+            addUserForm.setAlignment(Pos.CENTER);
+            addUserForm.setPadding(new Insets(10));
+
+            // Directly add to root (AnchorPane or your main container)
+            AnchorPane.setLeftAnchor(addUserForm, 50.0);
+            AnchorPane.setTopAnchor(addUserForm, 620.0);  // Adjust based on layout
+
+            getRoot().getChildren().add(addUserForm);
+            // Add the form pane to root using drawTableView since that's the available method        
+            // Handle submit button action
+            submitBtn.setOnAction(e -> {
+                Map<String, Object> dict = new HashMap<>();
+                String username = newUserName.getValue();
+                String description = newSpeDesc.getText();
+                double tarif = Double.parseDouble(newSpeTarif.getText());
+                double note = Double.parseDouble(newSpeNote.getText());                
+                
+                /*dict.put("name", username);
+                dict.put("password", password);
+                dict.put("admin", adminStatus);
+
+                //userDaoImpl.addUser(dict);*/
+
+                newSpeDesc.clear();
+                newSpeTarif.clear();
+                newSpeNote.clear();
+            });
+
+            } catch (IOException | SQLException e) {
+                e.printStackTrace();
+            }
     }
 
 

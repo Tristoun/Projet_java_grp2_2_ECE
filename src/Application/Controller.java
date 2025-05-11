@@ -119,6 +119,7 @@ public class Controller {
         System.out.println("SEARCH : " + indexSearch);
         Scene currentScene = ((Node) event.getSource()).getScene();
         Stage stage = (Stage) currentScene.getWindow();
+        stage.setResizable(false);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
